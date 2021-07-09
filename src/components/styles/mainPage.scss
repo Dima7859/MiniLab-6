@@ -1,0 +1,32 @@
+.mainPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mainPage__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__welcome__h1 {
+    color: #fe8201;
+    font-size: 52px;
+    margin-bottom: 20px;
+  }
+
+  &__profile__btn {
+    width: 310px;
+    height: 60px;
+    font-size: 40px;
+    font-weight: bold;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    background-color: #fe8201;
+  }
+
+  &__profile__btn:active {
+    background-color: #d30000;
+  }
+
+}
