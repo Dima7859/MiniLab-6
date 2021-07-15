@@ -1,6 +1,28 @@
 .input-error {
   position: absolute;
-  top: 262px;
+  top: 60px;
+  left: 300px;
   color: red;
   display: none;
+}
+
+.invalid {
+  background-color: red;
+}
+
+.error-notification {
+  border: 2px solid #000;
+  border-radius: 15px;
+  font-size: 20px;
+  background-color: rgb(243, 49, 49);
+  width: 200px;
+  height: 100px;
+  color: #fff;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

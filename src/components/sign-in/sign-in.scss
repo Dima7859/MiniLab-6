@@ -25,11 +25,12 @@
     align-items: center;
 
     &__div {
-      margin-bottom: 30px;
-      width: 500px;
+      margin-bottom: 50px;
+      width: 800px;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      position: relative;
 
       label {
         font-size: 30px;
@@ -37,7 +38,7 @@
 
       input {
         font-size: 30px;
-        width: 300px;
+        width: 500px;
       }
     }
 

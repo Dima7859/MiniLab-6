@@ -1,6 +1,7 @@
 import fierbase from 'firebase/app';
 import axios from 'axios';
 import { authUrl, API_CONFIG, dataBaceUrl } from './api-config';
+import { showErrorNotification } from '../shared/error-handlers';
 
 require('firebase/auth')
 
@@ -14,14 +15,16 @@ export const signIn = (email, password) => {
     password,
     returnSecureToken: true
   })
-    .then( response => response);
+    .then( response => response)
+    .catch(err => {
+      showErrorNotification(err);
+    });
 };
 
-export const createdUser = async (name, email, password, birth) => {
+export const createdUser = async (name, email, password ) => {
   await axios.post(`${dataBaceUrl}/miniLabUsers.json`, {
     name,
     email,
-    birth,
   })
     .then( response => console.log(response));
 

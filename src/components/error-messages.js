@@ -1,4 +1,4 @@
 export const ERROR_MESSAGES = {
-  password_length: 'The password should consist at least 6 symbols',
-  email_error: 'The email address was entered incorrectly'
+  password_length: 'Пароль должен быть более 6 символов',
+  email: 'Email адрес некорректный'
 }

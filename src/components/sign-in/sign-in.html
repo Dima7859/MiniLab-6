@@ -1,25 +1,26 @@
 <html>
   <head>
-    <title>Sign In</title>
+    <title>Вход</title>
   </head>
   <body>
     <div class="header">
-      <h1>Sign In</h1>
+      <h1>Вход</h1>
     </div>
     <div class="sing-in">
       <form class="sing-in__form">
         <div class="sing-in__form__div">
-          <label for="email" class="form-label">Email address</label>
+          <label for="email" class="form-label">Email адрес</label>
           <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+          <p class="input-error" id="emailError"></p>
         </div>
         <div class="sing-in__form__div">
-          <label for="password" class="form-label">Password</label>
+          <label for="password" class="form-label">Пароль</label>
           <input type="password" class="form-control" id="password">
+          <p class="input-error" id="passwordError"></p>
         </div>
-        <p class="input-error"></p>
-        <button id="signInBtn" type="submit" class="sing-in__form__btnSubmit">Sign In</button>
+        <button id="signInBtn" type="submit" class="sing-in__form__btnSubmit">Войти</button>
       </form>
-      <a href="/sign-up.html">Register</a>
+      <a href="/sign-up.html">Регистрация</a>
     </div>
   </body>
 </html>
