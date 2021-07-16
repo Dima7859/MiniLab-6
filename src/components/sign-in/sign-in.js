@@ -29,9 +29,7 @@ export const signInHandler = () => {
 
   signInForm.addEventListener('submit', event =>{
     event.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    signIn(email, password)
+    signIn(emailInput.value, passwordInput.value)
       .then( response => {
         if (response) {
           const { idToken: token } = response.data;
@@ -71,7 +69,7 @@ export const signInHandler = () => {
   };
 
   emailInput.onblur = () => {
-    if (!passwordLengthValidator(emailInput.value)) {
+    if (!emailValidator(emailInput.value)) {
       showEmailErrorMessage();
       emailInput.classList.add('invalid');
     } else hideEmailErrorMessage();

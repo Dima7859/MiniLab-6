@@ -18,13 +18,18 @@
       justify-content: space-between;
       position: relative;
 
-      label {
+      &__label {
         font-size: 30px;
       }
 
-      input {
+      &__control {
         font-size: 30px;
         width: 500px;
+      }
+
+      &__controllСheckbox {
+        width: 30px;
+        height: 30px;
       }
     }
 
@@ -40,7 +45,7 @@
     }
   }
 
-  a {
+  &__linkUpAndIn {
     font-size: 30px;
   }
 }

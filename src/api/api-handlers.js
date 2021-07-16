@@ -26,12 +26,13 @@ export const createdUser = async (name, email, password ) => {
     name,
     email,
   })
-    .then( response => console.log(response));
+    .then( response => response);
 
   return await fierbase
     .auth()
     .createUserWithEmailAndPassword(email, password)
-    .then(response => response);
+    .then(response => response)
+    .catch(err => console.log(err))
 };
 
 initApi();

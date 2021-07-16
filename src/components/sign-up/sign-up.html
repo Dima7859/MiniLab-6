@@ -9,24 +9,33 @@
     <div class="sign-up">
       <form class="sign-up__form">
         <div class="sign-up__form__div">
-          <label for="name" class="form-label">Имя</label>
-          <input type="text" class="form-control" id="name">
+          <label for="name" class="sign-up__form__div__label">Имя</label>
+          <input type="text" class="sign-up__form__div__control" id="nameInput">
+          <p class="input-error" id="nameError"></p>
         </div>
         <div class="sign-up__form__div">
-          <label for="email" class="form-label">Email адрес</label>
-          <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+          <label for="email" class="sign-up__form__div__label">Email адрес</label>
+          <input type="email" class="sign-up__form__div__control" id="email" aria-describedby="emailHelp">
+          <p class="input-error" id="emailError"></p>
         </div>
         <div class="sign-up__form__div">
-          <label for="password" class="form-label">Пароль</label>
-          <input type="password" class="form-control" id="password">
+          <label for="password" class="sign-up__form__div__label">Пароль</label>
+          <input type="password" class="sign-up__form__div__control" id="password">
+          <p class="input-error" id="passwordError"></p>
         </div>
         <div class="sign-up__form__div">
-          <label for="password" class="form-label">Повторный пароль</label>
-          <input type="password" class="form-control" id="password">
+          <label for="repeatPassword" class="sign-up__form__div__label">Повторите пароль</label>
+          <input type="password" class="sign-up__form__div__control" id="repeatPassword">
+          <p class="input-error" id="repeatPasswordError"></p>
         </div>
-        <button type="submit" class="sign-up__form__btnSubmit">Регистрация</button>
+        <div class="sign-up__form__div">
+          <label for="agreementСheckbox" class="sign-up__form__div__labelСheckbox">Настоящим подтверждаю,что с <a href="/src/other/Doc/sadasd.pdf" target="_blank" class="sign-up__form__div__labelСheckbox__link">условиями Соглашения</a>, ознакомлен и согласен</label>
+          <input type="checkbox" class="sign-up__form__div__controllСheckbox" id="agreementCheckbox">
+          <p class="input-error" id="agreementCheckboxError"></p>
+        </div>
+        <button type="submit" class="sign-up__form__btnSubmit" id="signUpBtn">Регистрация</button>
       </form>
-      <a href="/sign-in.html">Войти</a>
+      <a href="/sign-in.html" class="sign-up__linkUpAndIn">Войти</a>
     </div>
   </body>
 </html>
