@@ -1,6 +1,7 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { SourceMapDevToolPlugin } = require("webpack");
+const { type } = require('os');
 
 module.exports = {
   entry: './src/index.js',
@@ -20,6 +21,14 @@ module.exports = {
     new HTMLWebpackPlugin ({
       filename: 'sign-up.html',
       template: './src/components/sign-up/sign-up.html'
+    }),
+    new HTMLWebpackPlugin ({
+      filename: 'resetPassword.html',
+      template: './src/components/resetPassword/resetPassword.html'
+    }),
+    new HTMLWebpackPlugin ({
+      filename: 'startPage.html',
+      template: './src/components/startPage/startPage.html'
     }),
     new SourceMapDevToolPlugin({
         filename: "[file].map"
@@ -43,8 +52,8 @@ module.exports = {
         ]
       },
       {
-        test:/\.(jpg|png|svg|gif)$/,
-        use: ['file-loader']
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        type: 'asset'
       },
       {
         test: /\.js$/,

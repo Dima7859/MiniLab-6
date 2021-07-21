@@ -1,7 +1,7 @@
 export const ERROR_MESSAGES = {
-  password_length: 'Пароль должен быть более 6 символов',
-  email: 'Email адрес некорректный',
-  name: 'Имя должно быть либо русским либо английским',
-  repeatPassword: 'Пароль не совпадает',
-  agreementСheckbox: 'Обязательно соглашаться'
+  password_length: '! Password must be at least 6 characters',
+  email: '! E-mail address is incorrect',
+  name: '! The name must only consist of a letter',
+  repeatPassword: '! Password does not match',
+  agreementСheckbox: '! Be sure to agree'
 }

@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from "../components/error-messages";
+import { ERROR_MESSAGES } from '../components/error-messages';
 
 export const showPasswordLengthErrorMessage = () => {
   const errorTag = document.getElementById('passwordError');
@@ -28,10 +28,10 @@ export const showErrorNotification = error => {
   console.log(error.response.data.error.message);
   switch (error.response.data.error.message) {
     case 'INVALID_PASSWORD':
-      notification.innerText = 'Неверный пароль';
+      notification.innerText = 'Invalid password';
       break;
     case 'EMAIL_NOT_FOUND':
-      notification.innerText = 'email аккаунт не зарегистрирован';
+      notification.innerText = 'Email account not registered';
       break;
     default:
       notification.innerText = error.response.data.error.message;
@@ -73,4 +73,14 @@ export const showAgreementCheckboxErrorMessage = () => {
 export const hideAgreementCheckboxErrorMessage = () => {
   const inputErrorTag = document.getElementById('agreementCheckboxError');
   inputErrorTag.style.display = 'none';
+};
+
+export const showErrorRegisterNotification = error => {
+  const notification = document.createElement('div');
+  const body = document.getElementsByTagName('body')[0];
+  console.log(error.message);
+  notification.innerText = error.message;
+  notification.className = 'error-notification';
+  body.append(notification);
+  setTimeout( () => notification.style.display = 'none', 5000);
 };

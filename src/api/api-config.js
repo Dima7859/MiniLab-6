@@ -11,4 +11,6 @@ export const API_CONFIG = {
 
 export const authUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_CONFIG.apiKey}`;
 
+export const resetPasswordUrl = `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${API_CONFIG.apiKey}`;
+
 export const dataBaceUrl = "https://dimade7859-test-default-rtdb.firebaseio.com/";

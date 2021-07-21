@@ -10,11 +10,12 @@ import {
 } from '../../shared/error-handlers';
 
 export const signInHandler = () => {
-  const signInForm = document.querySelector('.sing-in__form');
+  const signInForm = document.querySelector('.sign-in__form');
   const signInBtn = document.getElementById('signInBtn');
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
   const inputError = document.querySelector('.input-error');
+  const btnWatchPassword = document.getElementById('btnWatchPassword');
 
   const formFields = {
     email: {
@@ -38,6 +39,8 @@ export const signInHandler = () => {
         };
       });
   });
+
+  btnWatchPassword.onclick = () => passwordInput.type === "password" ? passwordInput.type = "text" : passwordInput.type = "password";
 
   passwordInput.oninput = () => {
     if (passwordLengthValidator(passwordInput.value)) {

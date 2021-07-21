@@ -1,0 +1,54 @@
+.allBlockStartPage  {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.startPage {
+  padding: 20px;
+  border: 1px solid #E5E5E5;
+  width: 90vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+
+  &__btnBlock {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 18px;
+    font-weight: bold;
+
+    &__logInAndRegistration {
+      text-decoration: none;
+    }
+  }
+
+  &__greeting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+
+    &__welcome {
+      font-size: 36px;
+    }
+
+    hr {
+      width: 60%;
+    }
+
+    &__name {
+      font-size: 18px;
+    }
+  }
+
+  &__img {
+    height: 60%;
+    width: 100%;
+  }
+
+}

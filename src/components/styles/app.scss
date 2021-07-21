@@ -1,9 +1,18 @@
 .input-error {
   position: absolute;
-  top: 50px;
-  left: 300px;
+  top: 43px;
   color: red;
   display: none;
+  font-size: 10px;
+}
+
+#agreementCheckboxError {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  color: red;
+  display: none;
+  font-size: 10px;
 }
 
 .invalid {

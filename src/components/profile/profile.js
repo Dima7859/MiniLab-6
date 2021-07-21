@@ -5,6 +5,6 @@ export const logoutBtnHandler = () => {
   const logoutBtn = document.getElementById('logoutBtn');
   logoutBtn.onclick = () => {
     removeToken();
-    window.location.href = routes.sign_in;
+    window.location.href = routes.startPage;
   };
 };

@@ -27,6 +27,8 @@ export const signUpHendler = () => {
   const repeatPasswordInput = document.getElementById('repeatPassword');
   const signUpBtn = document.getElementById('signUpBtn');
   const agreementCheckbox = document.getElementById('agreementCheckbox');
+  const btnWatchPassword = document.getElementById('btnWatchPassword');
+  const btnWatchRepeatPassword = document.getElementById('btnWatchRepeatPassword');
 
   const formFields = {
     name: {
@@ -54,8 +56,7 @@ export const signUpHendler = () => {
     createdUser(nameInput.value, emailInput.value, passwordInput.value)
       .then( response => {
         if (response) {
-          const { email } = response.user;
-          signIn(email, passwordInput.value)
+          signIn(emailInput.value, passwordInput.value)
             .then( response => {
               if (response) {
                 const { idToken: token } = response.data;
@@ -66,6 +67,10 @@ export const signUpHendler = () => {
         };
       });
   });
+
+  btnWatchPassword.onclick = () => passwordInput.type === "password" ? passwordInput.type = "text" : passwordInput.type = "password";
+
+  btnWatchRepeatPassword.onclick = () => repeatPasswordInput.type === "password" ? repeatPasswordInput.type = "text" : repeatPasswordInput.type = "password";
 
   nameInput.oninput = () => {
     if (nameValidator(nameInput.value)) {
@@ -121,14 +126,14 @@ export const signUpHendler = () => {
     } else hidePasswordLengthErrorMessage();
   };
 
+
   repeatPasswordInput.oninput = () => {
-    if (repeatPasswordInput.value === passwordInput.value) {
-      formFields.repeatPassword.isValid = true;
+    if (formFields.password.isValid && password.value === repeatPasswordInput.value) {
+      formFields.repeatPassword.isValid = true
       hideRepeatPasswordErrorMessage();
       repeatPasswordInput.classList.remove('invalid');
-    } else {
-      formFields.repeatPassword.isValid = false;
-    }
+    } else formFields.repeatPassword.isValid  = false;
+
     checkFormValid();
   };
 
@@ -145,6 +150,7 @@ export const signUpHendler = () => {
       hideAgreementCheckboxErrorMessage();
     } else {
       formFields.agreementCheckbox.isValid = false;
+      showAgreementCheckboxErrorMessage();
     }
     checkFormValid();
   };
