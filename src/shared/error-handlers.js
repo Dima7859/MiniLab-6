@@ -93,5 +93,5 @@ export const showErrorRegisterNotification = error => {
   notificationImg.className = 'error-notification__img';
   body.append(notification);
   notification.append(notificationImg);
-  // setTimeout( () => notification.style.display = 'none', 5000);
+  setTimeout( () => notification.style.display = 'none', 5000);
 };
