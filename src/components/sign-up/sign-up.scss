@@ -13,7 +13,7 @@
   }
 
   &__img {
-    width: 60%;
+    width: 40%;
   }
 
   &__form {
@@ -27,7 +27,8 @@
       }
 
       &__control {
-        border-color: $borderColor;
+        border: 1px solid $borderColor;
+        height: 40px;
       }
 
       &__watchPass{
@@ -38,9 +39,6 @@
     &__divСheckbox {
       width: 85%;
       margin-bottom: 25px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
       position: relative;
 
         &__labelСheckbox {
@@ -58,10 +56,12 @@
   }
 
   hr {
+    margin-top: 20px;
     width: 85%;
   }
 
   &__linkUpAndIn {
+    margin-bottom: 40px;
     font-size: 12px;
   }
 }

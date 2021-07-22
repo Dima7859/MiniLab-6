@@ -48,6 +48,7 @@ export const signInHandler = () => {
       hidePasswordLengthErrorMessage();
       passwordInput.classList.remove('invalid');
     } else {
+      passwordInput.classList.add('invalid');
       formFields.password.isValid = false;
     }
     checkFormValid();
@@ -60,22 +61,21 @@ export const signInHandler = () => {
       emailInput.classList.remove('invalid');
     } else {
       formFields.email.isValid = false;
+      emailInput.classList.add('invalid');
     }
     checkFormValid();
   };
 
   passwordInput.onblur = () => {
-    if (!passwordLengthValidator(passwordInput.value)) {
-      showPasswordLengthErrorMessage();
-      passwordInput.classList.add('invalid');
-    } else hidePasswordLengthErrorMessage();
+    !passwordLengthValidator(passwordInput.value) ?
+      showPasswordLengthErrorMessage():
+      hidePasswordLengthErrorMessage();
   };
 
   emailInput.onblur = () => {
-    if (!emailValidator(emailInput.value)) {
-      showEmailErrorMessage();
-      emailInput.classList.add('invalid');
-    } else hideEmailErrorMessage();
+    !emailValidator(emailInput.value) ?
+      showEmailErrorMessage():
+      hideEmailErrorMessage();
   };
 
   const checkFormValid = () => {
