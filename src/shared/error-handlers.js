@@ -24,24 +24,30 @@ export const hideEmailErrorMessage = () => {
 
 export const showErrorNotification = error => {
   const notification = document.createElement('div');
+  const notificationImg = document.createElement('div');
+  const notificationText = document.createElement('p');
   const body = document.getElementsByTagName('body')[0];
 
   switch (error.response.data.error.message) {
     case 'INVALID_PASSWORD':
-      notification.innerText = 'Invalid password';
+      notificationText.innerText = 'Invalid password';
       break;
     case 'EMAIL_NOT_FOUND':
-      notification.innerText = 'Email account not registered';
+      notificationText.innerText = 'Email account not registered';
       break;
-    default:
-      notification.innerText = error.response.data.error.message;
-      break;
-  }
+      default:
+        notificationText.innerText = error.response.data.error.message;
+        break;
+      }
 
-  notification.className = 'error-notification';
-  body.append(notification);
-  setTimeout( () => notification.style.display = 'none', 5000);
-};
+      notificationImg.className = 'error-notification__img';
+      notification.className = 'error-notification';
+      body.append(notification);
+      notification.append(notificationImg);
+      notification.append(notificationText);
+
+    setTimeout( () => notification.style.display = 'none', 5000);
+  };
 
 export const showNameErrorMessage = () => {
   const errorTag = document.getElementById('nameError');
@@ -78,10 +84,14 @@ export const hideAgreementCheckboxErrorMessage = () => {
 
 export const showErrorRegisterNotification = error => {
   const notification = document.createElement('div');
+  const notificationImg = document.createElement('div');
+  const notificationText = document.createElement('p');
   const body = document.getElementsByTagName('body')[0];
 
   notification.innerText = error.message;
   notification.className = 'error-notification';
+  notificationImg.className = 'error-notification__img';
   body.append(notification);
-  setTimeout( () => notification.style.display = 'none', 5000);
+  notification.append(notificationImg);
+  // setTimeout( () => notification.style.display = 'none', 5000);
 };

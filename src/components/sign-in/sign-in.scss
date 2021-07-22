@@ -13,7 +13,7 @@
   }
 
   &__img {
-    width: 60%;
+    width: 40%;
   }
 
   &__form {
@@ -28,7 +28,8 @@
       }
 
       input {
-        border-color: $borderColor;
+        border: 1px solid $borderColor;
+        height: 40px;
       }
 
       &__watchPass{
@@ -52,10 +53,12 @@
   }
 
   hr {
+    margin-top: 20px;
     width: 85%;
   }
 
   &__doNotAccount {
     font-size: 12px;
+    margin-bottom: 40px;
   }
 }

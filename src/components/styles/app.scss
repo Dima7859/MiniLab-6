@@ -1,6 +1,8 @@
+@import './colors.scss';
+
 .input-error {
   position: absolute;
-  top: 43px;
+  top: 60px;
   color: red;
   display: none;
   font-size: 10px;
@@ -16,22 +18,26 @@
 }
 
 .invalid {
-  background-color: red;
+  border: 1px solid red !important;
 }
 
 .error-notification {
-  border: 2px solid #000;
-  border-radius: 15px;
-  font-size: 20px;
-  background-color: rgb(243, 49, 49);
-  width: 200px;
-  height: 100px;
-  color: #fff;
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  padding: 10px;
+  border: 1px solid $borderColor;
+  font-size: 16px;
+  background-color: #e496e9;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 13px 30px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  font-weight: bold;
+
+  &__img{
+    margin-right: 10px;
+    height: 20px;
+    width: 20px;
+    background: url('/src/asset/img/Exclamation.png') no-repeat;
+    background-size: 100%;
+  }
 }
