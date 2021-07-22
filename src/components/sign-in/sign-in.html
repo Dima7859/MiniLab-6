@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>Log in</title>
+  </head>
+  <body>
+    <div class="allBlockSignIn">
+      <div class="sign-in">
+        <div class="sign-in__heading">
+          <p>MiniLab-6</p>
+          <p>Log in</p>
+        </div>
+        <img class="sign-in__img" src="/src/asset/img/kanban.svg" alt="Error">
+        <form class="sign-in__form">
+          <div class="sign-in__form__div">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+            <p class="input-error" id="emailError"></p>
+          </div>
+          <div class="sign-in__form__div">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" checkPassword = 'true'>
+            <div class="sign-in__form__div__watchPass" id="btnWatchPassword"></div>
+            <p class="input-error" id="passwordError"></p>
+          </div>
+          <div class="sign-in__form__forgotPassword">
+            <a href="/resetPassword.html">forgot password ?</a>
+          </div>
+          <button id="signInBtn" type="submit" class="sign-in__form__btnSubmit">Log in</button>
+        </form>
+        <hr>
+        <p class="sign-in__doNotAccount">don't have an account?<a href="/sign-up.html">Registration</a></p>
+      </div>
+    </div>
+  </body>
+</html>

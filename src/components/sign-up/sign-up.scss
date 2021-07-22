@@ -1,0 +1,67 @@
+@import '../styles/colors.scss';
+@import '../styles/constSign-In-up-reset.scss';
+
+.allBlockSignUp {
+ @extend %allBlock-Sign-In-Up-Reset;
+}
+
+.sign-up {
+  @extend %Sign-In-Up-Reset;
+
+  &__heading {
+    @extend %headingSignInUpReset;
+  }
+
+  &__img {
+    width: 60%;
+  }
+
+  &__form {
+    @extend %form-Sign-In-Up-Reset;
+
+    &__div {
+      @extend %div-Sign-In-Up-Reset;
+
+      &__label {
+        @extend %labelSignInUpReset;
+      }
+
+      &__control {
+        border-color: $borderColor;
+      }
+
+      &__watchPass{
+        @extend %btnWatch;
+      }
+    }
+
+    &__divСheckbox {
+      width: 85%;
+      margin-bottom: 25px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      position: relative;
+
+        &__labelСheckbox {
+          font-size: 13px;
+        }
+    }
+
+    &__btnSubmit {
+      @extend %btn-Sign-In-Up-Reset;
+    }
+
+    &__btnSubmit:active {
+      background-color: $btnColorActive;
+    }
+  }
+
+  hr {
+    width: 85%;
+  }
+
+  &__linkUpAndIn {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,61 @@
+@import '../styles/colors.scss';
+@import '../styles/constSign-In-up-reset.scss';
+
+.allBlockSignIn {
+  @extend %allBlock-Sign-In-Up-Reset;
+}
+
+.sign-in {
+  @extend %Sign-In-Up-Reset;
+
+  &__heading {
+    @extend %headingSignInUpReset;
+  }
+
+  &__img {
+    width: 60%;
+  }
+
+  &__form {
+    @extend %form-Sign-In-Up-Reset;
+    margin-top: 50px;
+
+    &__div {
+      @extend %div-Sign-In-Up-Reset;
+
+      label{
+        @extend %labelSignInUpReset;
+      }
+
+      input {
+        border-color: $borderColor;
+      }
+
+      &__watchPass{
+        @extend %btnWatch;
+      }
+    }
+
+    &__btnSubmit {
+      @extend %btn-Sign-In-Up-Reset;
+    }
+
+    &__btnSubmit:active {
+      background-color: $btnColorActive;
+    }
+
+    &__forgotPassword {
+      margin-bottom: 5px;
+      width: 85%;
+      font-size: 12px;
+    }
+  }
+
+  hr {
+    width: 85%;
+  }
+
+  &__doNotAccount {
+    font-size: 12px;
+  }
+}
