@@ -1,25 +1,15 @@
+@import '../styles/colors.scss';
+@import '../styles/constSign-In-up-reset.scss';
+
 .allBlockSignUp {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+ @extend %allBlock-Sign-In-Up-Reset;
 }
 
-
 .sign-up {
-  margin: 30px 0;
-  padding: 10px 0;
-  width: 600px;
-  border: 1px solid #E5E5E5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @extend %Sign-In-Up-Reset;
 
   &__heading {
-    cursor: default;
-    width: 90%;
-    font-size: 18px;
-    font-weight: bold;
+    @extend %headingSignInUpReset;
   }
 
   &__img {
@@ -27,35 +17,21 @@
   }
 
   &__form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @extend %form-Sign-In-Up-Reset;
 
     &__div {
-      width: 85%;
-      margin-bottom: 25px;
-      display: flex;
-      flex-direction: column;
-      position: relative;
+      @extend %div-Sign-In-Up-Reset;
 
       &__label {
-        font-size: 12px;
-        font-weight: bold;
+        @extend %labelSignInUpReset;
       }
 
       &__control {
-        border-color: #E5E5E5;
+        border-color: $borderColor;
       }
 
       &__watchPass{
-        position: absolute;
-        top: 58%;
-        left: 96%;
-        cursor: pointer;
-        background: url('/src/asset/img/view.svg');
-        width: 15px;
-        height: 15px;
+        @extend %btnWatch;
       }
     }
 
@@ -73,15 +49,11 @@
     }
 
     &__btnSubmit {
-      width: 85%;
-      background-color: #96A0C5;
-      margin: 15px 0;
-      height: 50px;
-      font-size: 30px;
+      @extend %btn-Sign-In-Up-Reset;
     }
 
     &__btnSubmit:active {
-      background-color: #ccccfc;
+      background-color: $btnColorActive;
     }
   }
 

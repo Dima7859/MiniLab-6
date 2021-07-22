@@ -1,3 +1,5 @@
+@import './colors.scss';
+
 .mainPage {
   display: flex;
   flex-direction: column;
@@ -9,12 +11,6 @@
   flex-direction: column;
   align-items: center;
 
-  &__welcome__h1 {
-    color: #fe8201;
-    font-size: 52px;
-    margin-bottom: 20px;
-  }
-
   &__profile__btn {
     width: 310px;
     height: 60px;
@@ -22,11 +18,11 @@
     font-weight: bold;
     border-radius: 20px;
     margin-bottom: 20px;
-    background-color: #fe8201;
+    background-color: $btnColor;
   }
 
   &__profile__btn:active {
-    background-color: #d30000;
+    background-color: $btnColorActive;
   }
 
 }

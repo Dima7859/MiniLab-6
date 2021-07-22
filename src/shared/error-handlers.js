@@ -25,7 +25,7 @@ export const hideEmailErrorMessage = () => {
 export const showErrorNotification = error => {
   const notification = document.createElement('div');
   const body = document.getElementsByTagName('body')[0];
-  console.log(error.response.data.error.message);
+
   switch (error.response.data.error.message) {
     case 'INVALID_PASSWORD':
       notification.innerText = 'Invalid password';
@@ -37,6 +37,7 @@ export const showErrorNotification = error => {
       notification.innerText = error.response.data.error.message;
       break;
   }
+
   notification.className = 'error-notification';
   body.append(notification);
   setTimeout( () => notification.style.display = 'none', 5000);
@@ -78,7 +79,7 @@ export const hideAgreementCheckboxErrorMessage = () => {
 export const showErrorRegisterNotification = error => {
   const notification = document.createElement('div');
   const body = document.getElementsByTagName('body')[0];
-  console.log(error.message);
+
   notification.innerText = error.message;
   notification.className = 'error-notification';
   body.append(notification);

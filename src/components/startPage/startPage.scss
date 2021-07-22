@@ -1,3 +1,5 @@
+@import '../styles/colors.scss';
+
 .allBlockStartPage  {
   position: relative;
   display: flex;
@@ -8,7 +10,7 @@
 
 .startPage {
   padding: 20px;
-  border: 1px solid #E5E5E5;
+  border: 1px solid $borderColor;
   width: 90vw;
   height: 90vh;
   display: flex;
@@ -50,5 +52,4 @@
     height: 60%;
     width: 100%;
   }
-
 }

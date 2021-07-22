@@ -15,11 +15,7 @@ window.onload = () => {
     case paths.home:
       const token = getToken();
 
-      if (!token) {
-        window.location.href = routes.startPage;
-      } else {
-        logoutBtnHandler();
-      };
+      !token ? window.location.href = routes.startPage : logoutBtnHandler();
       break;
     case paths.sign_in:
       signInHandler();

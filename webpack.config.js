@@ -1,6 +1,6 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-const { SourceMapDevToolPlugin } = require("webpack");
+const { SourceMapDevToolPlugin } = require('webpack');
 const { type } = require('os');
 
 module.exports = {
