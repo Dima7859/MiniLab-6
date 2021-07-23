@@ -88,10 +88,12 @@ export const showErrorRegisterNotification = error => {
   const notificationText = document.createElement('p');
   const body = document.getElementsByTagName('body')[0];
 
-  notification.innerText = error.message;
+  notificationText.innerText = error.message;
   notification.className = 'error-notification';
   notificationImg.className = 'error-notification__img';
   body.append(notification);
   notification.append(notificationImg);
+  notification.append(notificationText);
+
   setTimeout( () => notification.style.display = 'none', 5000);
 };

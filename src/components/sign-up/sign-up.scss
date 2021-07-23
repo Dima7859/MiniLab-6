@@ -27,8 +27,7 @@
       }
 
       &__control {
-        border: 1px solid $borderColor;
-        height: 40px;
+        @extend %inputSignInUpReset;
       }
 
       &__watchPass{
