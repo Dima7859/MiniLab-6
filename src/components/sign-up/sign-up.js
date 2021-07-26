@@ -1,5 +1,5 @@
 import { signIn, createdUser } from '../../api/api-handlers';
-import { setToken } from '../../shared/ls-service';
+import { setToken, setUserEmail } from '../../shared/ls-service';
 import { routes } from '../../shared/constants/routes';
 import {
   nameValidator,
@@ -18,6 +18,7 @@ import {
   showAgreementCheckboxErrorMessage,
   hideAgreementCheckboxErrorMessage
 } from '../../shared/error-handlers';
+import { currentVersionAgreement } from '../../shared/agreementUser';
 
 export const signUpHendler = () => {
   const signUpForm = document.querySelector('.sign-up__form');
@@ -53,9 +54,10 @@ export const signUpHendler = () => {
   signUpForm.addEventListener('submit', event => {
     event.preventDefault();
 
-    createdUser(nameInput.value, emailInput.value, passwordInput.value)
+    createdUser(nameInput.value, emailInput.value, passwordInput.value, currentVersionAgreement)
       .then( response => {
         if (response) {
+          setUserEmail(emailInput.value);
           signIn(emailInput.value, passwordInput.value)
             .then( response => {
               if (response) {
