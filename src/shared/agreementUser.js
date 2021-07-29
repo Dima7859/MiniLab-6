@@ -1,6 +1,6 @@
 import { updateUserAgreement } from '../api/api-handlers';
 
-export const currentVersionAgreement = 2 ;
+export const currentVersionAgreement = 1 ;
 
 export const checkAgreement = (item) => {
   if (item.Agreement !== currentVersionAgreement) {

@@ -28,26 +28,28 @@ export const showErrorNotification = error => {
   const notificationText = document.createElement('p');
   const body = document.getElementsByTagName('body')[0];
 
-  switch (error.response.data.error.message) {
-    case 'INVALID_PASSWORD':
-      notificationText.innerText = 'Invalid password';
-      break;
-    case 'EMAIL_NOT_FOUND':
-      notificationText.innerText = 'Email account not registered';
-      break;
+  if (error.response) {
+    switch (error.response.data.error.message) {
+      case 'INVALID_PASSWORD':
+        notificationText.innerText = 'Invalid password';
+        break;
+      case 'EMAIL_NOT_FOUND':
+        notificationText.innerText = 'Email account not registered';
+        break;
       default:
         notificationText.innerText = error.response.data.error.message;
         break;
       }
+  } else notificationText.innerText = error.message;
 
-      notificationImg.className = 'error-notification__img';
-      notification.className = 'error-notification';
-      body.append(notification);
-      notification.append(notificationImg);
-      notification.append(notificationText);
+  notification.className = 'error-notification';
+  notificationImg.className = 'error-notification__img';
+  body.append(notification);
+  notification.append(notificationImg);
+  notification.append(notificationText);
 
-    setTimeout( () => notification.style.display = 'none', 5000);
-  };
+  setTimeout( () => notification.style.display = 'none', 5000);
+};
 
 export const showNameErrorMessage = () => {
   const errorTag = document.getElementById('nameError');
@@ -80,20 +82,4 @@ export const showAgreementCheckboxErrorMessage = () => {
 export const hideAgreementCheckboxErrorMessage = () => {
   const inputErrorTag = document.getElementById('agreementCheckboxError');
   inputErrorTag.style.display = 'none';
-};
-
-export const showErrorRegisterNotification = error => {
-  const notification = document.createElement('div');
-  const notificationImg = document.createElement('div');
-  const notificationText = document.createElement('p');
-  const body = document.getElementsByTagName('body')[0];
-
-  notificationText.innerText = error.message;
-  notification.className = 'error-notification';
-  notificationImg.className = 'error-notification__img';
-  body.append(notification);
-  notification.append(notificationImg);
-  notification.append(notificationText);
-
-  setTimeout( () => notification.style.display = 'none', 5000);
 };

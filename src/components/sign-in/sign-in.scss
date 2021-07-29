@@ -40,10 +40,6 @@
       @extend %btn-Sign-In-Up-Reset;
     }
 
-    &__btnSubmit:active {
-      background-color: $btnColorActive;
-    }
-
     &__forgotPassword {
       margin-bottom: 5px;
       width: 85%;

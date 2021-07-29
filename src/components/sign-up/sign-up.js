@@ -1,6 +1,4 @@
-import { signIn, createdUser } from '../../api/api-handlers';
-import { setToken, setUserEmail } from '../../shared/ls-service';
-import { routes } from '../../shared/constants/routes';
+import { signUp } from '../../api/api-handlers';
 import {
   nameValidator,
   emailValidator,
@@ -54,20 +52,14 @@ export const signUpHendler = () => {
   signUpForm.addEventListener('submit', event => {
     event.preventDefault();
 
-    createdUser(nameInput.value, emailInput.value, passwordInput.value, currentVersionAgreement)
-      .then( response => {
-        if (response) {
-          setUserEmail(emailInput.value);
-          signIn(emailInput.value, passwordInput.value)
-            .then( response => {
-              if (response) {
-                const { idToken: token } = response.data;
-                setToken(token);
-                window.location.href = routes.home;
-              };
-            });
-        };
-      });
+    const user = {
+      name: nameInput.value,
+      email: emailInput.value,
+      password: passwordInput.value,
+      Agreement:currentVersionAgreement
+    }
+
+    signUp(user);
   });
 
   btnWatchPassword.onclick = () => passwordInput.type === "password" ? passwordInput.type = "text" : passwordInput.type = "password";

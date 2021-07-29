@@ -1,6 +1,11 @@
 @import './colors.scss';
 @import './constSign-In-up-reset.scss';
 
+// .blackBackground {
+//   background: url('/src/asset/img/kanban.svg') no-repeat;
+//   background-size: 100%;
+// }
+
 .input-error {
   position: absolute;
   top: 60px;
@@ -69,5 +74,4 @@
       @extend %btn-Sign-In-Up-Reset;
     }
   }
-
 }

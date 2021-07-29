@@ -14,3 +14,9 @@ export const removeUserEmail = () => localStorage.removeItem('userEmail');
 export const getUserKey = () => localStorage.getItem('userKey');
 export const setUserKey = userKey => localStorage.setItem('userKey', userKey);
 export const removeUserKey = () => localStorage.removeItem('userKey');
+
+export const getUserUid = () => localStorage.getItem('uid');
+export const setUserUid = uid => localStorage.setItem('uid', uid);
+export const removeUserUid = () => localStorage.removeItem('uid');
+
+export const clearStorage = () => localStorage.clear();

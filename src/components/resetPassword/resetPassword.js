@@ -31,8 +31,6 @@ export const resetPasswordHandler = () => {
     } else {
       resetPasswordBtn.setAttribute('disabled', true);
     };
-
-    checkFormValid();
   };
 
   emailInput.onblur = () => {
