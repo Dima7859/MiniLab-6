@@ -1,12 +1,11 @@
 import { signIn } from '../../api/api-handlers';
-import { setToken } from '../../shared/ls-service';
-import { routes } from '../../shared/constants/routes';
 import {  passwordLengthValidator,emailValidator } from '../../shared/validators';
 import {
   showPasswordLengthErrorMessage,
   hidePasswordLengthErrorMessage,
   showEmailErrorMessage,
-  hideEmailErrorMessage
+  hideEmailErrorMessage,
+  showErrorNotification
 } from '../../shared/error-handlers';
 
 export const signInHandler = () => {
@@ -14,7 +13,6 @@ export const signInHandler = () => {
   const signInBtn = document.getElementById('signInBtn');
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
-  const inputError = document.querySelector('.input-error');
   const btnWatchPassword = document.getElementById('btnWatchPassword');
 
   const formFields = {
@@ -30,14 +28,8 @@ export const signInHandler = () => {
 
   signInForm.addEventListener('submit', event =>{
     event.preventDefault();
-    signIn(emailInput.value, passwordInput.value)
-      .then( response => {
-        if (response) {
-          const { idToken: token } = response.data;
-          setToken(token);
-          window.location.href = routes.home;
-        };
-      });
+
+    signIn(emailInput.value, passwordInput.value).catch( error => showErrorNotification(error));
   });
 
   btnWatchPassword.onclick = () => passwordInput.type === "password" ? passwordInput.type = "text" : passwordInput.type = "password";
@@ -82,5 +74,4 @@ export const signInHandler = () => {
     const isFormValid = Object.values(formFields).every(value => value.isValid);
     isFormValid ? signInBtn.removeAttribute('disabled'): signInBtn.setAttribute('disabled', true);
   };
-
 };

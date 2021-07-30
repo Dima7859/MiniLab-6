@@ -16,6 +16,16 @@
   font-weight: bold;
 }
 
+%inputSignInUpReset {
+  border: 1px solid $borderColor;
+  height: 40px;
+
+  &:focus{
+    outline: none;
+    border: 2px solid #878787;
+  }
+}
+
 %headingSignInUpReset {
   cursor: default;
   width: 90%;
@@ -34,7 +44,6 @@
 }
 
 %allBlock-Sign-In-Up-Reset {
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -58,7 +67,13 @@
 %btn-Sign-In-Up-Reset {
   width: 85%;
   background-color: $btnColor;
+  border: 1px solid $borderColor;
   margin: 15px 0;
   height: 50px;
+  font-weight: bold;
   font-size: 16px;
+
+  &:active {
+    background-color: $btnColorActive;
+  }
 }

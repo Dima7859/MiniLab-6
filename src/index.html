@@ -2,14 +2,41 @@
   <head>
     <title>Main Page</title>
   </head>
-  <body class="blackBackground">
+  <body>
+    <img src="/src/asset/img/kanban.svg" class="blockBackground" alt="Erorr">
     <div class="mainPage">
       <div class="mainPage__header">
         <div class="mainPage__header__welcome">
-          <div class="mainPage__header__welcome__h1"></div>
+          <div class="mainPage__header__btnMenu"></div>
+          <div class="mainPage__header__user">
+            <p class="mainPage__header__user__name"></p>
+            <div class="mainPage__header__user__menu"></div>
+          </div>
         </div>
         <div class="mainPage__header__profile">
-          <button id="logoutBtn" class="mainPage__header__profile__btn">log out</button>
+          <div class="mainPage__header__profile__info" id="headerInfoName"></div>
+          <div class="mainPage__header__profile__avatar" id="userAvatar"></div>
+          <div class="mainPage__header__profile__avatar__menu" id="userAvatarMenu">
+            <div class="mainPage__header__profile__avatar__menu__functional" id="logoutBtn">log out</div>
+          </div>
+        </div>
+      </div>
+      <div class="mainPage__menuBoards" id="userMenuBoards">
+        <div class="mainPage__menuBoards__functional" id="menuBoardsFunctional">
+          <div class="mainPage__menuBoards__functional__all" id="btnOpenActiveBoard">Active boards :</div>
+          <div class="mainPage__menuBoards__functional__boards" id="lookBoardsActive"></div>
+          <div class="mainPage__menuBoards__functional__all" id="btnOpenClosedBoard">Closed boards :</div>
+          <div class="mainPage__menuBoards__functional__boards" id="lookBoardsClosed"></div>
+          <hr>
+          <div class="mainPage__menuBoards__functional__all" id="btnOpenCreateBoard">+ Create a board</div>
+        </div>
+        <div class="mainPage__menuBoards__modelBlock">
+          <div class="mainPage__menuBoards__modelBlock__createBlock">
+              <label for="createBoard">Enter board name</label>
+              <input type="text" id="inputCreateBoard">
+            <button class="mainPage__menuBoards__modelBlock__createBlock__btn" id="btnCreateBoard"> Create </button>
+            <button class="mainPage__menuBoards__modelBlock__createBlock__btn" id="btnClosedCreateBoard"> Closed </button>
+          </div>
         </div>
       </div>
     </div>

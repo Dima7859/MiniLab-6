@@ -1,6 +1,4 @@
-import { signIn, createdUser } from '../../api/api-handlers';
-import { setToken } from '../../shared/ls-service';
-import { routes } from '../../shared/constants/routes';
+import { signUp } from '../../api/api-handlers';
 import {
   nameValidator,
   emailValidator,
@@ -18,6 +16,7 @@ import {
   showAgreementCheckboxErrorMessage,
   hideAgreementCheckboxErrorMessage
 } from '../../shared/error-handlers';
+import { currentVersionAgreement } from '../../shared/agreementUser';
 
 export const signUpHendler = () => {
   const signUpForm = document.querySelector('.sign-up__form');
@@ -53,19 +52,14 @@ export const signUpHendler = () => {
   signUpForm.addEventListener('submit', event => {
     event.preventDefault();
 
-    createdUser(nameInput.value, emailInput.value, passwordInput.value)
-      .then( response => {
-        if (response) {
-          signIn(emailInput.value, passwordInput.value)
-            .then( response => {
-              if (response) {
-                const { idToken: token } = response.data;
-                setToken(token);
-                window.location.href = routes.home;
-              };
-            });
-        };
-      });
+    const user = {
+      name: nameInput.value,
+      email: emailInput.value,
+      password: passwordInput.value,
+      Agreement:currentVersionAgreement
+    }
+
+    signUp(user);
   });
 
   btnWatchPassword.onclick = () => passwordInput.type === "password" ? passwordInput.type = "text" : passwordInput.type = "password";

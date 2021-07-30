@@ -28,8 +28,7 @@
       }
 
       input {
-        border: 1px solid $borderColor;
-        height: 40px;
+        @extend %inputSignInUpReset;
       }
 
       &__watchPass{
@@ -39,10 +38,6 @@
 
     &__btnSubmit {
       @extend %btn-Sign-In-Up-Reset;
-    }
-
-    &__btnSubmit:active {
-      background-color: $btnColorActive;
     }
 
     &__forgotPassword {
