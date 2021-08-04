@@ -3,7 +3,7 @@
     <title>Main Page</title>
   </head>
   <body>
-    <img src="/src/asset/img/kanban.svg" class="blockBackground" alt="Erorr">
+    <img src="/src/asset/img/kanban.svg" class="blockBackground" alt="Error">
     <div class="mainPage">
       <div class="mainPage__header">
         <div class="mainPage__header__welcome">
@@ -38,6 +38,16 @@
             <button class="mainPage__menuBoards__modelBlock__createBlock__btn" id="btnClosedCreateBoard"> Closed </button>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="boardsContent" id="blockBoardContent">
+    </div>
+    <div class="modelBlock" id="modelCreateColumn">
+      <div class="modelBlock__createBlock">
+          <label for="inputCreateColumn">Enter column name</label>
+          <input type="text" id="inputCreateColumn">
+        <button class="modelBlock__createBlock__btn" id="btnCreateColumn"> Create </button>
+        <button class="modelBlock__createBlock__btn" id="btnClosedCreateColumn"> Closed </button>
       </div>
     </div>
   </body>

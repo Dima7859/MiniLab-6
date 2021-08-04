@@ -1,9 +1,9 @@
 import { logoutBtnHandler } from '../components/profile/profile';
-import { getUserName } from './ls-service';
+import { LocalStorageService } from './ls-service';
 
 export const userNameAvatar = () => {
   const headerInfoName = document.getElementById('headerInfoName');
-  headerInfoName.innerText = getUserName();
+  headerInfoName.innerText = LocalStorageService.getPersonalData().name;
 };
 
 export const menuHederHendler = () => {

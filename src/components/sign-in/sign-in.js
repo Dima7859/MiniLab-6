@@ -1,12 +1,11 @@
 import { signIn } from '../../api/api-handlers';
 import {  passwordLengthValidator,emailValidator } from '../../shared/validators';
 import {
-  showPasswordLengthErrorMessage,
-  hidePasswordLengthErrorMessage,
-  showEmailErrorMessage,
-  hideEmailErrorMessage,
+  showErrorMessage,
+  hideErrorMessage,
   showErrorNotification
 } from '../../shared/error-handlers';
+import { ERROR_MESSAGES } from '../error-messages';
 
 export const signInHandler = () => {
   const signInForm = document.querySelector('.sign-in__form');
@@ -37,7 +36,7 @@ export const signInHandler = () => {
   passwordInput.oninput = () => {
     if (passwordLengthValidator(passwordInput.value)) {
       formFields.password.isValid = true;
-      hidePasswordLengthErrorMessage();
+      hideErrorMessage('passwordError');
       passwordInput.classList.remove('invalid');
     } else {
       passwordInput.classList.add('invalid');
@@ -49,7 +48,7 @@ export const signInHandler = () => {
   emailInput.oninput = () => {
     if (emailValidator(emailInput.value)) {
       formFields.email.isValid = true;
-      hideEmailErrorMessage();
+      hideErrorMessage('emailError');
       emailInput.classList.remove('invalid');
     } else {
       formFields.email.isValid = false;
@@ -60,14 +59,14 @@ export const signInHandler = () => {
 
   passwordInput.onblur = () => {
     !passwordLengthValidator(passwordInput.value) ?
-      showPasswordLengthErrorMessage():
-      hidePasswordLengthErrorMessage();
+      showErrorMessage('passwordError', ERROR_MESSAGES.password_length):
+      hideErrorMessage('passwordError');
   };
 
   emailInput.onblur = () => {
     !emailValidator(emailInput.value) ?
-      showEmailErrorMessage():
-      hideEmailErrorMessage();
+      showErrorMessage('emailError', ERROR_MESSAGES.email):
+      hideErrorMessage('emailError');
   };
 
   const checkFormValid = () => {

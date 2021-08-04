@@ -1,16 +1,57 @@
-export const getToken = () => localStorage.getItem('token');
-export const setToken = token => localStorage.setItem('token', token);
+export class LocalStorageService {
+  static getToken() {
+    return localStorage.getItem('token');
+  }
 
-export const getUserName = () => localStorage.getItem('userName');
-export const setUserName = userName => localStorage.setItem('userName', userName);
+  static setToken(token) {
+    localStorage.setItem('token', token);
+  }
 
-export const getUserEmail = () => localStorage.getItem('userEmail');
-export const setUserEmail = userEmail => localStorage.setItem('userEmail', userEmail);
+  static setPersonalData(user) {
+    localStorage.setItem('personalData', JSON.stringify(user));
+  }
 
-export const getUserKey = () => localStorage.getItem('userKey');
-export const setUserKey = userKey => localStorage.setItem('userKey', userKey);
+  static getPersonalData() {
+    return JSON.parse(localStorage.getItem('personalData'));
+  }
 
-export const getUserUid = () => localStorage.getItem('uid');
-export const setUserUid = uid => localStorage.setItem('uid', uid);
+  static setBoardData(board) {
+    localStorage.setItem('boardData', JSON.stringify(board));
+  }
 
-export const clearStorage = () => localStorage.clear();
+  static getBoardData() {
+    return JSON.parse(localStorage.getItem('boardData'));
+  }
+
+  static getUID() {
+    return localStorage.getItem('uid');
+  }
+
+  static setUID(id) {
+    localStorage.setItem('uid', id);
+  }
+
+  static getUserId() {
+    return localStorage.getItem('userId');
+  }
+
+  static setUserId(id) {
+    localStorage.setItem('userId', id);
+  }
+
+  static getIdBoard() {
+    return localStorage.getItem('idBoard');
+  }
+
+  static setIdBoard(id) {
+    localStorage.setItem('idBoard', id);
+  }
+
+  static removeIdBoard() {
+    localStorage.removeItem('idBoard');
+  }
+
+  static clearStorage() {
+    localStorage.clear();
+  }
+}

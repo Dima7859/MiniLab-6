@@ -1,26 +1,15 @@
 import { ERROR_MESSAGES } from '../components/error-messages';
 
-export const showPasswordLengthErrorMessage = () => {
-  const errorTag = document.getElementById('passwordError');
+export const showErrorMessage = (id, message) => {
+  const errorTag = document.getElementById(id);
   errorTag.style.display = 'block';
-  errorTag.innerText = ERROR_MESSAGES.password_length;
-};
+  errorTag.innerText = message;
+}
 
-export const hidePasswordLengthErrorMessage = () => {
-  const inputErrorTag = document.getElementById('passwordError');
+export const hideErrorMessage = id => {
+  const inputErrorTag = document.getElementById(id);
   inputErrorTag.style.display = 'none';
-};
-
-export const showEmailErrorMessage = () => {
-  const errorTag = document.getElementById('emailError');
-  errorTag.style.display = 'block';
-  errorTag.innerText = ERROR_MESSAGES.email;
-};
-
-export const hideEmailErrorMessage = () => {
-  const inputErrorTag = document.getElementById('emailError');
-  inputErrorTag.style.display = 'none';
-};
+}
 
 export const showErrorNotification = error => {
   const notification = document.createElement('div');
@@ -49,37 +38,4 @@ export const showErrorNotification = error => {
   notification.append(notificationText);
 
   setTimeout( () => notification.style.display = 'none', 5000);
-};
-
-export const showNameErrorMessage = () => {
-  const errorTag = document.getElementById('nameError');
-  errorTag.style.display = 'block';
-  errorTag.innerText = ERROR_MESSAGES.name;
-};
-
-export const hideNameErrorMessage = () => {
-  const inputErrorTag = document.getElementById('nameError');
-  inputErrorTag.style.display = 'none';
-};
-
-export const showRepeatPasswordErrorMessage = () => {
-  const errorTag = document.getElementById('repeatPasswordError');
-  errorTag.style.display = 'block';
-  errorTag.innerText = ERROR_MESSAGES.repeatPassword;
-};
-
-export const hideRepeatPasswordErrorMessage = () => {
-  const inputErrorTag = document.getElementById('repeatPasswordError');
-  inputErrorTag.style.display = 'none';
-};
-
-export const showAgreementCheckboxErrorMessage = () => {
-  const errorTag = document.getElementById('agreementCheckboxError');
-  errorTag.style.display = 'block';
-  errorTag.innerText = ERROR_MESSAGES.agreementСheckbox;
-};
-
-export const hideAgreementCheckboxErrorMessage = () => {
-  const inputErrorTag = document.getElementById('agreementCheckboxError');
-  inputErrorTag.style.display = 'none';
 };

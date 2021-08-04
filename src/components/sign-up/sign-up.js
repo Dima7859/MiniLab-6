@@ -4,19 +4,10 @@ import {
   emailValidator,
   passwordLengthValidator
 } from '../../shared/validators';
-import {
-  showNameErrorMessage,
-  hideNameErrorMessage,
-  showEmailErrorMessage,
-  hideEmailErrorMessage,
-  showPasswordLengthErrorMessage,
-  hidePasswordLengthErrorMessage,
-  showRepeatPasswordErrorMessage,
-  hideRepeatPasswordErrorMessage,
-  showAgreementCheckboxErrorMessage,
-  hideAgreementCheckboxErrorMessage
-} from '../../shared/error-handlers';
+import { showErrorMessage, hideErrorMessage } from '../../shared/error-handlers';
 import { currentVersionAgreement } from '../../shared/agreementUser';
+import { ERROR_MESSAGES } from '../error-messages';
+import { openBlockSpinner } from '../profile/profile';
 
 export const signUpHendler = () => {
   const signUpForm = document.querySelector('.sign-up__form');
@@ -47,6 +38,8 @@ export const signUpHendler = () => {
     },
   }
 
+  openBlockSpinner();
+
   signUpBtn.setAttribute('disabled', true);
 
   signUpForm.addEventListener('submit', event => {
@@ -69,7 +62,7 @@ export const signUpHendler = () => {
   nameInput.oninput = () => {
     if (nameValidator(nameInput.value)) {
       formFields.name.isValid = true;
-      hideNameErrorMessage();
+      hideErrorMessage('nameError');
       nameInput.classList.remove('invalid');
     } else {
       formFields.name.isValid = false;
@@ -80,14 +73,14 @@ export const signUpHendler = () => {
 
   nameInput.onblur = () => {
     !nameValidator(nameInput.value) ?
-      showNameErrorMessage():
-      hideNameErrorMessage();
+      showErrorMessage('nameError', ERROR_MESSAGES.name):
+      hideErrorMessage('nameError');
   };
 
   emailInput.oninput = () => {
     if (emailValidator(emailInput.value)) {
       formFields.email.isValid = true;
-      hideEmailErrorMessage();
+      hideErrorMessage('emailError');
       emailInput.classList.remove('invalid');
     } else {
       formFields.email.isValid = false;
@@ -98,14 +91,14 @@ export const signUpHendler = () => {
 
   emailInput.onblur = () => {
     !emailValidator(emailInput.value) ?
-    showEmailErrorMessage():
-    hideEmailErrorMessage();
+    showErrorMessage('emailError', ERROR_MESSAGES.email):
+    hideErrorMessage('emailError');
   };
 
   passwordInput.oninput = () => {
     if (passwordLengthValidator(passwordInput.value)) {
       formFields.password.isValid = true;
-      hidePasswordLengthErrorMessage();
+      hideErrorMessage('passwordError');
       passwordInput.classList.remove('invalid');
     } else {
       formFields.password.isValid = false;
@@ -115,7 +108,7 @@ export const signUpHendler = () => {
     if (repeatPasswordInput.value !== '' && repeatPasswordInput.value === passwordInput.value) {
       formFields.repeatPassword.isValid = true;
       repeatPasswordInput.classList.remove('invalid');
-      hideRepeatPasswordErrorMessage();
+      hideErrorMessage('repeatPasswordError');
     } else {
       formFields.repeatPassword.isValid = false;
     }
@@ -125,16 +118,16 @@ export const signUpHendler = () => {
 
   passwordInput.onblur = () => {
     !passwordLengthValidator(passwordInput.value)?
-      showPasswordLengthErrorMessage():
-      hidePasswordLengthErrorMessage();
+      showErrorMessage('passwordError', ERROR_MESSAGES.password_length) :
+      hideErrorMessage('passwordError');
 
     if (repeatPasswordInput.value !== '' && repeatPasswordInput.value !== passwordInput.value) {
-      showRepeatPasswordErrorMessage();
+      showErrorMessage('repeatPasswordError', ERROR_MESSAGES.repeatPassword);
       repeatPasswordInput.classList.add('invalid');
       formFields.repeatPassword.isValid = false;
     } else {
       repeatPasswordInput.classList.remove('invalid');
-      hideRepeatPasswordErrorMessage();
+      hideErrorMessage('repeatPasswordError');
     }
 
     checkFormValid();
@@ -143,7 +136,7 @@ export const signUpHendler = () => {
   repeatPasswordInput.oninput = () => {
     if (formFields.password.isValid && password.value === repeatPasswordInput.value) {
       formFields.repeatPassword.isValid = true
-      hideRepeatPasswordErrorMessage();
+      hideErrorMessage('repeatPasswordError');
       repeatPasswordInput.classList.remove('invalid');
     } else {
       formFields.repeatPassword.isValid  = false
@@ -156,25 +149,25 @@ export const signUpHendler = () => {
 
   repeatPasswordInput.onblur = () => {
     repeatPasswordInput.value !== passwordInput.value ?
-      showRepeatPasswordErrorMessage():
-      hideRepeatPasswordErrorMessage();
+      showErrorMessage('repeatPasswordError', ERROR_MESSAGES.repeatPassword):
+      hideErrorMessage('repeatPasswordError');
   };
 
   agreementCheckbox.onchange = () => {
     if (agreementCheckbox.checked) {
       formFields.agreementCheckbox.isValid = true;
-      hideAgreementCheckboxErrorMessage();
+      hideErrorMessage('agreementCheckboxError');
     } else {
       formFields.agreementCheckbox.isValid = false;
-      showAgreementCheckboxErrorMessage();
+      showErrorMessage('agreementCheckboxError', ERROR_MESSAGES.agreementСheckbox);
     }
     checkFormValid();
   };
 
   agreementCheckbox.onblur = () => {
     !agreementCheckbox.checked ?
-      showAgreementCheckboxErrorMessage():
-      hideAgreementCheckboxErrorMessage();
+      showErrorMessage('agreementCheckboxError', ERROR_MESSAGES.agreementСheckbox):
+      hideErrorMessage('agreementCheckboxError');
   };
 
   const checkFormValid = () => {
