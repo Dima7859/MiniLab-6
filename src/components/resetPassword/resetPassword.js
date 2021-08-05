@@ -1,7 +1,8 @@
 import { resetPassword } from '../../api/api-handlers';
 import { routes } from '../../shared/constants/routes';
 import { emailValidator } from '../../shared/validators';
-import { hideEmailErrorMessage, showEmailErrorMessage } from '../../shared/error-handlers';
+import { hideErrorMessage, showErrorMessage } from '../../shared/error-handlers';
+import { ERROR_MESSAGES } from '../error-messages';
 
 export const resetPasswordHandler = () => {
   const resetPasswordForm = document.querySelector('.resetPassword__form');
@@ -25,7 +26,7 @@ export const resetPasswordHandler = () => {
 
   emailInput.oninput = () => {
     if (emailValidator(emailInput.value)) {
-      hideEmailErrorMessage();
+      hideErrorMessage('emailError');
       emailInput.classList.remove('invalid');
       resetPasswordBtn.removeAttribute('disabled')
     } else {
@@ -35,11 +36,11 @@ export const resetPasswordHandler = () => {
 
   emailInput.onblur = () => {
     if (!emailValidator(emailInput.value)) {
-      showEmailErrorMessage();
+      showErrorMessage('emailError', ERROR_MESSAGES.email);
       emailInput.classList.add('invalid');
       resetPasswordBtn.setAttribute('disabled', true);
     } else {
-      hideEmailErrorMessage();
+      hideErrorMessage('emailError');
       resetPasswordBtn.removeAttribute('disabled')
     };
   };

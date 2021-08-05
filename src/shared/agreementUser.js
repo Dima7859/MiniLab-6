@@ -1,9 +1,10 @@
-import { updateUserAgreement } from '../api/api-handlers';
+import { getUser, updateUserAgreement } from '../api/api-handlers';
+import { LocalStorageService } from './ls-service';
 
 export const currentVersionAgreement = 1 ;
 
-export const checkAgreement = (item) => {
-  if (item.Agreement !== currentVersionAgreement) {
+export const checkAgreement = () => {
+  if (LocalStorageService.getPersonalData().Agreement !== currentVersionAgreement) {
     const body = document.getElementsByTagName('body')[0];
     const modalBlock = document.createElement('div');
     const windowAgreement = document.createElement('div');
@@ -22,9 +23,10 @@ export const checkAgreement = (item) => {
     windowAgreement.append(newAgreement);
     windowAgreement.append(btn);
 
-    btn.onclick = () => {
+    btn.onclick = async () => {
       modalBlock.style.display = 'none';
-      updateUserAgreement(currentVersionAgreement);
+      await updateUserAgreement(currentVersionAgreement);
+      await getUser();
     };
   }
 };
