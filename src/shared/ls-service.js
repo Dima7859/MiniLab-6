@@ -51,6 +51,18 @@ export class LocalStorageService {
     localStorage.removeItem('idBoard');
   }
 
+  static getIdColumn() {
+    return localStorage.getItem('idColumn');
+  }
+
+  static setIdColumn(id) {
+    localStorage.setItem('idColumn', id);
+  }
+
+  static removeIdColumn() {
+    localStorage.removeItem('idColumn');
+  }
+
   static clearStorage() {
     localStorage.clear();
   }

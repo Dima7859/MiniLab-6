@@ -7,7 +7,6 @@ import {
 import { showErrorMessage, hideErrorMessage } from '../../shared/error-handlers';
 import { currentVersionAgreement } from '../../shared/agreementUser';
 import { ERROR_MESSAGES } from '../error-messages';
-import { openBlockSpinner } from '../profile/profile';
 
 export const signUpHendler = () => {
   const signUpForm = document.querySelector('.sign-up__form');
@@ -37,8 +36,6 @@ export const signUpHendler = () => {
       isValid: false
     },
   }
-
-  openBlockSpinner();
 
   signUpBtn.setAttribute('disabled', true);
 

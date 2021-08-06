@@ -45,9 +45,25 @@
     <div class="modelBlock" id="modelCreateColumn">
       <div class="modelBlock__createBlock">
           <label for="inputCreateColumn">Enter column name</label>
-          <input type="text" id="inputCreateColumn">
+          <input type="text" id="inputCreateColumn"  maxlength="23">
         <button class="modelBlock__createBlock__btn" id="btnCreateColumn"> Create </button>
         <button class="modelBlock__createBlock__btn" id="btnClosedCreateColumn"> Closed </button>
+      </div>
+    </div>
+    <div class="modelBlock" id="modelRenameColumn">
+      <div class="modelBlock__createBlock">
+          <label for="inputRenameColumn">Rename column</label>
+          <input type="text" id="inputRenameColumn" maxlength="23">
+        <button class="modelBlock__createBlock__btn" id="btnRenameColumn"> Rename </button>
+        <button class="modelBlock__createBlock__btn" id="btnClosedRenameColumn"> Closed </button>
+      </div>
+    </div>
+    <div class="modelBlock" id="modelCreateTask">
+      <div class="modelBlock__createBlock">
+          <label for="inputCreateTask">Create Task</label>
+          <input type="text" id="inputCreateTask">
+        <button class="modelBlock__createBlock__btn" id="btnCreateTask"> Create Task </button>
+        <button class="modelBlock__createBlock__btn" id="btnClosedCreateTask"> Closed </button>
       </div>
     </div>
   </body>
