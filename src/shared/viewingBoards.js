@@ -1,6 +1,5 @@
-import { getBoards, getBoardsInfo } from '../api/api-handlers';
+import { getBoards, updateBoards } from '../api/api-handlers';
 import { clearLookBoards } from '../components/profile/profile';
-import { boardContentHendler } from './boardContent';
 import { LocalStorageService } from './ls-service';
 
 
@@ -37,19 +36,7 @@ export const viewingBoardsUser = condition => {
           LocalStorageService.removeIdBoard();
           LocalStorageService.setIdBoard(div.getAttribute('boardKey'));
 
-          getBoards()
-            .then( result => {
-              const transformedUserArr = Object.keys(result.data).map( key => ({
-                ...result.data[key],
-                key: key
-              }));
-
-              transformedUserArr.forEach( item => {
-                if ( item.key === LocalStorageService.getIdBoard()) {
-                  boardContentHendler(item);
-                };
-              });
-            });
+          updateBoards();
         }
       }
     })

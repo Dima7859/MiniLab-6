@@ -112,27 +112,27 @@ export const getBoards = async () => {
     .then( response => response);
 };
 
+export const updateBoards = async () => {
+  return axios.get(`${dataBaceUrl}/miniLabBoards.json`)
+  .then( result => {
+    const transformedUserArr = Object.keys(result.data).map( key => ({
+      ...result.data[key],
+      key: key
+    }));
+
+    transformedUserArr.forEach( item => {
+      if ( item.key === LocalStorageService.getIdBoard()) {
+        boardContentHendler(item);
+      };
+    });
+  });
+};
+
 export const createBoardsColumns = (idBoard, name) => {
   axios.post(`${dataBaceUrl}/miniLabBoards/${idBoard}/columns.json`, {
     name
   })
-    .then( () => {
-      if (LocalStorageService.getIdBoard()) {
-        getBoards()
-        .then( result => {
-          const transformedUserArr = Object.keys(result.data).map( key => ({
-            ...result.data[key],
-            key: key
-          }));
-
-          transformedUserArr.forEach( item => {
-            if ( item.key === LocalStorageService.getIdBoard()) {
-              boardContentHendler(item);
-            };
-          });
-        });
-      }
-    })
+    .then( () => updateBoards());
 };
 
 export const createBoards = ( name ) => {
@@ -152,11 +152,18 @@ export const createBoards = ( name ) => {
     });
 };
 
-export const renameColumn = ( id, name ) => {
-  return axios.patch(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard}/columns/${id}.json`,{
-    name
+export const renameColumn = ( id, newName ) => {
+  return axios.patch(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${id}.json`,{
+    name: newName
   })
-    .then( result => result);
+    .then( result => updateBoards());
 }
+
+export const createTaskColumns = (id, content) => {
+  axios.post(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${id}.json`, {
+    content
+  })
+    .then( () => updateBoards());
+};
 
 initApi();
