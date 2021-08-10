@@ -29,7 +29,11 @@ export const showErrorNotification = error => {
         notificationText.innerText = error.response.data.error.message;
         break;
       }
-  } else notificationText.innerText = error.message;
+  } else {
+    if (error.message) {
+      notificationText.innerText = error.message;
+    } else notificationText.innerText = 'Such an Element already exists';
+  }
 
   notification.className = 'error-notification';
   notificationImg.className = 'error-notification__img';
@@ -37,5 +41,5 @@ export const showErrorNotification = error => {
   notification.append(notificationImg);
   notification.append(notificationText);
 
-  setTimeout( () => notification.style.display = 'none', 5000);
+  setTimeout( () => notification.remove(), 5000);
 };
