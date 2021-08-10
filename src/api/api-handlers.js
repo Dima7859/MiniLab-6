@@ -6,8 +6,8 @@ import { authUrl, API_CONFIG, dataBaceUrl, resetPasswordUrl } from './api-config
 import { showErrorNotification } from '../shared/error-handlers';
 import { LocalStorageService } from '../shared/ls-service';
 import { routes } from '../shared/constants/routes';
-import { closedBlockSpinner, openBlockSpinner } from '../components/profile/profile';
 import { boardContentHendler } from '../shared/boardContent';
+import { hideBlockSpinner, showBlockSpinner } from '../components/spinner/spinner';
 
 
 export const initApi = () => {
@@ -78,15 +78,15 @@ export const signUp = async user => {
   const { password, email } = user;
 
   try {
-    await openBlockSpinner();
+    showBlockSpinner();
     await createAuthData(email, password);
     await createUser(user);
     await signIn(email, password);
-    await closedBlockSpinner();
   } catch (error) {
-    closedBlockSpinner();
+    hideBlockSpinner();
     showErrorNotification(error);
   }
+  hideBlockSpinner();
 }
 
 export const resetPassword = ( email ) => {

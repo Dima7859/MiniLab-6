@@ -1,5 +1,9 @@
 import { createBoardsColumns, renameColumn, createTaskColumns } from '../api/api-handlers';
+import { ERROR_MESSAGES } from '../components/error-messages';
 import { LocalStorageService } from './ls-service';
+import { contentNameValidator, contentTaskValidator } from './validators';
+import { openModalInputMenu, validContentOnblur, validContentOninput } from './menuMainPage';
+import { showErrorNotification } from './error-handlers';
 
 export const boardContentHendler = boardContent => {
   LocalStorageService.setBoardData(boardContent);
@@ -23,6 +27,8 @@ export const boardContentHendler = boardContent => {
   const btnCreateTask = document.getElementById('btnCreateTask');
   const btnClosedCreateTask = document.getElementById('btnClosedCreateTask');
   const boardNameColumnsArr = Object.keys(boardContent.columns).map( key => ({...boardContent.columns[key], id: key}));
+  const arrNamesColumns = [];
+  const arrTaskContent = [];
 
   btnCreateColumn.setAttribute('disabled', true);
   btnRenameColumn.setAttribute('disabled', true);
@@ -32,16 +38,13 @@ export const boardContentHendler = boardContent => {
     blockBoardContent.removeChild(blockBoardContent.firstChild);
   };
 
-  const openModalColumn = modalBlock => {
-    const isClicked = modalBlock.getAttribute('clicked');
-    if (!isClicked) {
-      modalBlock.setAttribute('clicked', true);
-      modalBlock.style.display = 'flex';
-    } else {
-      modalBlock.style.display = 'none';
-      modalBlock.removeAttribute('clicked');
-    }
-  };
+  inputCreateColumn.oninput = () => validContentOninput(inputCreateColumn, btnCreateColumn, contentNameValidator, 'columError');
+  inputCreateColumn.onblur = () => validContentOnblur(inputCreateColumn, btnCreateColumn, contentNameValidator, 'columError', ERROR_MESSAGES.nameContent);
+  inputRenameColumn.oninput = () => validContentOninput(inputRenameColumn, btnRenameColumn, contentNameValidator, 'renameError');
+  inputRenameColumn.onblur = () => validContentOnblur(inputRenameColumn, btnRenameColumn, contentNameValidator, 'renameError', ERROR_MESSAGES.nameContent);
+  inputCreateTask.oninput = () => validContentOninput(inputCreateTask, btnCreateTask, contentTaskValidator, 'taskError');
+  inputCreateTask.onblur = () => validContentOnblur(inputCreateTask, btnCreateTask, contentTaskValidator, 'taskError', ERROR_MESSAGES.taskContent);
+
 
   title.className = 'boardsContent__title';
   nameBoard.className = 'boardsContent__title__nameBoards';
@@ -66,9 +69,12 @@ export const boardContentHendler = boardContent => {
     const createTask = document.createElement('div');
     const overflowBlock = document.createElement('div');
 
+    arrNamesColumns.push(item.name);
+
     itemContent.forEach( item => {
       if (item.content) {
         taskArr.push(item);
+        arrTaskContent.push(item.content);
       };
     })
 
@@ -119,64 +125,85 @@ export const boardContentHendler = boardContent => {
 
     rename.onclick = () => {
       LocalStorageService.setIdColumn(rename.getAttribute('columnKey'));
-      openModalColumn(modelRenameColumn);
+      openModalInputMenu(modelRenameColumn);
       openSettingColumn();
     }
 
     createTask.onclick = () => {
       LocalStorageService.setIdColumn(createTask.getAttribute('columnKey'));
-      openModalColumn(modelCreateTask);
+      openModalInputMenu(modelCreateTask);
     }
 
   });
 
   btnClosedCreateTask.onclick = () => {
-    openModalColumn(modelCreateTask);
+    openModalInputMenu(modelCreateTask);
     LocalStorageService.removeIdColumn();
-  }
-
-  btnClosedRenameColumn.onclick = () => {
-    openModalColumn(modelRenameColumn);
-    LocalStorageService.removeIdColumn();
-  }
-
-  createBlockColumn.onclick = () => {
-    openModalColumn(modelCreateColumn);
-  }
-
-  btnClosedCreateColumn.onclick = () => {
-    openModalColumn(modelCreateColumn);
-  }
-
-  btnCreateColumn.onclick = () =>{
-    createBoardsColumns(boardContent.key, inputCreateColumn.value)
-    inputCreateColumn.value = null;
-    openModalColumn(modelCreateColumn);
-  }
-
-  btnRenameColumn.onclick = () => {
-    renameColumn(LocalStorageService.getIdColumn(), inputRenameColumn.value);
-    openModalColumn(modelRenameColumn);
-    inputRenameColumn.value = null;
-  }
-
-  btnCreateTask.onclick = () => {
-    createTaskColumns(LocalStorageService.getIdColumn(), inputCreateTask.value);
-    openModalColumn(modelCreateTask);
     inputCreateTask.value = null;
   }
 
-  inputCreateColumn.oninput = () => {
-    inputCreateColumn.value !== '' ? btnCreateColumn.removeAttribute('disabled') : btnCreateColumn.setAttribute('disabled', true);
-  };
+  btnClosedRenameColumn.onclick = () => {
+    openModalInputMenu(modelRenameColumn);
+    LocalStorageService.removeIdColumn();
+    inputRenameColumn.value = null;
+  }
 
-  inputRenameColumn.oninput = () => {
-    inputRenameColumn.value !== '' ? btnRenameColumn.removeAttribute('disabled') : btnRenameColumn.setAttribute('disabled', true);
-  };
+  btnClosedCreateColumn.onclick = () => {
+    openModalInputMenu(modelCreateColumn);
+    inputCreateColumn.value = null;
+  }
 
-  inputCreateTask.oninput = () => {
-    inputCreateTask.value !== '' ? btnCreateTask.removeAttribute('disabled') : btnCreateTask.setAttribute('disabled', true);
-  };
+  createBlockColumn.onclick = () => {
+    openModalInputMenu(modelCreateColumn);
+  }
+
+  btnCreateColumn.onclick = () => {
+    let check = 0;
+
+    arrNamesColumns.forEach(item => {
+      if (item === inputCreateColumn.value) {
+        check++;
+      };
+    });
+
+    if (check === 0) {
+      createBoardsColumns(boardContent.key, inputCreateColumn.value);
+      inputCreateColumn.value = null;
+      openModalInputMenu(modelCreateColumn);
+    } else showErrorNotification('repetition');
+  }
+
+  btnRenameColumn.onclick = () => {
+    let check = 0;
+
+    arrNamesColumns.forEach(item => {
+      if (item === inputRenameColumn.value) {
+        check++;
+      };
+    });
+
+    if (check === 0) {
+      renameColumn(LocalStorageService.getIdColumn(), inputRenameColumn.value);
+      openModalInputMenu(modelRenameColumn);
+      inputRenameColumn.value = null;
+    } else showErrorNotification('repetition');
+  }
+
+  btnCreateTask.onclick = () => {
+    let check = 0;
+
+    arrTaskContent.forEach(item => {
+      if (item === inputCreateTask.value) {
+        check++;
+      };
+    });
+
+    if (check === 0) {
+      createTaskColumns(LocalStorageService.getIdColumn(), inputCreateTask.value.trim());
+      openModalInputMenu(modelCreateTask);
+      inputCreateTask.value = null;
+    } else showErrorNotification('repetition');
+  }
 
   allColumns.append(createBlockColumn);
 };

@@ -43,7 +43,7 @@ export const signUpHendler = () => {
     event.preventDefault();
 
     const user = {
-      name: nameInput.value,
+      name: nameInput.value.trim(),
       email: emailInput.value,
       password: passwordInput.value,
       Agreement:currentVersionAgreement

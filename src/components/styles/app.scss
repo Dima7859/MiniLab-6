@@ -9,6 +9,15 @@
   font-size: 10px;
 }
 
+.input-errorNameContent {
+  position: absolute;
+  top: 140px;
+  width: 30%;
+  color: red;
+  display: none;
+  font-size: 10px;
+}
+
 #agreementCheckboxError {
   position: absolute;
   top: 25px;

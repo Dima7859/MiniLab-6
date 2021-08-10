@@ -33,7 +33,8 @@
         <div class="mainPage__menuBoards__modelBlock">
           <div class="mainPage__menuBoards__modelBlock__createBlock">
               <label for="createBoard">Enter board name</label>
-              <input type="text" id="inputCreateBoard">
+              <input type="text" id="inputCreateBoard" maxlength="23">
+              <p class="input-errorNameContent" id="boardError"></p>
             <button class="mainPage__menuBoards__modelBlock__createBlock__btn" id="btnCreateBoard"> Create </button>
             <button class="mainPage__menuBoards__modelBlock__createBlock__btn" id="btnClosedCreateBoard"> Closed </button>
           </div>
@@ -45,7 +46,8 @@
     <div class="modelBlock" id="modelCreateColumn">
       <div class="modelBlock__createBlock">
           <label for="inputCreateColumn">Enter column name</label>
-          <input type="text" id="inputCreateColumn"  maxlength="23">
+          <input type="text" id="inputCreateColumn" maxlength="23">
+          <p class="input-errorNameContent" id="columError"></p>
         <button class="modelBlock__createBlock__btn" id="btnCreateColumn"> Create </button>
         <button class="modelBlock__createBlock__btn" id="btnClosedCreateColumn"> Closed </button>
       </div>
@@ -54,6 +56,7 @@
       <div class="modelBlock__createBlock">
           <label for="inputRenameColumn">Rename column</label>
           <input type="text" id="inputRenameColumn" maxlength="23">
+          <p class="input-errorNameContent" id="renameError"></p>
         <button class="modelBlock__createBlock__btn" id="btnRenameColumn"> Rename </button>
         <button class="modelBlock__createBlock__btn" id="btnClosedRenameColumn"> Closed </button>
       </div>
@@ -62,6 +65,7 @@
       <div class="modelBlock__createBlock">
           <label for="inputCreateTask">Create Task</label>
           <input type="text" id="inputCreateTask">
+          <p class="input-errorNameContent" id="taskError"></p>
         <button class="modelBlock__createBlock__btn" id="btnCreateTask"> Create Task </button>
         <button class="modelBlock__createBlock__btn" id="btnClosedCreateTask"> Closed </button>
       </div>

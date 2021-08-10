@@ -1,11 +1,13 @@
 import { getBoards, updateBoards } from '../api/api-handlers';
 import { clearLookBoards } from '../components/profile/profile';
 import { LocalStorageService } from './ls-service';
+import { openBoardNameMenu } from './menuMainPage';
 
 
 export const viewingBoardsUser = condition => {
   const lookBoardsActive = document.getElementById('lookBoardsActive');
   const lookBoardsClosed = document.getElementById('lookBoardsClosed');
+  const userMenuBoards = document.getElementById('userMenuBoards');
   const activeUserBoard = [];
 
   clearLookBoards();
@@ -35,6 +37,7 @@ export const viewingBoardsUser = condition => {
         div.onclick = () => {
           LocalStorageService.removeIdBoard();
           LocalStorageService.setIdBoard(div.getAttribute('boardKey'));
+          openBoardNameMenu(userMenuBoards);
 
           updateBoards();
         }
