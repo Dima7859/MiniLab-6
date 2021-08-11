@@ -4,6 +4,7 @@ import { LocalStorageService } from './ls-service';
 import { contentNameValidator, contentTaskValidator } from './validators';
 import { openModalInputMenu, validContentOnblur, validContentOninput } from './menuMainPage';
 import { showErrorNotification } from './error-handlers';
+import { drag, dragDrop, dragEnd, dragEnter, dragOver } from './dragAndDrop';
 
 export const boardContentHendler = boardContent => {
   LocalStorageService.setBoardData(boardContent);
@@ -64,6 +65,7 @@ export const boardContentHendler = boardContent => {
     const titleColumn = document.createElement('div');
     const settingColumn = document.createElement('div');
     const divHederColum = document.createElement('div');
+    const taskStorage = document.createElement('div');
     const menuSettingColumn = document.createElement('div');
     const rename = document.createElement('div');
     const createTask = document.createElement('div');
@@ -83,6 +85,7 @@ export const boardContentHendler = boardContent => {
     createTask.innerText = '+ Create Task';
     rename.setAttribute('columnKey', item.id);
     createTask.setAttribute('columnKey', item.id);
+    taskStorage.setAttribute('columnKey', item.id);
     overflowBlock.className = 'boardsContent__allColumns__overflowBlock';
     rename.className = 'boardsContent__allColumns__overflowBlock__column__heder__menuSetting__functional'
     blockColumn.className = 'boardsContent__allColumns__overflowBlock__column';
@@ -90,23 +93,36 @@ export const boardContentHendler = boardContent => {
     settingColumn.className = 'boardsContent__allColumns__overflowBlock__column__heder__setting';
     titleColumn.className = 'boardsContent__allColumns__overflowBlock__column__heder__title';
     menuSettingColumn.className = 'boardsContent__allColumns__overflowBlock__column__heder__menuSetting';
-    createTask.className = 'boardsContent__allColumns__overflowBlock__column__createTask';
+    taskStorage.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage';
+    createTask.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__createTask';
+    createTask.draggable = false ;
     allColumns.append(overflowBlock);
     overflowBlock.append(blockColumn);
-    blockColumn.append(divHederColum);
+    blockColumn.append(divHederColum, taskStorage);
     divHederColum.append(titleColumn, settingColumn, menuSettingColumn);
     menuSettingColumn.append(rename);
+
+    taskStorage.addEventListener('dragstart', () => {
+      LocalStorageService.setIdColumn(taskStorage.getAttribute('columnKey'));
+    })
+
+    taskStorage.ondragover = dragOver;
+    taskStorage.ondragenter = dragEnter;
+    taskStorage.ondrop = dragDrop;
 
     taskArr.forEach( item => {
       const task = document.createElement('div');
 
       task.innerText = item.content;
-      task.setAttribute('columnKey', item.id);
-      task.className = 'boardsContent__allColumns__overflowBlock__column__task';
-      blockColumn.append(task);
+      task.draggable = true ;
+      task.setAttribute('id', item.id);
+      task.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task';
+      task.ondragstart = drag;
+      task.ondragend = dragEnd;
+      taskStorage.append(task);
     })
 
-    blockColumn.append(createTask);
+    taskStorage.append(createTask);
 
     const openSettingColumn = () => {
       const isClicked = menuSettingColumn.getAttribute('clicked');
