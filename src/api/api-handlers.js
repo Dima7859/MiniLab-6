@@ -159,22 +159,42 @@ export const renameColumn = ( id, newName ) => {
     .then( () => updateBoards());
 }
 
-export const createTaskColumns = (id, content) => {
+export const createTaskColumns = (id, content, taskNumber) => {
+  showBlockSpinner();
   axios.post(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${id}.json`, {
-    content
+    content,
+    taskNumber
   })
-    .then( () => updateBoards());
+    .then( async () => {
+      await updateBoards();
+      hideBlockSpinner();
+    });
 };
 
-export const dragAndDropTask = ( idColumn, idTask, content ) => {
+export const dragAndDropTask = ( idColumn, idTask, content, taskNumber ) => {
   return axios.patch(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${idColumn}/${idTask}.json`,{
-    content
+    content,
+    taskNumber
   })
 }
 
 export const deleteTask = (idColumn, idTask) => {
-  axios.delete(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${idColumn}/${idTask}.json`, {
+  axios.delete(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${idColumn}/${idTask}.json`)
+    .then( async () => {
+      await updateBoards();
+      hideBlockSpinner();
+    });
+};
+
+export const updateTaskNumber = ( newAllTaskNumber ) => {
+  return axios.patch(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}.json`,{
+    AllTaskNumber: newAllTaskNumber
   })
+}
+
+export const getDataDragAndDropTask = async (idColumn, idTask) => {
+  return axios.get(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${idColumn}/${idTask}.json`)
+    .then( response => response);
 };
 
 initApi();

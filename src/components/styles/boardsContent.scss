@@ -55,6 +55,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            z-index: 1;
 
             &__functional {
               cursor: pointer;
@@ -90,6 +91,25 @@
             font-size: 12px;
             font-weight: bold;
             background-color: $menuColor;
+            position: relative;
+            padding-top: 15px;
+
+            &__number {
+              position: absolute;
+              top: 0px;
+              font-size: 12px;
+              font-weight: bold;
+              min-width: 20px;
+              text-align: center;
+              background-color: $heder;
+            }
+
+            &__btnDelete {
+              position: absolute;
+              top: 0;
+              right: 5px;
+              cursor: pointer;
+            }
           }
         }
       }
