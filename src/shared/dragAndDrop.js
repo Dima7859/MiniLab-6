@@ -1,4 +1,5 @@
-import { deleteTask, dragAndDropTask } from '../api/api-handlers';
+import { deleteTask, dragAndDropTask, getDataDragAndDropTask } from '../api/api-handlers';
+import { showBlockSpinner } from '../components/spinner/spinner';
 import { LocalStorageService } from './ls-service';
 
 export const drag = function (event) {
@@ -20,12 +21,17 @@ export const dragEnter = function (event) {
   event.preventDefault();
 };
 
-export const dragDrop = function ( event ) {
+export const dragDrop = async function ( event ) {
   const taskId = event.dataTransfer.getData('id');
-  const content = document.getElementById(taskId).innerText;
   const primaryColumnId = LocalStorageService.getIdColumn();
   const columnId = this.getAttribute('columnKey');
-  this.prepend(document.getElementById(taskId));
-  dragAndDropTask(columnId, taskId, content);
-  deleteTask(primaryColumnId, taskId);
+  if (primaryColumnId !== columnId) {
+    this.prepend(document.getElementById(taskId));
+    showBlockSpinner();
+    await getDataDragAndDropTask(primaryColumnId, taskId)
+      .then( response => {
+        dragAndDropTask(columnId, taskId, response.data.content, response.data.taskNumber)
+      })
+    deleteTask(primaryColumnId, taskId);
+  }
 };

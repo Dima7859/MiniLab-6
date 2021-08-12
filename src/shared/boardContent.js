@@ -1,10 +1,11 @@
-import { createBoardsColumns, renameColumn, createTaskColumns } from '../api/api-handlers';
+import { createBoardsColumns, renameColumn, createTaskColumns, updateTaskNumber, deleteTask } from '../api/api-handlers';
 import { ERROR_MESSAGES } from '../components/error-messages';
 import { LocalStorageService } from './ls-service';
 import { contentNameValidator, contentTaskValidator } from './validators';
 import { openModalInputMenu, validContentOnblur, validContentOninput } from './menuMainPage';
 import { showErrorNotification } from './error-handlers';
 import { drag, dragDrop, dragEnd, dragEnter, dragOver } from './dragAndDrop';
+import { showBlockSpinner } from '../components/spinner/spinner';
 
 export const boardContentHendler = boardContent => {
   LocalStorageService.setBoardData(boardContent);
@@ -28,6 +29,7 @@ export const boardContentHendler = boardContent => {
   const btnCreateTask = document.getElementById('btnCreateTask');
   const btnClosedCreateTask = document.getElementById('btnClosedCreateTask');
   const boardNameColumnsArr = Object.keys(boardContent.columns).map( key => ({...boardContent.columns[key], id: key}));
+  let taskNumber = 0;
   const arrNamesColumns = [];
   const arrTaskContent = [];
 
@@ -39,13 +41,17 @@ export const boardContentHendler = boardContent => {
     blockBoardContent.removeChild(blockBoardContent.firstChild);
   };
 
+  if (boardContent.AllTaskNumber) {
+    taskNumber = boardContent.AllTaskNumber;
+    taskNumber++;
+  } else taskNumber++;
+
   inputCreateColumn.oninput = () => validContentOninput(inputCreateColumn, btnCreateColumn, contentNameValidator, 'columError');
   inputCreateColumn.onblur = () => validContentOnblur(inputCreateColumn, btnCreateColumn, contentNameValidator, 'columError', ERROR_MESSAGES.nameContent);
   inputRenameColumn.oninput = () => validContentOninput(inputRenameColumn, btnRenameColumn, contentNameValidator, 'renameError');
   inputRenameColumn.onblur = () => validContentOnblur(inputRenameColumn, btnRenameColumn, contentNameValidator, 'renameError', ERROR_MESSAGES.nameContent);
   inputCreateTask.oninput = () => validContentOninput(inputCreateTask, btnCreateTask, contentTaskValidator, 'taskError');
   inputCreateTask.onblur = () => validContentOnblur(inputCreateTask, btnCreateTask, contentTaskValidator, 'taskError', ERROR_MESSAGES.taskContent);
-
 
   title.className = 'boardsContent__title';
   nameBoard.className = 'boardsContent__title__nameBoards';
@@ -70,6 +76,7 @@ export const boardContentHendler = boardContent => {
     const rename = document.createElement('div');
     const createTask = document.createElement('div');
     const overflowBlock = document.createElement('div');
+    const columnId = item.id;
 
     arrNamesColumns.push(item.name);
 
@@ -83,9 +90,9 @@ export const boardContentHendler = boardContent => {
     rename.innerText = 'Rename';
     titleColumn.innerText = item.name;
     createTask.innerText = '+ Create Task';
-    rename.setAttribute('columnKey', item.id);
-    createTask.setAttribute('columnKey', item.id);
-    taskStorage.setAttribute('columnKey', item.id);
+    rename.setAttribute('columnKey', columnId);
+    createTask.setAttribute('columnKey', columnId);
+    taskStorage.setAttribute('columnKey', columnId);
     overflowBlock.className = 'boardsContent__allColumns__overflowBlock';
     rename.className = 'boardsContent__allColumns__overflowBlock__column__heder__menuSetting__functional'
     blockColumn.className = 'boardsContent__allColumns__overflowBlock__column';
@@ -112,14 +119,28 @@ export const boardContentHendler = boardContent => {
 
     taskArr.forEach( item => {
       const task = document.createElement('div');
+      const taskNumber = document.createElement('div');
+      const btnDeleteTask = document.createElement('div');
 
       task.innerText = item.content;
+      btnDeleteTask.innerText = "\u2716";
       task.draggable = true ;
       task.setAttribute('id', item.id);
+      btnDeleteTask.setAttribute('idTask', item.id);
+      btnDeleteTask.setAttribute('idColumn', columnId);
       task.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task';
+      taskNumber.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__number';
+      btnDeleteTask.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__btnDelete';
+      taskNumber.innerText = item.taskNumber;
       task.ondragstart = drag;
       task.ondragend = dragEnd;
       taskStorage.append(task);
+      task.append(taskNumber, btnDeleteTask);
+
+      btnDeleteTask.onclick = () => {
+        showBlockSpinner();
+        deleteTask(btnDeleteTask.getAttribute('idColumn'), btnDeleteTask.getAttribute('idTask'));
+      };
     })
 
     taskStorage.append(createTask);
@@ -215,7 +236,8 @@ export const boardContentHendler = boardContent => {
     });
 
     if (check === 0) {
-      createTaskColumns(LocalStorageService.getIdColumn(), inputCreateTask.value.trim());
+      createTaskColumns(LocalStorageService.getIdColumn(), inputCreateTask.value.trim(), taskNumber);
+      updateTaskNumber(taskNumber);
       openModalInputMenu(modelCreateTask);
       inputCreateTask.value = null;
     } else showErrorNotification('repetition');
