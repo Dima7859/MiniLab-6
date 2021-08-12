@@ -64,26 +64,33 @@
           }
         }
 
-        &__createTask {
-          width: 90%;
-          height: 50px;
-          cursor: pointer;
-          font-size: 16px;
-          font-weight: bold;
+        &__taskStorage{
+          width: 100%;
           display: flex;
+          flex-direction: column;
           align-items: center;
-          justify-content: center;
-          background-color: $btnColor;
-        }
 
-        &__task {
-          width: 90%;
-          border: 1px solid $borderColor;
-          min-height: 30px;
-          margin: 10px 0;
-          font-size: 12px;
-          font-weight: bold;
-          background-color: $menuColor;
+          &__createTask {
+            width: 90%;
+            height: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: $btnColor;
+          }
+
+          &__task {
+            width: 90%;
+            border: 1px solid $borderColor;
+            min-height: 30px;
+            margin: 10px 0;
+            font-size: 12px;
+            font-weight: bold;
+            background-color: $menuColor;
+          }
         }
       }
 

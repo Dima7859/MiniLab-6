@@ -156,7 +156,7 @@ export const renameColumn = ( id, newName ) => {
   return axios.patch(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${id}.json`,{
     name: newName
   })
-    .then( result => updateBoards());
+    .then( () => updateBoards());
 }
 
 export const createTaskColumns = (id, content) => {
@@ -164,6 +164,17 @@ export const createTaskColumns = (id, content) => {
     content
   })
     .then( () => updateBoards());
+};
+
+export const dragAndDropTask = ( idColumn, idTask, content ) => {
+  return axios.patch(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${idColumn}/${idTask}.json`,{
+    content
+  })
+}
+
+export const deleteTask = (idColumn, idTask) => {
+  axios.delete(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${idColumn}/${idTask}.json`, {
+  })
 };
 
 initApi();
