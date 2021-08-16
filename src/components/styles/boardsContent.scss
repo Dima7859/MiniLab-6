@@ -150,8 +150,8 @@
 
     &__menuSetting {
       background-color: $menuColor;
-      height: 50px;
       width: 200px;
+      padding: 5px;
       position: absolute;
       top: 26px;
       left: 125px;
@@ -169,6 +169,7 @@
         font-size: 16px;
         font-weight: bold;
         text-align: center;
+        margin: 5px 0 ;
       }
     }
   }

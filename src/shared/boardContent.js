@@ -5,7 +5,8 @@ import {
   updateTaskNumber,
   deleteTask,
   deleteBoards,
-  deleteColumn
+  deleteColumn,
+  renameBoard
 } from '../api/api-handlers';
 import { ERROR_MESSAGES } from '../components/error-messages';
 import { LocalStorageService } from './ls-service';
@@ -24,8 +25,13 @@ export const boardContentHendler = boardContent => {
   const settingBoard = document.createElement('div');
   const settingMenu = document.createElement('div');
   const btnDeleteBoard = document.createElement('div');
+  const btnRenameBoard = document.createElement('div');
   const allColumns = document.createElement('div');
   const createBlockColumn = document.createElement('div');
+  const modelRenameBoard = document.getElementById('modelRenameBoard');
+  const inputRenameBoard = document.getElementById('inputRenameBoard');
+  const btnModalRenameBoard = document.getElementById('btnModalRenameBoard');
+  const btnModalClosedRenameBoard =document.getElementById('btnModalClosedRenameBoard');
   const modelCreateColumn = document.getElementById('modelCreateColumn');
   const inputCreateColumn = document.getElementById('inputCreateColumn');
   const btnClosedCreateColumn = document.getElementById('btnClosedCreateColumn');
@@ -62,8 +68,12 @@ export const boardContentHendler = boardContent => {
 
   inputCreateColumn.oninput = () => validContentOninput(inputCreateColumn, btnCreateColumn, contentNameValidator, 'columError');
   inputCreateColumn.onblur = () => validContentOnblur(inputCreateColumn, btnCreateColumn, contentNameValidator, 'columError', ERROR_MESSAGES.nameContent);
-  inputRenameColumn.oninput = () => validContentOninput(inputRenameColumn, btnRenameColumn, contentNameValidator, 'renameError');
-  inputRenameColumn.onblur = () => validContentOnblur(inputRenameColumn, btnRenameColumn, contentNameValidator, 'renameError', ERROR_MESSAGES.nameContent);
+
+  inputRenameBoard.oninput = () => validContentOninput(inputRenameBoard, btnModalRenameBoard, contentNameValidator, 'renameErrorBoard');
+  inputRenameBoard.onblur = () => validContentOnblur(inputRenameBoard, btnModalRenameBoard, contentNameValidator, 'renameErrorBoard', ERROR_MESSAGES.nameContent);
+
+  inputRenameColumn.oninput = () => validContentOninput(inputRenameColumn, btnRenameColumn, contentNameValidator, 'renameErrorColumn');
+  inputRenameColumn.onblur = () => validContentOnblur(inputRenameColumn, btnRenameColumn, contentNameValidator, 'renameErrorColumn', ERROR_MESSAGES.nameContent);
   inputCreateTask.oninput = () => validContentOninput(inputCreateTask, btnCreateTask, contentTaskValidator, 'taskError');
   inputCreateTask.onblur = () => validContentOnblur(inputCreateTask, btnCreateTask, contentTaskValidator, 'taskError', ERROR_MESSAGES.taskContent);
 
@@ -72,15 +82,17 @@ export const boardContentHendler = boardContent => {
   settingBoard.className = 'boardsContent__title__settingBoards';
   settingMenu.className = 'boardsContent__title__menuSetting';
   btnDeleteBoard.className = 'boardsContent__title__menuSetting__functional';
+  btnRenameBoard.className = 'boardsContent__title__menuSetting__functional';
   allColumns.className = 'boardsContent__allColumns';
   createBlockColumn.className = 'boardsContent__allColumns__overflowBlock__createColumn';
-  nameBoard.innerText = boardContent.name
+  nameBoard.innerText = boardContent.name ;
+  btnRenameBoard.innerText = 'Rename';
   btnDeleteBoard.innerText = 'Delete';
   createBlockColumn.innerText = '+ Create column';
 
   blockBoardContent.append(title, allColumns);
   title.append(nameBoard, settingBoard, settingMenu);
-  settingMenu.append(btnDeleteBoard);
+  settingMenu.append(btnRenameBoard, btnDeleteBoard);
 
 
   boardNameColumnsArr.forEach(item => {
@@ -213,6 +225,20 @@ export const boardContentHendler = boardContent => {
     }
 
   });
+
+  btnRenameBoard.onclick = () => {
+    openModalInputMenu(modelRenameBoard);
+    openModalInputMenu(settingMenu);
+  };
+
+  btnModalClosedRenameBoard.onclick = () => openModalInputMenu(modelRenameBoard);
+
+  btnModalRenameBoard.onclick = () => {
+    showBlockSpinner();
+    renameBoard(inputRenameBoard.value);
+    openModalInputMenu(modelRenameBoard);
+    inputRenameBoard.value = null;
+  }
 
   btnClosedCreateTask.onclick = () => {
     openModalInputMenu(modelCreateTask);
