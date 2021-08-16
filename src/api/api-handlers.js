@@ -198,6 +198,15 @@ export const deleteBoards = () => {
     });
 };
 
+export const deleteColumn = (idColumn) => {
+  axios.delete(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${idColumn}.json`)
+    .then( async () => {
+      LocalStorageService.removeIdColumn();
+      await updateBoards();
+      setTimeout(() => hideBlockSpinner(),700);
+    });
+};
+
 export const updateTaskNumber = ( newAllTaskNumber ) => {
   return axios.patch(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}.json`,{
     AllTaskNumber: newAllTaskNumber

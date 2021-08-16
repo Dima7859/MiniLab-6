@@ -4,7 +4,8 @@ import {
   createTaskColumns,
   updateTaskNumber,
   deleteTask,
-  deleteBoards
+  deleteBoards,
+  deleteColumn
 } from '../api/api-handlers';
 import { ERROR_MESSAGES } from '../components/error-messages';
 import { LocalStorageService } from './ls-service';
@@ -92,6 +93,7 @@ export const boardContentHendler = boardContent => {
     const taskStorage = document.createElement('div');
     const menuSettingColumn = document.createElement('div');
     const rename = document.createElement('div');
+    const btnDeleteColumn = document.createElement('div');
     const createTask = document.createElement('div');
     const overflowBlock = document.createElement('div');
     const columnId = item.id;
@@ -105,14 +107,17 @@ export const boardContentHendler = boardContent => {
       };
     })
 
+    btnDeleteColumn.innerText = 'Delete';
     rename.innerText = 'Rename';
     titleColumn.innerText = item.name;
     createTask.innerText = '+ Create Task';
     rename.setAttribute('columnKey', columnId);
+    btnDeleteColumn.setAttribute('columnKey', columnId);
     createTask.setAttribute('columnKey', columnId);
     taskStorage.setAttribute('columnKey', columnId);
     overflowBlock.className = 'boardsContent__allColumns__overflowBlock';
-    rename.className = 'boardsContent__allColumns__overflowBlock__column__heder__menuSetting__functional'
+    rename.className = 'boardsContent__allColumns__overflowBlock__column__heder__menuSetting__functional';
+    btnDeleteColumn.className = 'boardsContent__allColumns__overflowBlock__column__heder__menuSetting__functional';
     blockColumn.className = 'boardsContent__allColumns__overflowBlock__column';
     divHederColum.className = 'boardsContent__allColumns__overflowBlock__column__heder';
     settingColumn.className = 'boardsContent__allColumns__overflowBlock__column__heder__setting';
@@ -125,7 +130,7 @@ export const boardContentHendler = boardContent => {
     overflowBlock.append(blockColumn);
     blockColumn.append(divHederColum, taskStorage);
     divHederColum.append(titleColumn, settingColumn, menuSettingColumn);
-    menuSettingColumn.append(rename);
+    menuSettingColumn.append(rename, btnDeleteColumn);
 
     taskStorage.addEventListener('dragstart', () => {
       LocalStorageService.setIdColumn(taskStorage.getAttribute('columnKey'));
@@ -194,7 +199,13 @@ export const boardContentHendler = boardContent => {
       LocalStorageService.setIdColumn(rename.getAttribute('columnKey'));
       openModalInputMenu(modelRenameColumn);
       openSettingColumn();
-    }
+    };
+
+    btnDeleteColumn.onclick = () => {
+      showBlockSpinner();
+      openSettingColumn();
+      deleteColumn(btnDeleteColumn.getAttribute('columnKey'));
+    };
 
     createTask.onclick = () => {
       LocalStorageService.setIdColumn(createTask.getAttribute('columnKey'));
