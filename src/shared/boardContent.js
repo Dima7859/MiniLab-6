@@ -1,19 +1,28 @@
-import { createBoardsColumns, renameColumn, createTaskColumns, updateTaskNumber, deleteTask } from '../api/api-handlers';
+import { 
+  createBoardsColumns,
+  renameColumn,
+  createTaskColumns,
+  updateTaskNumber,
+  deleteTask,
+  deleteBoards
+} from '../api/api-handlers';
 import { ERROR_MESSAGES } from '../components/error-messages';
 import { LocalStorageService } from './ls-service';
 import { contentNameValidator, contentTaskValidator } from './validators';
-import { openModalInputMenu, validContentOnblur, validContentOninput } from './menuMainPage';
+import { openBoardNameMenu, openModalInputMenu, validContentOnblur, validContentOninput } from './menuMainPage';
 import { showErrorNotification } from './error-handlers';
 import { drag, dragDrop, dragEnd, dragEnter, dragOver } from './dragAndDrop';
 import { showBlockSpinner } from '../components/spinner/spinner';
 
 export const boardContentHendler = boardContent => {
   LocalStorageService.setBoardData(boardContent);
+  const userMenuBoards = document.getElementById('userMenuBoards');
   const blockBoardContent = document.getElementById('blockBoardContent');
   const title = document.createElement('div');
   const nameBoard = document.createElement('div');
   const settingBoard = document.createElement('div');
   const settingMenu = document.createElement('div');
+  const btnDeleteBoard = document.createElement('div');
   const allColumns = document.createElement('div');
   const createBlockColumn = document.createElement('div');
   const modelCreateColumn = document.getElementById('modelCreateColumn');
@@ -37,9 +46,13 @@ export const boardContentHendler = boardContent => {
   btnRenameColumn.setAttribute('disabled', true);
   btnCreateTask.setAttribute('disabled', true);
 
-  while (blockBoardContent.firstChild) {
+  const clearBoardContent = () => {
+    while (blockBoardContent.firstChild) {
     blockBoardContent.removeChild(blockBoardContent.firstChild);
-  };
+    };
+  }
+
+  clearBoardContent();
 
   if (boardContent.AllTaskNumber) {
     taskNumber = boardContent.AllTaskNumber;
@@ -56,13 +69,18 @@ export const boardContentHendler = boardContent => {
   title.className = 'boardsContent__title';
   nameBoard.className = 'boardsContent__title__nameBoards';
   settingBoard.className = 'boardsContent__title__settingBoards';
+  settingMenu.className = 'boardsContent__title__menuSetting';
+  btnDeleteBoard.className = 'boardsContent__title__menuSetting__functional';
   allColumns.className = 'boardsContent__allColumns';
   createBlockColumn.className = 'boardsContent__allColumns__overflowBlock__createColumn';
   nameBoard.innerText = boardContent.name
+  btnDeleteBoard.innerText = 'Delete';
   createBlockColumn.innerText = '+ Create column';
 
   blockBoardContent.append(title, allColumns);
-  title.append(nameBoard, settingBoard);
+  title.append(nameBoard, settingBoard, settingMenu);
+  settingMenu.append(btnDeleteBoard);
+
 
   boardNameColumnsArr.forEach(item => {
     const taskArr = [];
@@ -144,6 +162,18 @@ export const boardContentHendler = boardContent => {
     })
 
     taskStorage.append(createTask);
+
+    settingBoard.onclick = () => {
+      openModalInputMenu(settingMenu);
+    };
+
+    btnDeleteBoard.onclick = () => {
+      showBlockSpinner();
+      openModalInputMenu(settingMenu);
+      clearBoardContent();
+      deleteBoards();
+      openBoardNameMenu(userMenuBoards);
+    };
 
     const openSettingColumn = () => {
       const isClicked = menuSettingColumn.getAttribute('clicked');

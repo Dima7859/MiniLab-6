@@ -71,7 +71,10 @@ export const openMenu = () => {
 
   btnCreateBoard.onclick = () => {
     createBoards(inputCreateBoard.value)
-      .then(response => inputCreateBoard.value = null);
+      .then(response => {
+        inputCreateBoard.value = null;
+        viewingBoardsUser('active');
+      });
 
     openModalInputMenu(modelBlockCreate);
     clearLookBoards();

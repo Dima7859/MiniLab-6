@@ -8,6 +8,7 @@ import { LocalStorageService } from '../shared/ls-service';
 import { routes } from '../shared/constants/routes';
 import { boardContentHendler } from '../shared/boardContent';
 import { hideBlockSpinner, showBlockSpinner } from '../components/spinner/spinner';
+import { viewingBoardsUser } from '../shared/viewingBoards';
 
 
 export const initApi = () => {
@@ -183,6 +184,17 @@ export const deleteTask = (idColumn, idTask) => {
     .then( async () => {
       await updateBoards();
       hideBlockSpinner();
+    });
+};
+
+export const deleteBoards = () => {
+  axios.delete(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}.json`)
+    .then( async () => {
+      LocalStorageService.removeIdBoard();
+      LocalStorageService.removeIdColumn();
+      LocalStorageService.removeBoardData();
+      viewingBoardsUser('active');
+      setTimeout(() => hideBlockSpinner(),700);
     });
 };
 

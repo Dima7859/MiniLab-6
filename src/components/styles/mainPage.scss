@@ -56,7 +56,7 @@
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          z-index: 3;
+          z-index: 4;
 
           &__functional{
             cursor: pointer;
@@ -87,7 +87,7 @@
     bottom: 0;
     transition-duration: 1s;
     overflow: auto;
-    z-index: 2;
+    z-index: 3;
 
 
     &__modelBlock {
