@@ -7,15 +7,17 @@ import {
   deleteBoards,
   deleteColumn,
   renameBoard,
-  updateConditionBoard
+  updateConditionBoard,
+  getUsers,
+  updatePartnersBoard
 } from '../api/api-handlers';
 import { ERROR_MESSAGES } from '../components/error-messages';
 import { LocalStorageService } from './ls-service';
-import { contentNameValidator, contentTaskValidator } from './validators';
+import { contentNameValidator, contentTaskValidator, emailValidator } from './validators';
 import { openBoardNameMenu, openModalInputMenu, validContentOnblur, validContentOninput } from './menuMainPage';
 import { showErrorNotification } from './error-handlers';
 import { drag, dragDrop, dragEnd, dragEnter, dragOver } from './dragAndDrop';
-import { showBlockSpinner } from '../components/spinner/spinner';
+import { hideBlockSpinner, showBlockSpinner } from '../components/spinner/spinner';
 
 export const boardContentHendler = ( boardContent, status ) => {
   LocalStorageService.setBoardData(boardContent);
@@ -25,11 +27,16 @@ export const boardContentHendler = ( boardContent, status ) => {
   const nameBoard = document.createElement('div');
   const settingBoard = document.createElement('div');
   const settingMenu = document.createElement('div');
+  const btnInviteBoard = document.createElement('div');
   const btnDeleteBoard = document.createElement('div');
   const btnRenameBoard = document.createElement('div');
   const btnClosedBoard = document.createElement('div');
   const allColumns = document.createElement('div');
   const createBlockColumn = document.createElement('div');
+  const modelInvitePartner = document.getElementById('modelInvitePartner');
+  const inputInvitePartner = document.getElementById('inputInvitePartner');
+  const btnInvitePartner = document.getElementById('btnInvitePartner');
+  const btnClosedInvitePartner = document.getElementById('btnClosedInvitePartner');
   const modelRenameBoard = document.getElementById('modelRenameBoard');
   const inputRenameBoard = document.getElementById('inputRenameBoard');
   const btnModalRenameBoard = document.getElementById('btnModalRenameBoard');
@@ -51,6 +58,8 @@ export const boardContentHendler = ( boardContent, status ) => {
   const arrNamesColumns = [];
   const arrTaskContent = [];
 
+  btnInvitePartner.setAttribute('disabled', true);
+  btnModalRenameBoard.setAttribute('disabled', true);
   btnCreateColumn.setAttribute('disabled', true);
   btnRenameColumn.setAttribute('disabled', true);
   btnCreateTask.setAttribute('disabled', true);
@@ -70,10 +79,10 @@ export const boardContentHendler = ( boardContent, status ) => {
 
   inputCreateColumn.oninput = () => validContentOninput(inputCreateColumn, btnCreateColumn, contentNameValidator, 'columError');
   inputCreateColumn.onblur = () => validContentOnblur(inputCreateColumn, btnCreateColumn, contentNameValidator, 'columError', ERROR_MESSAGES.nameContent);
-
   inputRenameBoard.oninput = () => validContentOninput(inputRenameBoard, btnModalRenameBoard, contentNameValidator, 'renameErrorBoard');
   inputRenameBoard.onblur = () => validContentOnblur(inputRenameBoard, btnModalRenameBoard, contentNameValidator, 'renameErrorBoard', ERROR_MESSAGES.nameContent);
-
+  inputInvitePartner.oninput = () => validContentOninput(inputInvitePartner, btnInvitePartner, emailValidator, 'inviteError');
+  inputInvitePartner.onblur = () => validContentOnblur(inputInvitePartner, btnInvitePartner, emailValidator, 'inviteError', ERROR_MESSAGES.email);
   inputRenameColumn.oninput = () => validContentOninput(inputRenameColumn, btnRenameColumn, contentNameValidator, 'renameErrorColumn');
   inputRenameColumn.onblur = () => validContentOnblur(inputRenameColumn, btnRenameColumn, contentNameValidator, 'renameErrorColumn', ERROR_MESSAGES.nameContent);
   inputCreateTask.oninput = () => validContentOninput(inputCreateTask, btnCreateTask, contentTaskValidator, 'taskError');
@@ -83,22 +92,28 @@ export const boardContentHendler = ( boardContent, status ) => {
   nameBoard.className = 'boardsContent__title__nameBoards';
   settingBoard.className = 'boardsContent__title__settingBoards';
   settingMenu.className = 'boardsContent__title__menuSetting';
+  btnInviteBoard.className = 'boardsContent__title__menuSetting__functional';
   btnDeleteBoard.className = 'boardsContent__title__menuSetting__functional';
   btnRenameBoard.className = 'boardsContent__title__menuSetting__functional';
   btnClosedBoard.className = 'boardsContent__title__menuSetting__functional';
   allColumns.className = 'boardsContent__allColumns';
   createBlockColumn.className = 'boardsContent__allColumns__overflowBlock__createColumn';
   nameBoard.innerText = boardContent.name ;
+  btnInviteBoard.innerText = 'To invite';
   btnRenameBoard.innerText = 'Rename';
   btnDeleteBoard.innerText = 'Delete';
   createBlockColumn.innerText = '+ Create column';
 
   status === 'Active' ? btnClosedBoard.innerText = 'Closed Board' : btnClosedBoard.innerText = 'Active Board';
 
+  if (status !== 'Active') {
+    createBlockColumn.classList.add('disabledButton');
+    btnRenameBoard.classList.add('disabledButton');
+  }
+
   blockBoardContent.append(title, allColumns);
   title.append(nameBoard, settingBoard, settingMenu);
-  settingMenu.append(btnRenameBoard, btnDeleteBoard, btnClosedBoard);
-
+  settingMenu.append(btnInviteBoard, btnRenameBoard, btnDeleteBoard, btnClosedBoard);
 
   boardNameColumnsArr.forEach(item => {
     const taskArr = [];
@@ -148,6 +163,11 @@ export const boardContentHendler = ( boardContent, status ) => {
     blockColumn.append(divHederColum, taskStorage);
     divHederColum.append(titleColumn, settingColumn, menuSettingColumn);
     menuSettingColumn.append(rename, btnDeleteColumn);
+
+    if (status !== 'Active') {
+      createTask.classList.add('disabledButton');
+      rename.classList.add('disabledButton');
+    }
 
     taskStorage.addEventListener('dragstart', () => {
       LocalStorageService.setIdColumn(taskStorage.getAttribute('columnKey'));
@@ -222,6 +242,45 @@ export const boardContentHendler = ( boardContent, status ) => {
     }
 
   });
+
+  btnInviteBoard.onclick = () => {
+    openModalInputMenu(modelInvitePartner);
+    openModalInputMenu(settingMenu);
+  }
+
+  btnInvitePartner.onclick = async () => {
+    let user;
+
+    showBlockSpinner();
+
+    await getUsers()
+      .then(result => {
+
+        const transformedUserArr = Object.keys(result.data).map( key => ({
+          ...result.data[key],
+          key: key
+        }));
+
+        transformedUserArr.forEach(item => {
+          if ( item.email === inputInvitePartner.value) {
+            user = item;
+          };
+        })
+      })
+
+      if (user !== undefined) {
+        await updatePartnersBoard( LocalStorageService.getIdBoard(), user.key );
+        inputInvitePartner.value = null;
+        openModalInputMenu(modelInvitePartner);
+      } else showErrorNotification('EMAIL_NOT_FOUND');
+
+    hideBlockSpinner();
+  }
+
+  btnClosedInvitePartner.onclick = () => {
+    openModalInputMenu(modelInvitePartner);
+    inputInvitePartner.value = null;
+  };
 
   btnDeleteBoard.onclick = () => {
     showBlockSpinner();

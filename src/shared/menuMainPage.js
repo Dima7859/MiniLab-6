@@ -69,13 +69,9 @@ export const openMenu = () => {
   inputCreateBoard.oninput = () => validContentOninput(inputCreateBoard, btnCreateBoard, contentNameValidator, 'boardError');
   inputCreateBoard.onblur = () => validContentOnblur(inputCreateBoard, btnCreateBoard, contentNameValidator, 'boardError', ERROR_MESSAGES.nameContent);
 
-  btnCreateBoard.onclick = () => {
-    createBoards(inputCreateBoard.value)
-      .then(response => {
-        inputCreateBoard.value = null;
-        viewingBoardsUser('Active');
-      });
-
+  btnCreateBoard.onclick = async () => {
+    await createBoards(inputCreateBoard.value);
+    inputCreateBoard.value = null;
     openModalInputMenu(modelBlockCreate);
     clearLookBoards();
   };

@@ -13,35 +13,38 @@ export const viewingBoardsUser = condition => {
   clearLookBoards();
 
   getBoards()
-  .then(result => {
+    .then(result => {
 
-    const transformedUserArr = Object.keys(result.data).map( key => ({
-      ...result.data[key],
-      key: key
-    }));
+      const transformedUserArr = Object.keys(result.data).map( key => ({
+        ...result.data[key],
+        key: key
+      }));
 
-    transformedUserArr.forEach( item => {
-      if ( item.creatorId === LocalStorageService.getPersonalData().id) {
-        activeUserBoard.push(item);
-      };
-    });
+      transformedUserArr.forEach( item => {
+        const transformedPartnerArr = Object.keys(item.partners).map( key => ({...item.partners[key], id: key}));
 
-    activeUserBoard.forEach( item => {
-      if (condition === item.condition) {
-        const div = document.createElement('div');
-        div.className = 'mainPage__menuBoards__functional__boards__name';
-        div.innerText = item.name;
-        div.setAttribute('boardKey', item.key);
-        condition === 'Active' ? lookBoardsActive.append(div) : lookBoardsClosed.append(div);
+        transformedPartnerArr.forEach( partnersBoard => {
+          if ( partnersBoard.partner === LocalStorageService.getPersonalData().id) {
+            activeUserBoard.push(item);
+          };
+        })
+      });
 
-        div.onclick = () => {
-          LocalStorageService.removeIdBoard();
-          LocalStorageService.setIdBoard(div.getAttribute('boardKey'));
-          openBoardNameMenu(userMenuBoards);
+      activeUserBoard.forEach( item => {
+        if (condition === item.condition) {
+          const div = document.createElement('div');
+          div.className = 'mainPage__menuBoards__functional__boards__name';
+          div.innerText = item.name;
+          div.setAttribute('boardKey', item.key);
+          condition === 'Active' ? lookBoardsActive.append(div) : lookBoardsClosed.append(div);
 
-          updateBoards(condition);
+          div.onclick = () => {
+            LocalStorageService.removeIdBoard();
+            LocalStorageService.setIdBoard(div.getAttribute('boardKey'));
+            openBoardNameMenu(userMenuBoards);
+            updateBoards(condition);
+          }
         }
-      }
-    })
-  });
+      })
+    });
 };

@@ -48,11 +48,7 @@ export const getUserById = id => axios.get(`${dataBaceUrl}/users/${id}.json`);
 
 export const getUsers = () => {
   return axios.get(`${dataBaceUrl}/miniLabUsers.json`)
-    .then( response => {
-      if (response) {
-        return Object.keys(response.data).map( key => ({...response.data[key], id: key}));
-      }
-    });
+    .then( response => response);
 };
 
 export const createAuthData = (email, password) => {
@@ -137,6 +133,13 @@ export const createBoardsColumns = (idBoard, name) => {
     .then( () => updateBoards());
 };
 
+export const updatePartnersBoard = ( idBoard, partner) => {
+  return axios.post(`${dataBaceUrl}/miniLabBoards/${idBoard}/partners.json`, {
+    partner
+  })
+    .then( response => response);
+};
+
 export const createBoards = ( name ) => {
   return axios.post(`${dataBaceUrl}/miniLabBoards.json`, {
     name,
@@ -150,6 +153,7 @@ export const createBoards = ( name ) => {
       createBoardsColumns(res.data.name, 'To do');
       createBoardsColumns(res.data.name, 'Done');
       createBoardsColumns(res.data.name, 'Doing');
+      updatePartnersBoard(res.data.name, LocalStorageService.getPersonalData().id);
       return res
     });
 };
