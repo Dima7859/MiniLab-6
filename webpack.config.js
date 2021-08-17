@@ -2,12 +2,13 @@ const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { SourceMapDevToolPlugin } = require('webpack');
 const { type } = require('os');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
   output: {
     filename: 'bundle.[chunkhash].js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'build')
   },
   plugins: [
     new HTMLWebpackPlugin ({
@@ -33,6 +34,7 @@ module.exports = {
     new SourceMapDevToolPlugin({
         filename: "[file].map"
     }),
+    new CleanWebpackPlugin()
   ],
   module: {
     rules: [

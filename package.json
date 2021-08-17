@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --mode development --open"
+    "start": "webpack serve --mode development --open",
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
     "css-loader": "^5.2.4",
     "file-loader": "^6.2.0",
     "firebase": "^8.5.0",
