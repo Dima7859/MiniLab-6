@@ -189,14 +189,6 @@ export const boardContentHendler = ( boardContent, status ) => {
       openModalInputMenu(settingMenu);
     };
 
-    // btnDeleteBoard.onclick = () => {
-    //   showBlockSpinner();
-    //   openModalInputMenu(settingMenu);
-    //   clearBoardContent();
-    //   deleteBoards();
-    //   openBoardNameMenu(userMenuBoards);
-    // };
-
     const openSettingColumn = () => {
       const isClicked = menuSettingColumn.getAttribute('clicked');
       if (!isClicked) {
