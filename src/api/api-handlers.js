@@ -8,6 +8,8 @@ import { LocalStorageService } from '../shared/ls-service';
 import { routes } from '../shared/constants/routes';
 import { boardContentHendler } from '../shared/boardContent';
 import { hideBlockSpinner, showBlockSpinner } from '../components/spinner/spinner';
+import { viewingBoardsUser } from '../shared/viewingBoards';
+import { clearLookBoards } from '../components/profile/profile';
 
 
 export const initApi = () => {
@@ -46,11 +48,7 @@ export const getUserById = id => axios.get(`${dataBaceUrl}/users/${id}.json`);
 
 export const getUsers = () => {
   return axios.get(`${dataBaceUrl}/miniLabUsers.json`)
-    .then( response => {
-      if (response) {
-        return Object.keys(response.data).map( key => ({...response.data[key], id: key}));
-      }
-    });
+    .then( response => response);
 };
 
 export const createAuthData = (email, password) => {
@@ -112,7 +110,7 @@ export const getBoards = async () => {
     .then( response => response);
 };
 
-export const updateBoards = async () => {
+export const updateBoards = async (status) => {
   return axios.get(`${dataBaceUrl}/miniLabBoards.json`)
   .then( result => {
     const transformedUserArr = Object.keys(result.data).map( key => ({
@@ -122,7 +120,7 @@ export const updateBoards = async () => {
 
     transformedUserArr.forEach( item => {
       if ( item.key === LocalStorageService.getIdBoard()) {
-        boardContentHendler(item);
+        boardContentHendler(item, status);
       };
     });
   });
@@ -135,6 +133,13 @@ export const createBoardsColumns = (idBoard, name) => {
     .then( () => updateBoards());
 };
 
+export const updatePartnersBoard = ( idBoard, partner) => {
+  return axios.post(`${dataBaceUrl}/miniLabBoards/${idBoard}/partners.json`, {
+    partner
+  })
+    .then( response => response);
+};
+
 export const createBoards = ( name ) => {
   return axios.post(`${dataBaceUrl}/miniLabBoards.json`, {
     name,
@@ -142,12 +147,13 @@ export const createBoards = ( name ) => {
       creator: LocalStorageService.getPersonalData().email,
     },
     creatorId: LocalStorageService.getPersonalData().id,
-    condition : 'active'
+    condition : 'Active'
   })
     .then( res => {
       createBoardsColumns(res.data.name, 'To do');
       createBoardsColumns(res.data.name, 'Done');
       createBoardsColumns(res.data.name, 'Doing');
+      updatePartnersBoard(res.data.name, LocalStorageService.getPersonalData().id);
       return res
     });
 };
@@ -186,6 +192,37 @@ export const deleteTask = (idColumn, idTask) => {
     });
 };
 
+export const deleteBoards = () => {
+  axios.delete(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}.json`)
+    .then( async () => {
+      LocalStorageService.removeIdBoard();
+      LocalStorageService.removeIdColumn();
+      LocalStorageService.removeBoardData();
+      viewingBoardsUser('Active');
+      setTimeout(() => hideBlockSpinner(),700);
+    });
+};
+
+export const renameBoard = ( newName ) => {
+  return axios.patch(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}.json`,{
+    name: newName
+  })
+    .then( async () => {
+      await updateBoards();
+      viewingBoardsUser('Active');
+      setTimeout(() => hideBlockSpinner(),700);
+    });
+}
+
+export const deleteColumn = (idColumn) => {
+  axios.delete(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${idColumn}.json`)
+    .then( async () => {
+      LocalStorageService.removeIdColumn();
+      await updateBoards();
+      setTimeout(() => hideBlockSpinner(),700);
+    });
+};
+
 export const updateTaskNumber = ( newAllTaskNumber ) => {
   return axios.patch(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}.json`,{
     AllTaskNumber: newAllTaskNumber
@@ -196,5 +233,18 @@ export const getDataDragAndDropTask = async (idColumn, idTask) => {
   return axios.get(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${idColumn}/${idTask}.json`)
     .then( response => response);
 };
+
+export const updateConditionBoard = ( newCondition ) => {
+  return axios.patch(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}.json`,{
+    condition: newCondition
+  })
+    .then( async () => {
+      LocalStorageService.removeIdBoard();
+      LocalStorageService.removeIdColumn();
+      LocalStorageService.removeBoardData();
+      clearLookBoards();
+      setTimeout(() => hideBlockSpinner(),700);
+    });
+}
 
 initApi();

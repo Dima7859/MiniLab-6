@@ -23,6 +23,10 @@ export class LocalStorageService {
     return JSON.parse(localStorage.getItem('boardData'));
   }
 
+  static removeBoardData() {
+    localStorage.removeItem('boardData');
+  }
+
   static getUID() {
     return localStorage.getItem('uid');
   }

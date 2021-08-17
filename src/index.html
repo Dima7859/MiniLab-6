@@ -8,10 +8,9 @@
       <div class="mainPage__header">
         <div class="mainPage__header__welcome">
           <div class="mainPage__header__btnMenu"></div>
-          <div class="mainPage__header__user">
-            <p class="mainPage__header__user__name"></p>
-            <div class="mainPage__header__user__menu"></div>
-          </div>
+        </div>
+        <div class="mainPage__header__nameAppendix">
+          <p>Do It</p>
         </div>
         <div class="mainPage__header__profile">
           <div class="mainPage__header__profile__info" id="headerInfoName"></div>
@@ -52,11 +51,20 @@
         <button class="modelBlock__createBlock__btn" id="btnClosedCreateColumn"> Closed </button>
       </div>
     </div>
+    <div class="modelBlock" id="modelRenameBoard">
+      <div class="modelBlock__createBlock">
+          <label for="inputRenameBoard">Rename board</label>
+          <input type="text" id="inputRenameBoard" maxlength="23">
+          <p class="input-errorNameContent" id="renameErrorBoard"></p>
+        <button class="modelBlock__createBlock__btn" id="btnModalRenameBoard"> Rename </button>
+        <button class="modelBlock__createBlock__btn" id="btnModalClosedRenameBoard"> Closed </button>
+      </div>
+    </div>
     <div class="modelBlock" id="modelRenameColumn">
       <div class="modelBlock__createBlock">
           <label for="inputRenameColumn">Rename column</label>
           <input type="text" id="inputRenameColumn" maxlength="23">
-          <p class="input-errorNameContent" id="renameError"></p>
+          <p class="input-errorNameContent" id="renameErrorColumn"></p>
         <button class="modelBlock__createBlock__btn" id="btnRenameColumn"> Rename </button>
         <button class="modelBlock__createBlock__btn" id="btnClosedRenameColumn"> Closed </button>
       </div>
@@ -68,6 +76,15 @@
           <p class="input-errorNameContent" id="taskError"></p>
         <button class="modelBlock__createBlock__btn" id="btnCreateTask"> Create Task </button>
         <button class="modelBlock__createBlock__btn" id="btnClosedCreateTask"> Closed </button>
+      </div>
+    </div>
+    <div class="modelBlock" id="modelInvitePartner">
+      <div class="modelBlock__createBlock">
+          <label for="inputInvitePartner">To invite partner</label>
+          <input type="text" id="inputInvitePartner">
+          <p class="input-errorNameContent" id="inviteError"></p>
+        <button class="modelBlock__createBlock__btn" id="btnInvitePartner"> To invite </button>
+        <button class="modelBlock__createBlock__btn" id="btnClosedInvitePartner"> Closed </button>
       </div>
     </div>
   </body>
