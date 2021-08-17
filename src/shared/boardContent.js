@@ -6,7 +6,8 @@ import {
   deleteTask,
   deleteBoards,
   deleteColumn,
-  renameBoard
+  renameBoard,
+  updateConditionBoard
 } from '../api/api-handlers';
 import { ERROR_MESSAGES } from '../components/error-messages';
 import { LocalStorageService } from './ls-service';
@@ -16,7 +17,7 @@ import { showErrorNotification } from './error-handlers';
 import { drag, dragDrop, dragEnd, dragEnter, dragOver } from './dragAndDrop';
 import { showBlockSpinner } from '../components/spinner/spinner';
 
-export const boardContentHendler = boardContent => {
+export const boardContentHendler = ( boardContent, status ) => {
   LocalStorageService.setBoardData(boardContent);
   const userMenuBoards = document.getElementById('userMenuBoards');
   const blockBoardContent = document.getElementById('blockBoardContent');
@@ -26,6 +27,7 @@ export const boardContentHendler = boardContent => {
   const settingMenu = document.createElement('div');
   const btnDeleteBoard = document.createElement('div');
   const btnRenameBoard = document.createElement('div');
+  const btnClosedBoard = document.createElement('div');
   const allColumns = document.createElement('div');
   const createBlockColumn = document.createElement('div');
   const modelRenameBoard = document.getElementById('modelRenameBoard');
@@ -83,6 +85,7 @@ export const boardContentHendler = boardContent => {
   settingMenu.className = 'boardsContent__title__menuSetting';
   btnDeleteBoard.className = 'boardsContent__title__menuSetting__functional';
   btnRenameBoard.className = 'boardsContent__title__menuSetting__functional';
+  btnClosedBoard.className = 'boardsContent__title__menuSetting__functional';
   allColumns.className = 'boardsContent__allColumns';
   createBlockColumn.className = 'boardsContent__allColumns__overflowBlock__createColumn';
   nameBoard.innerText = boardContent.name ;
@@ -90,9 +93,11 @@ export const boardContentHendler = boardContent => {
   btnDeleteBoard.innerText = 'Delete';
   createBlockColumn.innerText = '+ Create column';
 
+  status === 'Active' ? btnClosedBoard.innerText = 'Closed Board' : btnClosedBoard.innerText = 'Active Board';
+
   blockBoardContent.append(title, allColumns);
   title.append(nameBoard, settingBoard, settingMenu);
-  settingMenu.append(btnRenameBoard, btnDeleteBoard);
+  settingMenu.append(btnRenameBoard, btnDeleteBoard, btnClosedBoard);
 
 
   boardNameColumnsArr.forEach(item => {
@@ -184,13 +189,13 @@ export const boardContentHendler = boardContent => {
       openModalInputMenu(settingMenu);
     };
 
-    btnDeleteBoard.onclick = () => {
-      showBlockSpinner();
-      openModalInputMenu(settingMenu);
-      clearBoardContent();
-      deleteBoards();
-      openBoardNameMenu(userMenuBoards);
-    };
+    // btnDeleteBoard.onclick = () => {
+    //   showBlockSpinner();
+    //   openModalInputMenu(settingMenu);
+    //   clearBoardContent();
+    //   deleteBoards();
+    //   openBoardNameMenu(userMenuBoards);
+    // };
 
     const openSettingColumn = () => {
       const isClicked = menuSettingColumn.getAttribute('clicked');
@@ -226,10 +231,26 @@ export const boardContentHendler = boardContent => {
 
   });
 
+  btnDeleteBoard.onclick = () => {
+    showBlockSpinner();
+    openModalInputMenu(settingMenu);
+    clearBoardContent();
+    deleteBoards();
+    openBoardNameMenu(userMenuBoards);
+  };
+
   btnRenameBoard.onclick = () => {
     openModalInputMenu(modelRenameBoard);
     openModalInputMenu(settingMenu);
   };
+
+  btnClosedBoard.onclick = () => {
+    showBlockSpinner();
+    openModalInputMenu(settingMenu);
+    clearBoardContent();
+    status === 'Active' ? updateConditionBoard('Closed') :  updateConditionBoard('Active');
+    openBoardNameMenu(userMenuBoards);
+  }
 
   btnModalClosedRenameBoard.onclick = () => openModalInputMenu(modelRenameBoard);
 

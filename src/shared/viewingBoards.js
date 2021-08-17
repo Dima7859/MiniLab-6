@@ -32,14 +32,14 @@ export const viewingBoardsUser = condition => {
         div.className = 'mainPage__menuBoards__functional__boards__name';
         div.innerText = item.name;
         div.setAttribute('boardKey', item.key);
-        condition === 'active' ? lookBoardsActive.append(div) : lookBoardsClosed.append(div);
+        condition === 'Active' ? lookBoardsActive.append(div) : lookBoardsClosed.append(div);
 
         div.onclick = () => {
           LocalStorageService.removeIdBoard();
           LocalStorageService.setIdBoard(div.getAttribute('boardKey'));
           openBoardNameMenu(userMenuBoards);
 
-          updateBoards();
+          updateBoards(condition);
         }
       }
     })

@@ -73,7 +73,7 @@ export const openMenu = () => {
     createBoards(inputCreateBoard.value)
       .then(response => {
         inputCreateBoard.value = null;
-        viewingBoardsUser('active');
+        viewingBoardsUser('Active');
       });
 
     openModalInputMenu(modelBlockCreate);
@@ -81,10 +81,10 @@ export const openMenu = () => {
   };
 
   btnOpenActiveBoard.onclick = () => {
-    viewingBoardsUser('active');
+    viewingBoardsUser('Active');
   };
 
   btnOpenClosedBoard.onclick = () => {
-    viewingBoardsUser('closed');
+    viewingBoardsUser('Closed');
   }
 };
