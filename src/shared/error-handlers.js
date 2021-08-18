@@ -33,9 +33,9 @@ export const showErrorNotification = error => {
     if (error.message) {
       notificationText.innerText = error.message;
     } else {
-      if (error === 'EMAIL_NOT_FOUND') {
-        notificationText.innerText = 'Email account not registered';
-      } else notificationText.innerText = 'Such an Element already exists';
+      error === 'EMAIL_NOT_FOUND' ? 
+        notificationText.innerText = 'Email account not registered' :
+        notificationText.innerText = 'Such an Element already exists';
     };
   }
 

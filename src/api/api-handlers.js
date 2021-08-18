@@ -110,7 +110,7 @@ export const getBoards = async () => {
     .then( response => response);
 };
 
-export const updateBoards = async (status) => {
+export const updateBoards = async () => {
   return axios.get(`${dataBaceUrl}/miniLabBoards.json`)
   .then( result => {
     const transformedUserArr = Object.keys(result.data).map( key => ({
@@ -120,7 +120,7 @@ export const updateBoards = async (status) => {
 
     transformedUserArr.forEach( item => {
       if ( item.key === LocalStorageService.getIdBoard()) {
-        boardContentHendler(item, status);
+        boardContentHendler(item, item.condition);
       };
     });
   });

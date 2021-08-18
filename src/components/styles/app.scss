@@ -1,5 +1,6 @@
 @import './colors.scss';
 @import './constSign-In-up-reset.scss';
+@import url('https://fonts.googleapis.com/css2?family=Style+Script&display=swap');
 
 .input-error {
   position: absolute;
@@ -87,4 +88,8 @@
 .disabledButton {
   pointer-events: none;
   opacity: 0.7;
+}
+
+.italicFont {
+  font-family: 'Style Script', cursive;
 }

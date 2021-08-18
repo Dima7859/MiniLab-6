@@ -42,7 +42,7 @@ export const viewingBoardsUser = condition => {
             LocalStorageService.removeIdBoard();
             LocalStorageService.setIdBoard(div.getAttribute('boardKey'));
             openBoardNameMenu(userMenuBoards);
-            updateBoards(condition);
+            updateBoards();
           }
         }
       })

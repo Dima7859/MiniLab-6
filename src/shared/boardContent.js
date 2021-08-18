@@ -106,7 +106,7 @@ export const boardContentHendler = ( boardContent, status ) => {
 
   status === 'Active' ? btnClosedBoard.innerText = 'Closed Board' : btnClosedBoard.innerText = 'Active Board';
 
-  if (status !== 'Active') {
+  if (status === 'Closed') {
     createBlockColumn.classList.add('disabledButton');
     btnRenameBoard.classList.add('disabledButton');
   }
@@ -164,7 +164,7 @@ export const boardContentHendler = ( boardContent, status ) => {
     divHederColum.append(titleColumn, settingColumn, menuSettingColumn);
     menuSettingColumn.append(rename, btnDeleteColumn);
 
-    if (status !== 'Active') {
+    if (status === 'Closed') {
       createTask.classList.add('disabledButton');
       rename.classList.add('disabledButton');
     }
