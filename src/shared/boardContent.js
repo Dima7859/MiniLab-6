@@ -9,7 +9,9 @@ import {
   renameBoard,
   updateConditionBoard,
   getUsers,
-  updatePartnersBoard
+  updatePartnersBoard,
+  getUserById,
+  updateBoards
 } from '../api/api-handlers';
 import { ERROR_MESSAGES } from '../components/error-messages';
 import { LocalStorageService } from './ls-service';
@@ -51,10 +53,12 @@ export const boardContentHendler = ( boardContent, status ) => {
   const btnClosedRenameColumn = document.getElementById('btnClosedRenameColumn');
   const modelCreateTask = document.getElementById('modelCreateTask');
   const inputCreateTask = document.getElementById('inputCreateTask');
+  const responsibleTask = document.getElementById('responsibleTask');
   const btnCreateTask = document.getElementById('btnCreateTask');
   const btnClosedCreateTask = document.getElementById('btnClosedCreateTask');
-  const boardNameColumnsArr = Object.keys(boardContent.columns).map( key => ({...boardContent.columns[key], id: key}));
+  let boardNameColumnsArr;
   let taskNumber = 0;
+  const arrPartners = [];
   const arrNamesColumns = [];
   const arrTaskContent = [];
 
@@ -64,13 +68,17 @@ export const boardContentHendler = ( boardContent, status ) => {
   btnRenameColumn.setAttribute('disabled', true);
   btnCreateTask.setAttribute('disabled', true);
 
-  const clearBoardContent = () => {
-    while (blockBoardContent.firstChild) {
-    blockBoardContent.removeChild(blockBoardContent.firstChild);
+  if (boardContent.columns) {
+    boardNameColumnsArr = Object.keys(boardContent.columns).map( key => ({...boardContent.columns[key], id: key}));
+  }
+
+  const clearContent = block => {
+    while (block.firstChild) {
+      block.removeChild(block.firstChild);
     };
   }
 
-  clearBoardContent();
+  clearContent(blockBoardContent);
 
   if (boardContent.AllTaskNumber) {
     taskNumber = boardContent.AllTaskNumber;
@@ -115,133 +123,159 @@ export const boardContentHendler = ( boardContent, status ) => {
   title.append(nameBoard, settingBoard, settingMenu);
   settingMenu.append(btnInviteBoard, btnRenameBoard, btnDeleteBoard, btnClosedBoard);
 
-  boardNameColumnsArr.forEach(item => {
-    const taskArr = [];
-    const itemContent = Object.keys(item).map( key => ({...item[key], id: key}));
-    const blockColumn = document.createElement('div');
-    const titleColumn = document.createElement('div');
-    const settingColumn = document.createElement('div');
-    const divHederColum = document.createElement('div');
-    const taskStorage = document.createElement('div');
-    const menuSettingColumn = document.createElement('div');
-    const rename = document.createElement('div');
-    const btnDeleteColumn = document.createElement('div');
-    const createTask = document.createElement('div');
-    const overflowBlock = document.createElement('div');
-    const columnId = item.id;
+  if (boardContent.columns) {
+    boardNameColumnsArr.forEach(item => {
+      const taskArr = [];
+      const itemContent = Object.keys(item).map( key => ({...item[key], id: key}));
+      const blockColumn = document.createElement('div');
+      const titleColumn = document.createElement('div');
+      const settingColumn = document.createElement('div');
+      const divHederColum = document.createElement('div');
+      const taskStorage = document.createElement('div');
+      const menuSettingColumn = document.createElement('div');
+      const rename = document.createElement('div');
+      const btnDeleteColumn = document.createElement('div');
+      const createTask = document.createElement('div');
+      const overflowBlock = document.createElement('div');
+      const columnId = item.id;
 
-    arrNamesColumns.push(item.name);
+      arrNamesColumns.push(item.name);
 
-    itemContent.forEach( item => {
-      if (item.content) {
-        taskArr.push(item);
-        arrTaskContent.push(item.content);
-      };
-    })
+      itemContent.forEach( item => {
+        if (item.content) {
+          taskArr.push(item);
+          arrTaskContent.push(item.content);
+        };
+      })
 
-    btnDeleteColumn.innerText = 'Delete';
-    rename.innerText = 'Rename';
-    titleColumn.innerText = item.name;
-    createTask.innerText = '+ Create Task';
-    rename.setAttribute('columnKey', columnId);
-    btnDeleteColumn.setAttribute('columnKey', columnId);
-    createTask.setAttribute('columnKey', columnId);
-    taskStorage.setAttribute('columnKey', columnId);
-    overflowBlock.className = 'boardsContent__allColumns__overflowBlock';
-    rename.className = 'boardsContent__allColumns__overflowBlock__column__heder__menuSetting__functional';
-    btnDeleteColumn.className = 'boardsContent__allColumns__overflowBlock__column__heder__menuSetting__functional';
-    blockColumn.className = 'boardsContent__allColumns__overflowBlock__column';
-    divHederColum.className = 'boardsContent__allColumns__overflowBlock__column__heder';
-    settingColumn.className = 'boardsContent__allColumns__overflowBlock__column__heder__setting';
-    titleColumn.className = 'boardsContent__allColumns__overflowBlock__column__heder__title';
-    menuSettingColumn.className = 'boardsContent__allColumns__overflowBlock__column__heder__menuSetting';
-    taskStorage.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage';
-    createTask.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__createTask';
-    createTask.draggable = false ;
-    allColumns.append(overflowBlock);
-    overflowBlock.append(blockColumn);
-    blockColumn.append(divHederColum, taskStorage);
-    divHederColum.append(titleColumn, settingColumn, menuSettingColumn);
-    menuSettingColumn.append(rename, btnDeleteColumn);
+      btnDeleteColumn.innerText = 'Delete';
+      rename.innerText = 'Rename';
+      titleColumn.innerText = item.name;
+      createTask.innerText = '+ Create Task';
+      rename.setAttribute('columnKey', columnId);
+      btnDeleteColumn.setAttribute('columnKey', columnId);
+      createTask.setAttribute('columnKey', columnId);
+      taskStorage.setAttribute('columnKey', columnId);
+      overflowBlock.className = 'boardsContent__allColumns__overflowBlock';
+      rename.className = 'boardsContent__allColumns__overflowBlock__column__heder__menuSetting__functional';
+      btnDeleteColumn.className = 'boardsContent__allColumns__overflowBlock__column__heder__menuSetting__functional';
+      blockColumn.className = 'boardsContent__allColumns__overflowBlock__column';
+      divHederColum.className = 'boardsContent__allColumns__overflowBlock__column__heder';
+      settingColumn.className = 'boardsContent__allColumns__overflowBlock__column__heder__setting';
+      titleColumn.className = 'boardsContent__allColumns__overflowBlock__column__heder__title';
+      menuSettingColumn.className = 'boardsContent__allColumns__overflowBlock__column__heder__menuSetting';
+      taskStorage.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage';
+      createTask.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__createTask';
+      createTask.draggable = false ;
+      allColumns.append(overflowBlock);
+      overflowBlock.append(blockColumn);
+      blockColumn.append(divHederColum, taskStorage);
+      divHederColum.append(titleColumn, settingColumn, menuSettingColumn);
+      menuSettingColumn.append(rename, btnDeleteColumn);
 
-    if (status === 'Closed') {
-      createTask.classList.add('disabledButton');
-      rename.classList.add('disabledButton');
-    }
-
-    taskStorage.addEventListener('dragstart', () => {
-      LocalStorageService.setIdColumn(taskStorage.getAttribute('columnKey'));
-    })
-
-    taskStorage.ondragover = dragOver;
-    taskStorage.ondragenter = dragEnter;
-    taskStorage.ondrop = dragDrop;
-
-    taskArr.forEach( item => {
-      const task = document.createElement('div');
-      const taskNumber = document.createElement('div');
-      const btnDeleteTask = document.createElement('div');
-
-      task.innerText = item.content;
-      btnDeleteTask.innerText = "\u2716";
-      task.draggable = true ;
-      task.setAttribute('id', item.id);
-      btnDeleteTask.setAttribute('idTask', item.id);
-      btnDeleteTask.setAttribute('idColumn', columnId);
-      task.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task';
-      taskNumber.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__number';
-      btnDeleteTask.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__btnDelete';
-      taskNumber.innerText = item.taskNumber;
-      task.ondragstart = drag;
-      task.ondragend = dragEnd;
-      taskStorage.append(task);
-      task.append(taskNumber, btnDeleteTask);
-
-      btnDeleteTask.onclick = () => {
-        showBlockSpinner();
-        deleteTask(btnDeleteTask.getAttribute('idColumn'), btnDeleteTask.getAttribute('idTask'));
-      };
-    })
-
-    taskStorage.append(createTask);
-
-    settingBoard.onclick = () => {
-      openModalInputMenu(settingMenu);
-    };
-
-    const openSettingColumn = () => {
-      const isClicked = menuSettingColumn.getAttribute('clicked');
-      if (!isClicked) {
-        menuSettingColumn.setAttribute('clicked', true);
-        menuSettingColumn.style.display = 'flex';
-      } else {
-        menuSettingColumn.style.display = 'none';
-        menuSettingColumn.removeAttribute('clicked');
+      if (status === 'Closed') {
+        createTask.classList.add('disabledButton');
+        rename.classList.add('disabledButton');
       }
-    }
 
-    settingColumn.onclick = () => {
-      openSettingColumn();
-    }
+      taskStorage.addEventListener('dragstart', () => {
+        LocalStorageService.setIdColumn(taskStorage.getAttribute('columnKey'));
+      })
 
-    rename.onclick = () => {
-      LocalStorageService.setIdColumn(rename.getAttribute('columnKey'));
-      openModalInputMenu(modelRenameColumn);
-      openSettingColumn();
-    };
+      taskStorage.ondragover = dragOver;
+      taskStorage.ondragenter = dragEnter;
+      taskStorage.ondrop = dragDrop;
 
-    btnDeleteColumn.onclick = () => {
-      showBlockSpinner();
-      openSettingColumn();
-      deleteColumn(btnDeleteColumn.getAttribute('columnKey'));
-    };
+      taskArr.forEach( item => {
+        const task = document.createElement('div');
+        const taskNumber = document.createElement('div');
+        const btnDeleteTask = document.createElement('div');
+        const responsibleTaskContent = document.createElement('div');
 
-    createTask.onclick = () => {
-      LocalStorageService.setIdColumn(createTask.getAttribute('columnKey'));
-      openModalInputMenu(modelCreateTask);
-    }
+        task.innerText = item.content;
+        btnDeleteTask.innerText = "\u2716";
+        item.responsibleTask ? responsibleTaskContent.innerText = item.responsibleTask : responsibleTaskContent.innerText = 'The person in charge was not chosen' ;
+        task.draggable = true ;
+        task.setAttribute('id', item.id);
+        btnDeleteTask.setAttribute('idTask', item.id);
+        btnDeleteTask.setAttribute('idColumn', columnId);
+        task.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task';
+        taskNumber.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__number';
+        btnDeleteTask.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__btnDelete';
+        responsibleTaskContent.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__responsible';
+        taskNumber.innerText = item.taskNumber;
+        task.ondragstart = drag;
+        task.ondragend = dragEnd;
+        taskStorage.append(task);
+        task.append(taskNumber, btnDeleteTask, responsibleTaskContent);
 
-  });
+        btnDeleteTask.onclick = () => {
+          showBlockSpinner();
+          deleteTask(btnDeleteTask.getAttribute('idColumn'), btnDeleteTask.getAttribute('idTask'));
+        };
+      })
+
+      taskStorage.append(createTask);
+
+      const openSettingColumn = () => {
+        const isClicked = menuSettingColumn.getAttribute('clicked');
+        if (!isClicked) {
+          menuSettingColumn.setAttribute('clicked', true);
+          menuSettingColumn.style.display = 'flex';
+        } else {
+          menuSettingColumn.style.display = 'none';
+          menuSettingColumn.removeAttribute('clicked');
+        }
+      }
+
+      settingColumn.onclick = () => {
+        openSettingColumn();
+      }
+
+      rename.onclick = () => {
+        LocalStorageService.setIdColumn(rename.getAttribute('columnKey'));
+        openModalInputMenu(modelRenameColumn);
+        openSettingColumn();
+      };
+
+      btnDeleteColumn.onclick = () => {
+        showBlockSpinner();
+        openSettingColumn();
+        deleteColumn(btnDeleteColumn.getAttribute('columnKey'));
+      };
+
+      createTask.onclick = async () => {
+        showBlockSpinner();
+        LocalStorageService.setIdColumn(createTask.getAttribute('columnKey'));
+        arrPartners.length = 0;
+        const arrInfoPartners = Object.keys(boardContent.partners).map( key => ({...boardContent.partners[key], id: key}));
+        arrInfoPartners.forEach( item => {
+          getUserById(item.partner)
+            .then(result => arrPartners.push(result.data.email));
+        })
+        setTimeout(() => {
+          const standardOption = document.createElement('option');
+
+          clearContent(responsibleTask);
+          standardOption.selected = 'selected';
+          standardOption.innerText = 'Choose a responsible';
+          responsibleTask.append(standardOption);
+
+          arrPartners.forEach( item => {
+            const optionResponsible = document.createElement('option');
+            optionResponsible.innerText = item;
+            responsibleTask.append(optionResponsible);
+          })
+          openModalInputMenu(modelCreateTask);
+          hideBlockSpinner();
+        }, 500)
+      }
+    });
+  }
+
+  settingBoard.onclick = () => {
+    openModalInputMenu(settingMenu);
+  };
 
   btnInviteBoard.onclick = () => {
     openModalInputMenu(modelInvitePartner);
@@ -274,6 +308,8 @@ export const boardContentHendler = ( boardContent, status ) => {
         openModalInputMenu(modelInvitePartner);
       } else showErrorNotification('EMAIL_NOT_FOUND');
 
+      await updateBoards();
+
     hideBlockSpinner();
   }
 
@@ -285,7 +321,7 @@ export const boardContentHendler = ( boardContent, status ) => {
   btnDeleteBoard.onclick = () => {
     showBlockSpinner();
     openModalInputMenu(settingMenu);
-    clearBoardContent();
+    clearContent(blockBoardContent);
     deleteBoards();
     openBoardNameMenu(userMenuBoards);
   };
@@ -298,7 +334,7 @@ export const boardContentHendler = ( boardContent, status ) => {
   btnClosedBoard.onclick = () => {
     showBlockSpinner();
     openModalInputMenu(settingMenu);
-    clearBoardContent();
+    clearContent(blockBoardContent);
     status === 'Active' ? updateConditionBoard('Closed') :  updateConditionBoard('Active');
     openBoardNameMenu(userMenuBoards);
   }
@@ -367,6 +403,7 @@ export const boardContentHendler = ( boardContent, status ) => {
 
   btnCreateTask.onclick = () => {
     let check = 0;
+    let responsibleFix;
 
     arrTaskContent.forEach(item => {
       if (item === inputCreateTask.value) {
@@ -374,8 +411,10 @@ export const boardContentHendler = ( boardContent, status ) => {
       };
     });
 
+    responsibleTask.value === 'Choose a responsible' ? responsibleFix = null : responsibleFix = responsibleTask.value;
+
     if (check === 0) {
-      createTaskColumns(LocalStorageService.getIdColumn(), inputCreateTask.value.trim(), taskNumber);
+      createTaskColumns(LocalStorageService.getIdColumn(), inputCreateTask.value.trim(), taskNumber, responsibleFix);
       updateTaskNumber(taskNumber);
       openModalInputMenu(modelCreateTask);
       inputCreateTask.value = null;

@@ -36,15 +36,17 @@ export const getUser = () => {
   return axios.get(`${dataBaceUrl}/miniLabUsers.json`)
     .then( response => {
       if (response) {
-        const transformedUsers = 
-          Object.keys(response.data).map( key => ({...response.data[key], id: key}));
+        const transformedUsers = Object.keys(response.data).map( key => ({...response.data[key], id: key}));
         const user = transformedUsers.find( user => user.uuid === LocalStorageService.getUID());
         LocalStorageService.setPersonalData(user);
       }
     })
 }
 
-export const getUserById = id => axios.get(`${dataBaceUrl}/users/${id}.json`);
+export const getUserById = id => {
+  return axios.get(`${dataBaceUrl}/miniLabUsers/${id}.json`)
+    .then( response => response );
+};
 
 export const getUsers = () => {
   return axios.get(`${dataBaceUrl}/miniLabUsers.json`)
@@ -165,11 +167,12 @@ export const renameColumn = ( id, newName ) => {
     .then( () => updateBoards());
 }
 
-export const createTaskColumns = (id, content, taskNumber) => {
+export const createTaskColumns = (id, content, taskNumber, responsibleTask) => {
   showBlockSpinner();
   axios.post(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${id}.json`, {
     content,
-    taskNumber
+    taskNumber,
+    responsibleTask
   })
     .then( async () => {
       await updateBoards();
