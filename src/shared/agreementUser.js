@@ -2,6 +2,7 @@ import { getUser, updateUserAgreement } from '../api/api-handlers';
 import { LocalStorageService } from './ls-service';
 
 export const currentVersionAgreement = 1 ;
+export const linkToAgreement = 'https://firebasestorage.googleapis.com/v0/b/dimade7859-test.appspot.com/o/Doc%2Fagreement.pdf?alt=media&token=7fc400df-2850-40ed-b1b4-f09fa5e440bc';
 
 export const checkAgreement = () => {
   if (LocalStorageService.getPersonalData().Agreement !== currentVersionAgreement) {
@@ -15,7 +16,7 @@ export const checkAgreement = () => {
     windowAgreement.className = 'mainPageModal__agreement';
     btn.className = 'mainPageModal__agreement__btn';
     btn.innerText = 'Familiarized';
-    newAgreement.href = '/src/asset/Doc/sadasd.pdf';
+    newAgreement.href = linkToAgreement;
     newAgreement.innerText = 'The Agreement has been amended, read';
     newAgreement.target = '_blank';
     body.append(modalBlock);
@@ -24,9 +25,9 @@ export const checkAgreement = () => {
     windowAgreement.append(btn);
 
     btn.onclick = async () => {
-      modalBlock.style.display = 'none';
       await updateUserAgreement(currentVersionAgreement);
       await getUser();
+      modalBlock.remove();
     };
   }
 };

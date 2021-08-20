@@ -5,7 +5,7 @@ import {
   passwordLengthValidator
 } from '../../shared/validators';
 import { showErrorMessage, hideErrorMessage } from '../../shared/error-handlers';
-import { currentVersionAgreement } from '../../shared/agreementUser';
+import { currentVersionAgreement, linkToAgreement } from '../../shared/agreementUser';
 import { ERROR_MESSAGES } from '../error-messages';
 
 export const signUpHendler = () => {
@@ -18,6 +18,7 @@ export const signUpHendler = () => {
   const agreementCheckbox = document.getElementById('agreementCheckbox');
   const btnWatchPassword = document.getElementById('btnWatchPassword');
   const btnWatchRepeatPassword = document.getElementById('btnWatchRepeatPassword');
+  const linkToAgreementSingUp = document.querySelector('.sign-up__form__divСheckbox__labelСheckbox__link');
 
   const formFields = {
     name: {
@@ -37,6 +38,7 @@ export const signUpHendler = () => {
     },
   }
 
+  linkToAgreementSingUp.href = linkToAgreement;
   signUpBtn.setAttribute('disabled', true);
 
   signUpForm.addEventListener('submit', event => {
