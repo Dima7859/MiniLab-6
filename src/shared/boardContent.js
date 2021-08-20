@@ -268,7 +268,7 @@ export const boardContentHendler = ( boardContent, status ) => {
           })
           openModalInputMenu(modelCreateTask);
           hideBlockSpinner();
-        }, 500)
+        }, 1000)
       }
     });
   }
