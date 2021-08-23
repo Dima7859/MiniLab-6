@@ -30,7 +30,7 @@ export const dragDrop = async function ( event ) {
     showBlockSpinner();
     await getDataDragAndDropTask(primaryColumnId, taskId)
       .then( response => {
-        dragAndDropTask(columnId, taskId, response.data.content, response.data.taskNumber, response.data.responsibleTask)
+        dragAndDropTask(columnId, taskId, response.data.content, response.data.taskNumber, response.data.responsibleTask, response.data.deadline )
       })
     deleteTask(primaryColumnId, taskId);
   }

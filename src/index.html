@@ -69,14 +69,30 @@
         <button class="modelBlock__createBlock__btn" id="btnClosedRenameColumn"> Closed </button>
       </div>
     </div>
-    <div class="modelBlock" id="modelCreateTask">
-      <div class="modelBlock__createBlock">
+    <div class="modelBlockTask" id="modelCreateTask">
+      <div class="modelBlockTask__createBlock">
+        <div class="modelBlockTask__createBlock__content">
           <label for="inputCreateTask">Create Task</label>
-          <input type="text" id="inputCreateTask">
-          <p class="input-errorNameContent" id="taskError"></p>
-          <select name="responsible" id="responsibleTask"></select>
-        <button class="modelBlock__createBlock__btn" id="btnCreateTask"> Create Task </button>
-        <button class="modelBlock__createBlock__btn" id="btnClosedCreateTask"> Closed </button>
+          <textarea  type="text" id="inputCreateTask"></textarea>
+        </div>
+        <div class="modelBlockTask__createBlock__other">
+          <div class="modelBlockTask__createBlock__other__responsible">
+            <label for="responsibleTask">Responsible</label>
+            <select name="responsible" id="responsibleTask"></select>
+          </div>
+          <div class="modelBlockTask__createBlock__other__date">
+            <label for="inputDateCreateTask">Date of completion</label>
+            <input type="date" id="inputDateCreateTask">
+          </div>
+        </div>
+        <div class="modelBlockTask__createBlock__error">
+          <p class="input-errorTaskContent" id="taskError"></p>
+          <p class="input-errorTaskContent" id="taskDateError"></p>
+        </div>
+        <div class="modelBlockTask__createBlock__btnBlock">
+          <button class="modelBlockTask__createBlock__btnBlock__btn" id="btnCreateTask"> Create Task </button>
+          <button class="modelBlockTask__createBlock__btnBlock__btn" id="btnClosedCreateTask"> Closed </button>
+        </div>
       </div>
     </div>
     <div class="modelBlock" id="modelInvitePartner">

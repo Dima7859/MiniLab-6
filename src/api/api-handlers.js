@@ -178,12 +178,13 @@ export const renameColumn = ( id, newName ) => {
     .then( () => updateBoards());
 }
 
-export const createTaskColumns = (id, content, taskNumber, responsibleTask) => {
+export const createTaskColumns = (id, content, taskNumber, responsibleTask, deadline ) => {
   showBlockSpinner();
   axios.post(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${id}.json`, {
     content,
     taskNumber,
-    responsibleTask
+    responsibleTask,
+    deadline
   })
     .then( async () => {
       await updateBoards();
@@ -191,11 +192,12 @@ export const createTaskColumns = (id, content, taskNumber, responsibleTask) => {
     });
 };
 
-export const dragAndDropTask = ( idColumn, idTask, content, taskNumber, responsibleTask ) => {
+export const dragAndDropTask = ( idColumn, idTask, content, taskNumber, responsibleTask, deadline ) => {
   return axios.patch(`${dataBaceUrl}/miniLabBoards/${LocalStorageService.getIdBoard()}/columns/${idColumn}/${idTask}.json`,{
     content,
     taskNumber,
-    responsibleTask
+    responsibleTask,
+    deadline
   })
 }
 

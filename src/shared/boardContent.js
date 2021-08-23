@@ -15,7 +15,16 @@ import {
 } from '../api/api-handlers';
 import { ERROR_MESSAGES } from '../components/error-messages';
 import { LocalStorageService } from './ls-service';
-import { contentNameValidator, contentTaskValidator, emailValidator } from './validators';
+import {
+  contentNameValidator,
+  contentTaskValidator,
+  dateTaskValidator,
+  emailValidator,
+  validContentTaskOnblur,
+  validContentTaskOninput,
+  validDateTaskOnblur,
+  validDateTaskOninput
+} from './validators';
 import { openBoardNameMenu, openModalInputMenu, validContentOnblur, validContentOninput } from './menuMainPage';
 import { showErrorNotification } from './error-handlers';
 import { drag, dragDrop, dragEnd, dragEnter, dragOver } from './dragAndDrop';
@@ -54,6 +63,7 @@ export const boardContentHendler = ( boardContent, status ) => {
   const modelCreateTask = document.getElementById('modelCreateTask');
   const inputCreateTask = document.getElementById('inputCreateTask');
   const responsibleTask = document.getElementById('responsibleTask');
+  const inputDateCreateTask = document.getElementById('inputDateCreateTask');
   const btnCreateTask = document.getElementById('btnCreateTask');
   const btnClosedCreateTask = document.getElementById('btnClosedCreateTask');
   let boardNameColumnsArr;
@@ -93,8 +103,10 @@ export const boardContentHendler = ( boardContent, status ) => {
   inputInvitePartner.onblur = () => validContentOnblur(inputInvitePartner, btnInvitePartner, emailValidator, 'inviteError', ERROR_MESSAGES.email);
   inputRenameColumn.oninput = () => validContentOninput(inputRenameColumn, btnRenameColumn, contentNameValidator, 'renameErrorColumn');
   inputRenameColumn.onblur = () => validContentOnblur(inputRenameColumn, btnRenameColumn, contentNameValidator, 'renameErrorColumn', ERROR_MESSAGES.nameContent);
-  inputCreateTask.oninput = () => validContentOninput(inputCreateTask, btnCreateTask, contentTaskValidator, 'taskError');
-  inputCreateTask.onblur = () => validContentOnblur(inputCreateTask, btnCreateTask, contentTaskValidator, 'taskError', ERROR_MESSAGES.taskContent);
+  inputCreateTask.oninput = () => validContentTaskOninput(inputCreateTask, contentTaskValidator, 'taskError');
+  inputCreateTask.onblur = () => validContentTaskOnblur(inputCreateTask, contentTaskValidator, 'taskError', ERROR_MESSAGES.taskContent);
+  inputDateCreateTask.oninput = () => validDateTaskOninput(inputDateCreateTask, dateTaskValidator, 'taskDateError');
+  inputDateCreateTask.onblur = () => validDateTaskOnblur(inputDateCreateTask, dateTaskValidator, 'taskDateError', ERROR_MESSAGES.taskContent);
 
   title.className = 'boardsContent__title';
   nameBoard.className = 'boardsContent__title__nameBoards';
@@ -191,10 +203,13 @@ export const boardContentHendler = ( boardContent, status ) => {
         const taskNumber = document.createElement('div');
         const btnDeleteTask = document.createElement('div');
         const responsibleTaskContent = document.createElement('div');
+        const deadline = document.createElement('div');
 
         task.innerText = item.content;
         btnDeleteTask.innerText = "\u2716";
-        item.responsibleTask ? responsibleTaskContent.innerText = item.responsibleTask : responsibleTaskContent.innerText = 'The person in charge was not chosen' ;
+        item.responsibleTask ? responsibleTaskContent.innerText = item.responsibleTask : responsibleTaskContent.innerText = 'Responsible Not assigned' ;
+        deadline.innerText = item.deadline;
+        taskNumber.innerText = item.taskNumber;
         task.draggable = true ;
         task.setAttribute('id', item.id);
         btnDeleteTask.setAttribute('idTask', item.id);
@@ -203,11 +218,11 @@ export const boardContentHendler = ( boardContent, status ) => {
         taskNumber.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__number';
         btnDeleteTask.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__btnDelete';
         responsibleTaskContent.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__responsible';
-        taskNumber.innerText = item.taskNumber;
+        deadline.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__deadline';
         task.ondragstart = drag;
         task.ondragend = dragEnd;
         taskStorage.append(task);
-        task.append(taskNumber, btnDeleteTask, responsibleTaskContent);
+        task.append(taskNumber, btnDeleteTask, responsibleTaskContent, deadline);
 
         btnDeleteTask.onclick = () => {
           showBlockSpinner();
@@ -352,6 +367,7 @@ export const boardContentHendler = ( boardContent, status ) => {
     openModalInputMenu(modelCreateTask);
     LocalStorageService.removeIdColumn();
     inputCreateTask.value = null;
+    inputDateCreateTask.value = null;
   }
 
   btnClosedRenameColumn.onclick = () => {
@@ -414,10 +430,11 @@ export const boardContentHendler = ( boardContent, status ) => {
     responsibleTask.value === 'Choose a responsible' ? responsibleFix = null : responsibleFix = responsibleTask.value;
 
     if (check === 0) {
-      createTaskColumns(LocalStorageService.getIdColumn(), inputCreateTask.value.trim(), taskNumber, responsibleFix);
+      createTaskColumns(LocalStorageService.getIdColumn(), inputCreateTask.value.trim(), taskNumber, responsibleFix, inputDateCreateTask.value);
       updateTaskNumber(taskNumber);
       openModalInputMenu(modelCreateTask);
       inputCreateTask.value = null;
+      inputDateCreateTask.value = null;
     } else showErrorNotification('repetition');
   }
 
