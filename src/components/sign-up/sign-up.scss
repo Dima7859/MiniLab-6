@@ -10,6 +10,10 @@
 
   &__heading {
     @extend %headingSignInUpReset;
+
+    &__nameProject{
+      font-size: 20px;
+    }
   }
 
   &__img {
