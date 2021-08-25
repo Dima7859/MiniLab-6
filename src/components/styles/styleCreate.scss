@@ -17,3 +17,97 @@
     }
   }
 }
+
+.modelBlockTask {
+  @extend %modelBlockAll;
+
+  &__createBlock {
+    margin-top: 40px;
+    display: flex;
+    font-weight: bold;
+    font-size: 16px;
+    height: 500px;
+    width: 35%;
+    border: 1px solid;
+    background-color: #d8cbed;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      width: 85%;
+      align-items: center;
+
+      label{
+        margin-top: 15px;
+        font-size: 16px;
+      }
+    
+      textarea {
+        height: 160px;
+        width: 100%;
+        min-height: 40px;
+        min-width: 200px;
+        max-width: 464px;
+        max-height: 240px;
+      }
+    }
+
+    &__other{
+      display: flex;
+      flex-direction: row;
+      width: 85%;
+      justify-content: space-between;
+
+      &__responsible {
+        display: flex;
+        flex-direction: column;
+
+        select {
+          border: 1px solid $borderColor;
+          height: 40px;
+
+          &:focus{
+            outline: none;
+            border: 1px solid #878787;
+          }
+        }
+      }
+
+      &__date{
+        display: flex;
+        flex-direction: column;
+
+        input {
+          border: 1px solid $borderColor;
+          height: 40px;
+
+          &:focus{
+            outline: none;
+            border: 1px solid #878787;
+          }
+        }
+      }
+    }
+
+    &__error {
+      position: relative;
+      height: 40px;
+      width: 85%;
+    }
+
+    &__btnBlock {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      &__btn {
+        margin: 5px 0 !important;
+        @extend %btn-Sign-In-Up-Reset;
+      }
+    }
+  }
+}
