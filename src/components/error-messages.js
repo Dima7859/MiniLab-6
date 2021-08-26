@@ -5,5 +5,6 @@ export const ERROR_MESSAGES = {
   repeatPassword: '! Password does not match',
   agreementСheckbox: '! Be sure to agree',
   nameContent: '! There must be no spaces at the beginning and at the end and there must be only one space between words',
-  taskContent: '! There should be no spaces at the beginning'
+  taskContent: '! There should be no spaces at the beginning',
+  dateContent: '! Date is invalid'
 }

@@ -35,24 +35,28 @@ export const dateTaskValidator = TaskDate => {
   }
 
   toDay.forEach( ( item, i ) => {
-  if (Number(item) <= Number(calendar[i])) {
     switch (i) {
       case 0:
-        validDate.year.isValid = true;
+        if (Number(item) < Number(calendar[i])) {
+          validDate.year.isValid = true;
+        }
         break;
       case 1:
-        validDate.month.isValid = true;
+        if (Number(item) < Number(calendar[i])) {
+          validDate.month.isValid = true;
+        }
         break;
       case 2:
-        validDate.day.isValid = true;
+        if (Number(item) <= Number(calendar[i])) {
+          validDate.day.isValid = true;
+        }
         break;
       default:
         break;
     }
-  }
   })
 
-  validDate.year.isValid && validDate.month.isValid && validDate.day.isValid ?
+  validDate.year.isValid || validDate.month.isValid || validDate.day.isValid ?
   status = true :
   status = false;
 
