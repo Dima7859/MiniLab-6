@@ -1,5 +1,5 @@
 @import '../styles/colors.scss';
-@import '../styles/constSign-In-up-reset.scss';
+@import '../styles/constStyleVariables.scss';
 
 .allBlockSignUp {
  @extend %allBlock-Sign-In-Up-Reset;
@@ -62,5 +62,15 @@
   &__linkUpAndIn {
     margin-bottom: 40px;
     font-size: 12px;
+  }
+}
+
+@media (max-width: 500px) {
+  .sign-up__form__div {
+    margin-bottom: 30px !important;
+  }
+
+  .sign-up__form__div__watchPass{
+    left: 93% !important;
   }
 }

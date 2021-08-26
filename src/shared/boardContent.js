@@ -407,7 +407,7 @@ export const boardContentHendler = ( boardContent, status ) => {
     openModalInputMenu(modelCreateColumn);
   }
 
-  btnCreateColumn.onclick = () => {
+  btnCreateColumn.onclick = async () => {
     let check = 0;
 
     arrNamesColumns.forEach(item => {
@@ -417,13 +417,15 @@ export const boardContentHendler = ( boardContent, status ) => {
     });
 
     if (check === 0) {
-      createBoardsColumns(boardContent.key, inputCreateColumn.value);
+      showBlockSpinner();
+      await createBoardsColumns(boardContent.key, inputCreateColumn.value);
       inputCreateColumn.value = null;
       openModalInputMenu(modelCreateColumn);
+      hideBlockSpinner();
     } else showErrorNotification('repetition');
   }
 
-  btnRenameColumn.onclick = () => {
+  btnRenameColumn.onclick = async () => {
     let check = 0;
 
     arrNamesColumns.forEach(item => {
@@ -433,9 +435,11 @@ export const boardContentHendler = ( boardContent, status ) => {
     });
 
     if (check === 0) {
-      renameColumn(LocalStorageService.getIdColumn(), inputRenameColumn.value);
+      showBlockSpinner();
+      await renameColumn(LocalStorageService.getIdColumn(), inputRenameColumn.value);
       openModalInputMenu(modelRenameColumn);
       inputRenameColumn.value = null;
+      hideBlockSpinner();
     } else showErrorNotification('repetition');
   }
 

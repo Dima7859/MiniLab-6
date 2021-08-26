@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>Main Page</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
   </head>
   <body>
     <img src="/src/asset/img/kanban.svg" class="blockBackground" alt="Error">
@@ -29,18 +30,18 @@
           <hr>
           <div class="mainPage__menuBoards__functional__all" id="btnOpenCreateBoard">+ Create a board</div>
         </div>
-        <div class="mainPage__menuBoards__modelBlock">
-          <div class="mainPage__menuBoards__modelBlock__createBlock">
-              <label for="createBoard">Enter board name</label>
-              <input type="text" id="inputCreateBoard" maxlength="23">
-              <p class="input-errorNameContent" id="boardError"></p>
-            <button class="mainPage__menuBoards__modelBlock__createBlock__btn" id="btnCreateBoard"> Create </button>
-            <button class="mainPage__menuBoards__modelBlock__createBlock__btn" id="btnClosedCreateBoard"> Close </button>
-          </div>
-        </div>
       </div>
     </div>
     <div class="boardsContent" id="blockBoardContent">
+    </div>
+    <div class="modelBlock" id="modelCreateBoard">
+      <div class="modelBlock__createBlock">
+          <label for="createBoard">Enter board name</label>
+          <input type="text" id="inputCreateBoard" maxlength="23">
+          <p class="input-errorNameContent" id="boardError"></p>
+        <button class="modelBlock__createBlock__btn" id="btnCreateBoard"> Create </button>
+        <button class="modelBlock__createBlock__btn" id="btnClosedCreateBoard"> Close </button>
+      </div>
     </div>
     <div class="modelBlock" id="modelCreateColumn">
       <div class="modelBlock__createBlock">

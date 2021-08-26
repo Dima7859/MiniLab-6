@@ -22,13 +22,14 @@
   @extend %modelBlockAll;
 
   &__createBlock {
-    margin-top: 40px;
+    margin-top: 90px;
     display: flex;
     font-weight: bold;
     font-size: 16px;
     height: 500px;
     width: 35%;
-    border: 1px solid;
+    border: 1px solid $borderColorCreate;
+    border-radius: 10px;
     background-color: #d8cbed;
     flex-direction: column;
     align-items: center;
@@ -44,7 +45,7 @@
         margin-top: 15px;
         font-size: 16px;
       }
-    
+
       textarea {
         height: 160px;
         width: 100%;
@@ -109,5 +110,41 @@
         @extend %btn-Sign-In-Up-Reset;
       }
     }
+  }
+}
+
+@media (max-width: 1065px) {
+  .modelBlockTask__createBlock{
+    width: 50%;
+  }
+}
+
+@media (max-width: 750px) {
+  .modelBlockTask__createBlock{
+    width: 70%;
+  }
+}
+
+@media (max-width: 530px) {
+  .modelBlockTask__createBlock{
+    width: 100%;
+  }
+}
+
+@media (max-width: 950px) {
+  .modelBlock__createBlock{
+    width: 50%;
+  }
+}
+
+@media (max-width: 690px) {
+  .modelBlock__createBlock{
+    width: 70%;
+  }
+}
+
+@media (max-width: 500px) {
+  .modelBlock__createBlock{
+    width: 100%;
   }
 }
