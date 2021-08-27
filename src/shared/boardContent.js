@@ -106,7 +106,7 @@ export const boardContentHendler = ( boardContent, status ) => {
   inputCreateTask.oninput = () => validContentTaskOninput(inputCreateTask, contentTaskValidator, 'taskError');
   inputCreateTask.onblur = () => validContentTaskOnblur(inputCreateTask, contentTaskValidator, 'taskError', ERROR_MESSAGES.taskContent);
   inputDateCreateTask.oninput = () => validDateTaskOninput(inputDateCreateTask, dateTaskValidator, 'taskDateError');
-  inputDateCreateTask.onblur = () => validDateTaskOnblur(inputDateCreateTask, dateTaskValidator, 'taskDateError', ERROR_MESSAGES.taskContent);
+  inputDateCreateTask.onblur = () => validDateTaskOnblur(inputDateCreateTask, dateTaskValidator, 'taskDateError', ERROR_MESSAGES.dateContent);
 
   title.className = 'boardsContent__title';
   nameBoard.className = 'boardsContent__title__nameBoards';
@@ -208,7 +208,7 @@ export const boardContentHendler = ( boardContent, status ) => {
         const calendarTask = document.createElement('div');
 
         task.innerText = item.content;
-        btnDeleteTask.innerText = "\u2716";
+        btnDeleteTask.innerText = '\u2716';
         item.responsibleTask ? responsibleTaskContent.innerText = item.responsibleTask : responsibleTaskContent.innerText = 'Responsible Not assigned' ;
         deadline.innerText = item.deadline;
         taskNumber.innerText = item.taskNumber;
@@ -295,7 +295,7 @@ export const boardContentHendler = ( boardContent, status ) => {
 
           clearContent(responsibleTask);
           standardOption.selected = 'selected';
-          standardOption.innerText = 'Choose a responsible';
+          standardOption.innerText = 'Assing this task';
           responsibleTask.append(standardOption);
 
           arrPartners.forEach( item => {
@@ -407,7 +407,7 @@ export const boardContentHendler = ( boardContent, status ) => {
     openModalInputMenu(modelCreateColumn);
   }
 
-  btnCreateColumn.onclick = () => {
+  btnCreateColumn.onclick = async () => {
     let check = 0;
 
     arrNamesColumns.forEach(item => {
@@ -417,13 +417,15 @@ export const boardContentHendler = ( boardContent, status ) => {
     });
 
     if (check === 0) {
-      createBoardsColumns(boardContent.key, inputCreateColumn.value);
+      showBlockSpinner();
+      await createBoardsColumns(boardContent.key, inputCreateColumn.value);
       inputCreateColumn.value = null;
       openModalInputMenu(modelCreateColumn);
+      hideBlockSpinner();
     } else showErrorNotification('repetition');
   }
 
-  btnRenameColumn.onclick = () => {
+  btnRenameColumn.onclick = async () => {
     let check = 0;
 
     arrNamesColumns.forEach(item => {
@@ -433,9 +435,11 @@ export const boardContentHendler = ( boardContent, status ) => {
     });
 
     if (check === 0) {
-      renameColumn(LocalStorageService.getIdColumn(), inputRenameColumn.value);
+      showBlockSpinner();
+      await renameColumn(LocalStorageService.getIdColumn(), inputRenameColumn.value);
       openModalInputMenu(modelRenameColumn);
       inputRenameColumn.value = null;
+      hideBlockSpinner();
     } else showErrorNotification('repetition');
   }
 
@@ -449,7 +453,7 @@ export const boardContentHendler = ( boardContent, status ) => {
       };
     });
 
-    responsibleTask.value === 'Choose a responsible' ? responsibleFix = null : responsibleFix = responsibleTask.value;
+    responsibleTask.value === 'Assing this task' ? responsibleFix = null : responsibleFix = responsibleTask.value;
 
     if (check === 0) {
       createTaskColumns(LocalStorageService.getIdColumn(), inputCreateTask.value.trim(), taskNumber, responsibleFix, inputDateCreateTask.value);

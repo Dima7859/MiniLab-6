@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>Main Page</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
   </head>
   <body>
     <img src="/src/asset/img/kanban.svg" class="blockBackground" alt="Error">
@@ -29,18 +30,18 @@
           <hr>
           <div class="mainPage__menuBoards__functional__all" id="btnOpenCreateBoard">+ Create a board</div>
         </div>
-        <div class="mainPage__menuBoards__modelBlock">
-          <div class="mainPage__menuBoards__modelBlock__createBlock">
-              <label for="createBoard">Enter board name</label>
-              <input type="text" id="inputCreateBoard" maxlength="23">
-              <p class="input-errorNameContent" id="boardError"></p>
-            <button class="mainPage__menuBoards__modelBlock__createBlock__btn" id="btnCreateBoard"> Create </button>
-            <button class="mainPage__menuBoards__modelBlock__createBlock__btn" id="btnClosedCreateBoard"> Closed </button>
-          </div>
-        </div>
       </div>
     </div>
     <div class="boardsContent" id="blockBoardContent">
+    </div>
+    <div class="modelBlock" id="modelCreateBoard">
+      <div class="modelBlock__createBlock">
+          <label for="createBoard">Enter board name</label>
+          <input type="text" id="inputCreateBoard" maxlength="23">
+          <p class="input-errorNameContent" id="boardError"></p>
+        <button class="modelBlock__createBlock__btn" id="btnCreateBoard"> Create </button>
+        <button class="modelBlock__createBlock__btn" id="btnClosedCreateBoard"> Close </button>
+      </div>
     </div>
     <div class="modelBlock" id="modelCreateColumn">
       <div class="modelBlock__createBlock">
@@ -48,7 +49,7 @@
           <input type="text" id="inputCreateColumn" maxlength="23">
           <p class="input-errorNameContent" id="columError"></p>
         <button class="modelBlock__createBlock__btn" id="btnCreateColumn"> Create </button>
-        <button class="modelBlock__createBlock__btn" id="btnClosedCreateColumn"> Closed </button>
+        <button class="modelBlock__createBlock__btn" id="btnClosedCreateColumn"> Close </button>
       </div>
     </div>
     <div class="modelBlock" id="modelRenameBoard">
@@ -57,7 +58,7 @@
           <input type="text" id="inputRenameBoard" maxlength="23">
           <p class="input-errorNameContent" id="renameErrorBoard"></p>
         <button class="modelBlock__createBlock__btn" id="btnModalRenameBoard"> Rename </button>
-        <button class="modelBlock__createBlock__btn" id="btnModalClosedRenameBoard"> Closed </button>
+        <button class="modelBlock__createBlock__btn" id="btnModalClosedRenameBoard"> Close </button>
       </div>
     </div>
     <div class="modelBlock" id="modelRenameColumn">
@@ -66,7 +67,7 @@
           <input type="text" id="inputRenameColumn" maxlength="23">
           <p class="input-errorNameContent" id="renameErrorColumn"></p>
         <button class="modelBlock__createBlock__btn" id="btnRenameColumn"> Rename </button>
-        <button class="modelBlock__createBlock__btn" id="btnClosedRenameColumn"> Closed </button>
+        <button class="modelBlock__createBlock__btn" id="btnClosedRenameColumn"> Close </button>
       </div>
     </div>
     <div class="modelBlockTask" id="modelCreateTask">
@@ -77,31 +78,31 @@
         </div>
         <div class="modelBlockTask__createBlock__other">
           <div class="modelBlockTask__createBlock__other__responsible">
-            <label for="responsibleTask">Responsible</label>
+            <label for="responsibleTask">Assignee</label>
             <select name="responsible" id="responsibleTask"></select>
           </div>
           <div class="modelBlockTask__createBlock__other__date">
-            <label for="inputDateCreateTask">Date of completion</label>
+            <label for="inputDateCreateTask">Due Date</label>
             <input type="date" id="inputDateCreateTask">
           </div>
         </div>
         <div class="modelBlockTask__createBlock__error">
           <p class="input-errorTaskContent" id="taskError"></p>
-          <p class="input-errorTaskContent" id="taskDateError"></p>
+          <p class="input-errorTaskDate" id="taskDateError"></p>
         </div>
         <div class="modelBlockTask__createBlock__btnBlock">
           <button class="modelBlockTask__createBlock__btnBlock__btn" id="btnCreateTask"> Create Task </button>
-          <button class="modelBlockTask__createBlock__btnBlock__btn" id="btnClosedCreateTask"> Closed </button>
+          <button class="modelBlockTask__createBlock__btnBlock__btn" id="btnClosedCreateTask"> Close </button>
         </div>
       </div>
     </div>
     <div class="modelBlock" id="modelInvitePartner">
       <div class="modelBlock__createBlock">
-          <label for="inputInvitePartner">To invite partner</label>
+          <label for="inputInvitePartner">Invite with email</label>
           <input type="text" id="inputInvitePartner">
           <p class="input-errorNameContent" id="inviteError"></p>
-        <button class="modelBlock__createBlock__btn" id="btnInvitePartner"> To invite </button>
-        <button class="modelBlock__createBlock__btn" id="btnClosedInvitePartner"> Closed </button>
+        <button class="modelBlock__createBlock__btn" id="btnInvitePartner"> Share </button>
+        <button class="modelBlock__createBlock__btn" id="btnClosedInvitePartner"> Close </button>
       </div>
     </div>
   </body>

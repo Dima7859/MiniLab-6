@@ -34,7 +34,7 @@ export const viewingBoardsUser = condition => {
         if (condition === item.condition) {
           const div = document.createElement('div');
           div.className = 'mainPage__menuBoards__functional__boards__name';
-          div.innerText = item.name;
+          div.innerText = `\u25CF ${item.name}`;
           div.setAttribute('boardKey', item.key);
           condition === 'Active' ? lookBoardsActive.append(div) : lookBoardsClosed.append(div);
 

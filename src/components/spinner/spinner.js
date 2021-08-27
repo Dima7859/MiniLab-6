@@ -20,5 +20,7 @@ export const showBlockSpinner = () => {
 
 export const hideBlockSpinner = () => {
   const modalBlockSpinner = document.querySelector('.modalSpinner');
-  modalBlockSpinner.remove();
+  if (modalBlockSpinner) {
+    modalBlockSpinner.remove();
+  }
 };

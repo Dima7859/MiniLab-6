@@ -1,6 +1,7 @@
 import { createBoards } from '../api/api-handlers';
 import { ERROR_MESSAGES } from '../components/error-messages';
 import { clearLookBoards } from '../components/profile/profile';
+import { hideBlockSpinner, showBlockSpinner } from '../components/spinner/spinner';
 import { hideErrorMessage, showErrorMessage } from './error-handlers';
 import { contentNameValidator } from './validators';
 import { viewingBoardsUser } from './viewingBoards';
@@ -52,7 +53,7 @@ export const openMenu = () => {
   const btnOpenMenu = document.querySelector('.mainPage__header__btnMenu');
   const userMenuBoards = document.getElementById('userMenuBoards');
   const btnOpenCreateBoard = document.getElementById('btnOpenCreateBoard');
-  const modelBlockCreate = document.querySelector('.mainPage__menuBoards__modelBlock');
+  const modelBlockCreate = document.getElementById('modelCreateBoard');
   const btnClosedCreateBoard = document.getElementById('btnClosedCreateBoard');
   const btnCreateBoard = document.getElementById('btnCreateBoard');
   const inputCreateBoard = document.getElementById('inputCreateBoard');
@@ -76,11 +77,15 @@ export const openMenu = () => {
     clearLookBoards();
   };
 
-  btnOpenActiveBoard.onclick = () => {
+  btnOpenActiveBoard.onclick = async () => {
+    showBlockSpinner();
     viewingBoardsUser('Active');
+    setTimeout(() => hideBlockSpinner(),400);
   };
 
   btnOpenClosedBoard.onclick = () => {
+    showBlockSpinner();
     viewingBoardsUser('Closed');
+    setTimeout(() => hideBlockSpinner(),400);
   }
 };
