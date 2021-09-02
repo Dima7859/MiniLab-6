@@ -114,18 +114,19 @@
           &__task {
             width: 78%;
             border: 1px solid $borderColor;
+            border-radius: 10px;
             min-height: 30px;
             margin: 10px 0;
             font-size: 12px;
             font-weight: bold;
             background-color: $menuColor;
             position: relative;
-            padding: 20px 15px 30px 15px;
+            padding: 25px 15px 30px 15px;
             word-wrap: break-word;
 
             &__number {
               position: absolute;
-              top: 0px;
+              top: 5px;
               font-size: 12px;
               font-weight: bold;
               min-width: 20px;
@@ -135,36 +136,22 @@
 
             &__btnDelete {
               position: absolute;
-              top: 0;
-              right: 5px;
+              top: 5;
+              right: 10px;
               cursor: pointer;
             }
 
-            &__avatarUser {
+            &__responsible {
               position: absolute;
-              background: url('/src/asset/img/user.png')no-repeat;
-              background-size: cover;
-              border: 1px solid $borderColor;
-              border-radius: 50%;
-              width: 20px;
-              height: 20px;
-              bottom: 3px;
+              bottom: 4px;
               left: 15px;
-              cursor: pointer;
-
-              &__responsible {
-                display: none;
-                position: absolute;
-                bottom: 4px;
-                left: 25px;
-                width: 200px;
-              }
+              width: 200px;
             }
 
             &__calendar{
               position: absolute;
-              bottom: 3px;
-              right: 3px;
+              bottom: 4px;
+              right: 5px;
               background: url('/src/asset/img/calendar.png')no-repeat;
               background-size: cover;
               width: 20px;
@@ -173,13 +160,16 @@
 
               &__deadline{
                 display: none;
+                border: 1px solid $borderColorCreate;
+                border-radius: 5px;
+                background-color: $menuColor;
                 position: absolute;
-                bottom: 4px;
+                bottom: 0px;
                 right: 25px;
-                width: 65px;
+                padding: 3px 10px;
+                width: 80px;
               }
             }
-
           }
         }
       }
