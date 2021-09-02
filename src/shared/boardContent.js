@@ -1,4 +1,4 @@
-import { 
+import {
   createBoardsColumns,
   renameColumn,
   createTaskColumns,
@@ -204,7 +204,6 @@ export const boardContentHendler = ( boardContent, status ) => {
         const btnDeleteTask = document.createElement('div');
         const responsibleTaskContent = document.createElement('div');
         const deadline = document.createElement('div');
-        const responsibleAvatarUser = document.createElement('div');
         const calendarTask = document.createElement('div');
 
         task.innerText = item.content;
@@ -219,24 +218,14 @@ export const boardContentHendler = ( boardContent, status ) => {
         task.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task';
         taskNumber.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__number';
         btnDeleteTask.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__btnDelete';
-        responsibleAvatarUser.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__avatarUser';
-        responsibleTaskContent.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__avatarUser__responsible';
+        responsibleTaskContent.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__responsible';
         calendarTask.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__calendar';
         deadline.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__calendar__deadline';
         task.ondragstart = drag;
         task.ondragend = dragEnd;
         taskStorage.append(task);
-        task.append(taskNumber, btnDeleteTask, responsibleAvatarUser, calendarTask);
-        responsibleAvatarUser.append(responsibleTaskContent);
+        task.append(taskNumber, btnDeleteTask, responsibleTaskContent, calendarTask);
         calendarTask.append(deadline);
-
-        responsibleAvatarUser.onmouseover = () => {
-          responsibleTaskContent.style.display = 'block';
-        }
-
-        responsibleAvatarUser.onmouseout = () => {
-          responsibleTaskContent.style.display = 'none';
-        }
 
         calendarTask.onmouseover = () => {
           deadline.style.display = 'block';
