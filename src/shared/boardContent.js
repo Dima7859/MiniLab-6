@@ -11,7 +11,9 @@ import {
   getUsers,
   updatePartnersBoard,
   getUserById,
-  updateBoards
+  updateBoards,
+  getDataDragAndDropTask,
+  dragAndDropTask
 } from '../api/api-handlers';
 import { ERROR_MESSAGES } from '../components/error-messages';
 import { LocalStorageService } from './ls-service';
@@ -19,6 +21,7 @@ import {
   contentNameValidator,
   contentTaskValidator,
   dateTaskValidator,
+  dragAndDropMobileTaskValidator,
   emailValidator,
   validContentTaskOnblur,
   validContentTaskOninput,
@@ -66,6 +69,11 @@ export const boardContentHendler = ( boardContent, status ) => {
   const inputDateCreateTask = document.getElementById('inputDateCreateTask');
   const btnCreateTask = document.getElementById('btnCreateTask');
   const btnClosedCreateTask = document.getElementById('btnClosedCreateTask');
+  const modelDragAndDropMobile= document.getElementById('modelDragAndDropMobile');
+  const menuDragAndDropMobile = document.getElementById('menuDragAndDropMobile');
+  const btnDragAndDropMobile = document.getElementById('btnDragAndDropMobile');
+  const btnClosedDragAndDropMobile = document.getElementById('btnClosedDragAndDropMobile');
+
   let boardNameColumnsArr;
   let taskNumber = 0;
   const arrPartners = [];
@@ -77,6 +85,7 @@ export const boardContentHendler = ( boardContent, status ) => {
   btnCreateColumn.setAttribute('disabled', true);
   btnRenameColumn.setAttribute('disabled', true);
   btnCreateTask.setAttribute('disabled', true);
+  btnDragAndDropMobile.setAttribute('disabled', true);
 
   if (boardContent.columns) {
     boardNameColumnsArr = Object.keys(boardContent.columns).map( key => ({...boardContent.columns[key], id: key}));
@@ -107,6 +116,7 @@ export const boardContentHendler = ( boardContent, status ) => {
   inputCreateTask.onblur = () => validContentTaskOnblur(inputCreateTask, contentTaskValidator, 'taskError', ERROR_MESSAGES.taskContent);
   inputDateCreateTask.oninput = () => validDateTaskOninput(inputDateCreateTask, dateTaskValidator, 'taskDateError');
   inputDateCreateTask.onblur = () => validDateTaskOnblur(inputDateCreateTask, dateTaskValidator, 'taskDateError', ERROR_MESSAGES.dateContent);
+  menuDragAndDropMobile.oninput = () =>  dragAndDropMobileTaskValidator(menuDragAndDropMobile.value) ? btnDragAndDropMobile.removeAttribute('disabled'): btnDragAndDropMobile.setAttribute('disabled', true);
 
   title.className = 'boardsContent__title';
   nameBoard.className = 'boardsContent__title__nameBoards';
@@ -203,6 +213,7 @@ export const boardContentHendler = ( boardContent, status ) => {
         const taskNumber = document.createElement('div');
         const btnDeleteTask = document.createElement('div');
         const responsibleTaskContent = document.createElement('div');
+        const openDragAndDropMobile = document.createElement('div');
         const deadline = document.createElement('div');
         const calendarTask = document.createElement('div');
 
@@ -211,20 +222,24 @@ export const boardContentHendler = ( boardContent, status ) => {
         item.responsibleTask ? responsibleTaskContent.innerText = item.responsibleTask : responsibleTaskContent.innerText = 'Responsible Not assigned' ;
         deadline.innerText = item.deadline;
         taskNumber.innerText = item.taskNumber;
+        openDragAndDropMobile.innerText = 'Transfer';
         task.draggable = true ;
         task.setAttribute('id', item.id);
+        openDragAndDropMobile.setAttribute('idTask', item.id);
+        openDragAndDropMobile.setAttribute('idColumn', columnId);
         btnDeleteTask.setAttribute('idTask', item.id);
         btnDeleteTask.setAttribute('idColumn', columnId);
         task.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task';
         taskNumber.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__number';
         btnDeleteTask.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__btnDelete';
+        openDragAndDropMobile.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__dAndDMobile';
         responsibleTaskContent.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__responsible';
         calendarTask.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__calendar';
         deadline.className = 'boardsContent__allColumns__overflowBlock__column__taskStorage__task__calendar__deadline';
         task.ondragstart = drag;
         task.ondragend = dragEnd;
         taskStorage.append(task);
-        task.append(taskNumber, btnDeleteTask, responsibleTaskContent, calendarTask);
+        task.append(taskNumber, openDragAndDropMobile, btnDeleteTask, responsibleTaskContent, calendarTask);
         calendarTask.append(deadline);
 
         calendarTask.onmouseover = () => {
@@ -233,6 +248,25 @@ export const boardContentHendler = ( boardContent, status ) => {
 
         calendarTask.onmouseout = () => {
           deadline.style.display = 'none';
+        }
+
+        openDragAndDropMobile.onclick = () => {
+          openModalInputMenu(modelDragAndDropMobile);
+          LocalStorageService.setIdColumn(openDragAndDropMobile.getAttribute('idColumn'));
+          LocalStorageService.setIdTask(openDragAndDropMobile.getAttribute('idTask'));
+          const standardOption = document.createElement('option');
+
+          standardOption.selected = 'selected';
+          standardOption.innerText = 'Names columns';
+          menuDragAndDropMobile.append(standardOption);
+
+          boardNameColumnsArr.forEach( item => {
+            if (item.id !== openDragAndDropMobile.getAttribute('idColumn')) {
+              const optionColumnTransfer = document.createElement('option');
+              optionColumnTransfer.innerText = item.name;
+              menuDragAndDropMobile.append(optionColumnTransfer);
+            }
+          })
         }
 
         btnDeleteTask.onclick = () => {
@@ -451,6 +485,30 @@ export const boardContentHendler = ( boardContent, status ) => {
       inputCreateTask.value = null;
       inputDateCreateTask.value = null;
     } else showErrorNotification('repetition');
+  }
+
+  btnDragAndDropMobile.onclick = () => {
+    if (menuDragAndDropMobile.value !== 'Names columns') {
+      showBlockSpinner();
+      boardNameColumnsArr.forEach( item => {
+        if (menuDragAndDropMobile.value === item.name) {
+          getDataDragAndDropTask(LocalStorageService.getIdColumn(), LocalStorageService.getIdTask())
+            .then( response => {
+              dragAndDropTask(item.id, LocalStorageService.getIdTask(), response.data.content, response.data.taskNumber, response.data.responsibleTask, response.data.deadline );
+              setTimeout(() => deleteTask(LocalStorageService.getIdColumn(), LocalStorageService.getIdTask()), 500);
+            })
+        }
+      })
+    }
+    openModalInputMenu(modelDragAndDropMobile);
+    clearContent(menuDragAndDropMobile);
+  }
+
+  btnClosedDragAndDropMobile.onclick = () => {
+    openModalInputMenu(modelDragAndDropMobile);
+    LocalStorageService.removeIdColumn();
+    LocalStorageService.removeIdTask();
+    clearContent(menuDragAndDropMobile);
   }
 
   allColumns.append(createBlockColumn);

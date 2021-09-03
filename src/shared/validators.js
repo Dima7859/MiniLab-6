@@ -7,6 +7,7 @@ export const emailValidator = email => email.match(REGEXP.EMAIL);
 export const nameValidator = name => name.match(REGEXP.NAME);
 export const contentNameValidator = name => name.match(REGEXP.CONTENT);
 export const contentTaskValidator = content => content.match(REGEXP.TASK);
+export const dragAndDropMobileTaskValidator = content => content.match(REGEXP.dragAndDropMobileTask);
 
 const validAllTaskContent = {
   content: {

@@ -4,4 +4,5 @@ export const REGEXP = {
   NAME: /^([a-z]+\s)*[a-z]+$/i,
   CONTENT: /^([\S]+\s)*[\S]+$/i,
   TASK: /(?<!\\s+)[\S]{2,}/i,
+  dragAndDropMobileTask: /^(?!Names columns$).*$/
 };

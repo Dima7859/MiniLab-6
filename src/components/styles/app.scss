@@ -97,6 +97,13 @@
   display: none;
 }
 
+#menuDragAndDropMobile {
+  width: 85%;
+  margin-bottom: 50px;
+  border: 1px solid #E5E5E5;
+  height: 40px;
+}
+
 .disabledButton {
   pointer-events: none;
   opacity: 0.7;
