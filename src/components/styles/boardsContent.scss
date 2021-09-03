@@ -134,6 +134,24 @@
               background-color: $heder;
             }
 
+            &__dAndDMobile {
+              background-color: $btnColor;
+              cursor: pointer;
+              position: absolute;
+              border-radius: 5px;
+              top: 5px;
+              left: 35%;
+              width: 80px;
+              height: 20px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              &:active {
+                background-color: $btnColorActive;
+              }
+            }
+
             &__btnDelete {
               position: absolute;
               top: 5;
