@@ -3,7 +3,8 @@ export const routes = {
   sign_in: 'sign-in.html',
   sign_up: 'sign-up.html',
   resetPassword: 'resetPassword.html',
-  startPage: 'startPage.html'
+  startPage: 'startPage.html',
+  profile: 'profile.html'
 };
 
 export const paths = {
@@ -11,5 +12,6 @@ export const paths = {
   sign_in: '/sign-in.html',
   sign_up: '/sign-up.html',
   resetPassword: '/resetPassword.html',
-  startPage: '/startPage.html'
+  startPage: '/startPage.html',
+  profile: '/profile.html'
 };

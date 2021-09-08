@@ -31,6 +31,10 @@ module.exports = {
       filename: 'startPage.html',
       template: './src/components/startPage/startPage.html'
     }),
+    new HTMLWebpackPlugin ({
+      filename: 'profile.html',
+      template: './src/components/profile/profile.html'
+    }),
     new SourceMapDevToolPlugin({
         filename: "[file].map"
     }),

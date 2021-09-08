@@ -9,7 +9,7 @@ export const contentNameValidator = name => name.match(REGEXP.CONTENT);
 export const contentTaskValidator = content => content.match(REGEXP.TASK);
 export const dragAndDropMobileTaskValidator = content => content.match(REGEXP.dragAndDropMobileTask);
 
-const validAllTaskContent = {
+export const validAllTaskContent = {
   content: {
     isValid: false
   },
@@ -108,7 +108,7 @@ export const validDateTaskOninput = ( inp, validFun, idError ) => {
   checkFormValid();
 }
 
-const checkFormValid = () => {
+export const checkFormValid = () => {
   const btnCreateTask = document.getElementById('btnCreateTask');
   const isFormValid = Object.values(validAllTaskContent).every(value => value.isValid);
   isFormValid ? btnCreateTask.removeAttribute('disabled'): btnCreateTask.setAttribute('disabled', true);
