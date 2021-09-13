@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Profile</title>
+  </head>
+  <body>
+    <img src="/src/asset/img/kanban.svg" class="blockBackground" alt="Error">
+    <div class="profile">
+      <div class="profile__header">
+        <div class="profile__header__welcome">
+          <div class="profile__header__btnBack"></div>
+        </div>
+        <div class="profile__header__nameAppendix">
+          <p class="italicFont">Do It</p>
+        </div>
+        <div class="profile__header__profile">
+          <div class="profile__header__profile__info" id="headerInfoName"></div>
+          <div class="profile__header__profile__avatar" id="userAvatar"></div>
+          <div class="profile__header__profile__avatar__menu" id="userAvatarMenu">
+            <div class="profile__header__profile__avatar__menu__functional" id="logoutBtn">log out</div>
+            <div class="profile__header__profile__avatar__menu__functional" id="profileLinkBtn">Profile</div>
+          </div>
+        </div>
+      </div>
+      <div class="profile__userInfo">
+        <div class="profile__userInfo__photo">
+          <div class="profile__userInfo__photo__userAvatar" id="userAvatar"></div>
+          <input type="button" class="profile__userInfo__photo__ChangePhoto" id="ChangePhoto" value="Change photo" onclick="document.getElementById('photoFile').click();" />
+          <input type="file" style="display:none;" id="photoFile" name="file" accept=".png, .jpg, .jpeg, .gif, .svg"/>
+        </div>
+        <div class="profile__userInfo__date">
+          <label for="name" class="profile__userInfo__date__label">Name</label>
+          <div class="profile__userInfo__date__control">
+            <div class="profile__userInfo__date__control__currentName"></div>
+            <div class="profile__userInfo__date__control__changeBtn" id="openModalChangeName">Change</div>
+          </div>
+        </div>
+        <div class="profile__userInfo__date">
+          <label for="email" class="profile__userInfo__date__label">E-mail</label>
+          <div class="profile__userInfo__date__control">
+            <div class="profile__userInfo__date__control__currentEmail"></div>
+            <div class="profile__userInfo__date__control__changeBtn" id="openModalChangeEmail">Change</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modelBlock" id="modelChangeName">
+      <div class="modelBlock__createBlock">
+          <label for="inputChangeName">Enter a new name</label>
+          <input type="text" id="inputChangeName">
+          <p class="input-errorNameContent" id="changeNameError"></p>
+        <button class="modelBlock__createBlock__btn" id="btnChangeName"> Change </button>
+        <button class="modelBlock__createBlock__btn" id="btnClosedChangeName"> Close </button>
+      </div>
+    </div>
+    <div class="modelBlock" id="modelChangeEmail">
+      <div class="modelBlock__createBlock">
+          <label for="inputbtnChangeEmail">Enter new email</label>
+          <input type="text" id="inputChangeEmail">
+          <p class="input-errorNameContent" id="changeEmailError"></p>
+        <button class="modelBlock__createBlock__btn" id="btnChangeEmail"> Change </button>
+        <button class="modelBlock__createBlock__btn" id="btnClosedBtnChangeEmail"> Close </button>
+      </div>
+    </div>
+  </body>
+</html>

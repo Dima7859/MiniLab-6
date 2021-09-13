@@ -1,7 +1,7 @@
 import { getBoards, updateBoards } from '../api/api-handlers';
-import { clearLookBoards } from '../components/profile/profile';
+import { clearLookBoards } from './components';
 import { LocalStorageService } from './ls-service';
-import { openBoardNameMenu } from './menuMainPage';
+import { openBoardNameMenu } from './components';
 
 
 export const viewingBoardsUser = condition => {

@@ -1,15 +1,18 @@
 require('firebase/auth')
 import firebase from 'firebase/app';
+import 'firebase/storage';
 import axios from 'axios';
 
-import { authUrl, API_CONFIG, dataBaceUrl, resetPasswordUrl } from './api-config';
+import { authUrl, API_CONFIG, dataBaceUrl, resetPasswordUrl, resetEmailUrl } from './api-config';
 import { showErrorNotification } from '../shared/error-handlers';
 import { LocalStorageService } from '../shared/ls-service';
-import { routes } from '../shared/constants/routes';
+import { paths, routes } from '../shared/constants/routes';
 import { boardContentHendler } from '../shared/boardContent';
 import { hideBlockSpinner, showBlockSpinner } from '../components/spinner/spinner';
 import { viewingBoardsUser } from '../shared/viewingBoards';
-import { clearLookBoards } from '../components/profile/profile';
+import { clearLookBoards, setUserInfo } from '../shared/components';
+import { refreshFormPhoto } from '../components/profile/profile';
+
 
 
 export const initApi = () => {
@@ -261,6 +264,51 @@ export const updateConditionBoard = ( newCondition ) => {
       LocalStorageService.removeBoardData();
       clearLookBoards();
       setTimeout(() => hideBlockSpinner(),700);
+    });
+}
+
+export const uploadPhoto = async (event, imgName) => {
+  const user = LocalStorageService.getPersonalData();
+
+  await firebase
+    .storage()
+    .ref(`photos/${imgName}`)
+    .put(event.target.files[0])
+    .catch( error => showErrorNotification(error));
+  await firebase
+    .storage()
+    .ref(`photos/${imgName}`)
+    .getDownloadURL()
+    .then( url => user.photo = url)
+    .catch( error => showErrorNotification(error));
+  
+  await updateUser(user).then( () => refreshFormPhoto());
+
+  await firebase.storage().ref(`photos/${imgName}`).delete
+}
+
+export const updateUser = async user => 
+  axios.put(`${dataBaceUrl}/miniLabUsers/${user.id}.json`, user)
+    .then(() => {
+      const pathname = Object.values(paths).find( path => path === window.location.pathname );
+      LocalStorageService.setPersonalData(user);
+      setUserInfo();
+      if (pathname === paths.profile) {
+        refreshFormPhoto();
+      }
+      hideBlockSpinner();
+    });
+
+export const resetEmail = ( email ) => {
+  return axios.post (resetEmailUrl, {
+    idToken: `${LocalStorageService.getToken()}`,
+    email,
+    returnSecureToken: true
+  })
+    .then( response => response )
+    .catch(error => {
+      hideBlockSpinner();
+      showErrorNotification(error);
     });
 }
 

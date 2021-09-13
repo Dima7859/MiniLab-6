@@ -18,20 +18,22 @@ import {
 import { ERROR_MESSAGES } from '../components/error-messages';
 import { LocalStorageService } from './ls-service';
 import {
+  checkFormValid,
   contentNameValidator,
   contentTaskValidator,
   dateTaskValidator,
   dragAndDropMobileTaskValidator,
   emailValidator,
+  validAllTaskContent,
   validContentTaskOnblur,
   validContentTaskOninput,
   validDateTaskOnblur,
   validDateTaskOninput
 } from './validators';
-import { openBoardNameMenu, openModalInputMenu, validContentOnblur, validContentOninput } from './menuMainPage';
 import { showErrorNotification } from './error-handlers';
 import { drag, dragDrop, dragEnd, dragEnter, dragOver } from './dragAndDrop';
 import { hideBlockSpinner, showBlockSpinner } from '../components/spinner/spinner';
+import { openModalInputMenu, validContentOnblur, validContentOninput, openBoardNameMenu } from './components';
 
 export const boardContentHendler = ( boardContent, status ) => {
   LocalStorageService.setBoardData(boardContent);
@@ -413,6 +415,9 @@ export const boardContentHendler = ( boardContent, status ) => {
     LocalStorageService.removeIdColumn();
     inputCreateTask.value = null;
     inputDateCreateTask.value = null;
+    validAllTaskContent.date.isValid = false;
+    validAllTaskContent.content.isValid = false;
+    checkFormValid();
   }
 
   btnClosedRenameColumn.onclick = () => {
@@ -484,6 +489,9 @@ export const boardContentHendler = ( boardContent, status ) => {
       openModalInputMenu(modelCreateTask);
       inputCreateTask.value = null;
       inputDateCreateTask.value = null;
+      validAllTaskContent.date.isValid = false;
+      validAllTaskContent.content.isValid = false;
+      checkFormValid();
     } else showErrorNotification('repetition');
   }
 

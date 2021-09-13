@@ -1,4 +1,4 @@
-import { logoutBtnHandler } from '../components/profile/profile';
+import { logoutBtnHandler, openModalInputMenu, profileLinkBtnHandler } from './components';
 import { LocalStorageService } from './ls-service';
 
 export const userNameAvatar = () => {
@@ -9,16 +9,8 @@ export const userNameAvatar = () => {
 export const menuHederHendler = () => {
   const userAvatar = document.getElementById('userAvatar');
   const userAvatarMenu = document.getElementById('userAvatarMenu');
+  userAvatar.onclick = () => openModalInputMenu(userAvatarMenu);
 
-  userAvatar.onclick = () => {
-    const isClicked = userAvatarMenu.getAttribute('clicked');
-    if (!isClicked) {
-      userAvatarMenu.style.display = 'flex';
-      userAvatarMenu.setAttribute('clicked', true);
-    } else {
-      userAvatarMenu.removeAttribute('clicked');
-      userAvatarMenu.style.display = 'none';
-    }
-  };
   logoutBtnHandler();
+  profileLinkBtnHandler();
 };
