@@ -78,6 +78,6 @@ export const setUserInfo = () => {
   const headerInfoName = document.getElementById('headerInfoName');
   const userPhotoUrl = LocalStorageService.getPersonalData().photo;
   photo.style.backgroundImage = userPhotoUrl ?
-    `url("${userPhotoUrl}")` : `url("/src/asset/img/user.png")`;
+    `url("${userPhotoUrl}")` : `url("gs://dimade7859-test.appspot.com/photos/C:\fakepath\user.png")`;
   headerInfoName.innerText = LocalStorageService.getPersonalData().name;
 }
