@@ -16,7 +16,7 @@
   position: relative;
   width: 100%;
 
-  .mainPage__header {
+  &__header {
     height: 60px;
     padding: 10px;
     position: fixed;
@@ -161,5 +161,11 @@
         width: 85%;
       }
     }
+  }
+}
+
+@media (max-width: 600px) {
+  .mainPage__header__nameAppendix {
+    left: 60px;
   }
 }
