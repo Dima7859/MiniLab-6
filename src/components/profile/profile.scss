@@ -148,3 +148,28 @@
     }
   }
 }
+
+@media (max-width: 600px) {
+
+  .profile {
+    min-width: 375px;
+
+    &__header {
+      position: absolute;
+
+      &__nameAppendix {
+        left: 60px;
+      }
+    }
+
+    &__userInfo {
+      width: 100%;
+
+      &__photo {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  }
+}
